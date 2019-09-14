@@ -3,10 +3,80 @@
 
 #include "pch.h"
 #include <iostream>
+#include <cmath>
+#include <assert.h>
+
+void printDecimalToOthers(int decimal, int base)
+{
+	assert(decimal > 0);
+	assert(base > 0);
+	int mark = 1;
+
+	for (unsigned i = 0; mark <= decimal; i++)
+	{
+		mark = static_cast<int>(pow(base, i));
+	}
+
+	mark /= base;
+
+	while (mark >= 1)
+	{
+		if (decimal >= mark)
+		{ 
+			int digit = decimal / mark;
+			if (digit < 10)
+			{
+				std::cout << digit;
+			}
+			else
+			{
+				switch (digit)
+				{
+				case 10:
+					std::cout << 'A';
+					break;
+				case 11:
+					std::cout << 'B';
+					break;
+				case 12:
+					std::cout << 'C';
+					break;
+				case 13:
+					std::cout << 'D';
+					break;
+				case 14:
+					std::cout << 'E';
+					break;
+				case 15:
+					std::cout << 'F';
+					break;
+				default:
+					std::cout << '[' << digit << ']';
+					break;
+				}
+			}
+				
+			decimal %= mark;
+		}
+		else
+		{
+			std::cout << 0;
+		}
+
+		mark /= base;
+	}
+}
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+    std::cout << "decimal\toctal\thexadecimal\n";
+	for (int i = 1; i <= 256; i++)
+	{
+		std::cout << i << '\t';
+		printDecimalToOthers(i, 8); std::cout << '\t';
+		printDecimalToOthers(i, 16);
+		std::cout << std::endl;
+	}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
