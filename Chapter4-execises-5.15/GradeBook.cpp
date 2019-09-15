@@ -109,6 +109,8 @@ void GradeBook::displayGradeReport() const
       << "\nD: " << dCount // display number of D grades
       << "\nF: " << fCount // display number of F grades
       << endl;
+   double totalPoints = 5 * aCount + 4 * bCount + 3 * cCount + 2 * dCount + fCount;
+   std::cout << "grade-point average: " << totalPoints / static_cast<double>(aCount + bCount + cCount + dCount + fCount) << std::endl;
 } // end function displayGradeReport
 
 
