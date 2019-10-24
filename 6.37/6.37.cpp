@@ -6,12 +6,38 @@
 #include <cstdlib>
 #include <ctime>
 #include <cassert>
+#include <iomanip>
+#include <string>
 
-unsigned gcd(unsigned big, unsigned small);
+unsigned gcd(unsigned a, unsigned b);
+unsigned gcd_r(unsigned big, unsigned small);
 unsigned lcm(unsigned a, unsigned b);
+unsigned lcm_gcd(unsigned n, unsigned m);
 unsigned lcm_r(unsigned a, unsigned b);
 
-unsigned gcd(unsigned big, unsigned small)
+unsigned gcd(unsigned n, unsigned m)
+{
+	unsigned temp = n;
+	if (n < m)
+	{
+		temp = n;
+		n = m;
+		m = temp;
+	}
+
+	unsigned greatestCommanDivisor = 1;
+	for (unsigned i = 1; i <= m; i++)
+	{
+		if (0 == n % i && 0 == m % i)
+		{
+			greatestCommanDivisor = i;
+		}
+	}
+
+	return greatestCommanDivisor;
+}
+
+unsigned gcd_r(unsigned big, unsigned small)
 {
 	if (0 == small)
 	{
@@ -19,7 +45,7 @@ unsigned gcd(unsigned big, unsigned small)
 	}
 	else
 	{
-		return gcd(small, big % small);
+		return gcd_r(small, big % small);
 	}
 }
 
@@ -33,7 +59,27 @@ unsigned lcm_r(unsigned n, unsigned m)
 		m = temp;
 	}
 
-	unsigned theGcd = gcd(n, m);
+	if (1 == gcd(n, m))
+	{
+		return n * m;
+	}
+	else
+	{
+		return gcd(n, m) * lcm_r(n / gcd(n, m), m / gcd(n, m));
+	}
+}
+
+unsigned lcm_gcd(unsigned n, unsigned m)
+{
+	unsigned temp = n;
+	if (n < m)
+	{
+		temp = n;
+		n = m;
+		m = temp;
+	}
+
+	unsigned theGcd = gcd_r(n, m);
 
 	return n * m / theGcd;
 }
@@ -71,15 +117,20 @@ int main()
 	int i = 0;
 	while (i < 1000)
 	{
-		i++;
-		n = rand() % INT_MAX + 1;
-		m = rand() % INT_MAX + 1;
+		n = rand() % static_cast<int>(sqrt(INT_MAX)) + 1;
+		m = rand() % static_cast<int>(sqrt(INT_MAX)) + 1;
 		unsigned iterative = lcm(n, m);
+		unsigned lcmGcd = lcm_gcd(n, m);
 		unsigned recursive = lcm_r(n, m);
 		assert(iterative == recursive);
-		std::cout << "n: " << n << "\t" << m << "\t" << iterative << '\n';
-		std::cout << "n: " << n << "\t" << m << "\t" << recursive << '\n';
-		std::cout << "-----------------------------------\n";
+		assert(recursive == lcmGcd);
+		size_t width = std::to_string(UINT32_MAX).size() + 1;
+		std::cout << std::setw(5) << "id" << std::setw(width) << "n" << std::setw(width) << "m" << std::setw(width)
+			<< "iterative" << std::setw(width) << "recursive" << std::setw(width) << "lcmGcd" << '\n';
+		std::cout << std::setw(5) << i << std::setw(width) << n << std::setw(width) << m << std::setw(width) 
+			<< iterative << std::setw(width) << recursive << std::setw(width) << lcmGcd << '\n';
+		std::cout << "\n";
+		i++;
 	}
 
 	return 0;
