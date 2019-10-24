@@ -1,46 +1,23 @@
-// 6.31.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// 6.38.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include "pch.h"
 #include <iostream>
 
-unsigned lcm(unsigned a, unsigned b)
+void move(int count, int start, int end, int temp)
 {
-	unsigned max = 0, min = 0;
-	if (a > b)
+	if (count > 0)
 	{
-		max = a;
-		min = b;
+		move(count - 1, start, temp, end);
+		std::cout << "Move disk " << count << " from " << start << " to " << end << std::endl;
+		move(count - 1, temp, end, start);
 	}
-	else
-	{
-		max = b;
-		min = a;
-	}
-
-	for (unsigned int i = 1; i <= min; i++)
-	{
-		if (0 == ((max * i) % min))
-		{
-			return max * i;
-		}
-	}
-
-	return a * b;
 }
 
 int main()
 {
-    std::cout << "Input two integers:\n";
-	unsigned int a = 1, b = 1;
-	while (a != 0 && b != 0)
-	{
-		std::cin >> a >> b;
-
-		std::cout << lcm(a, b) << std::endl;
-	}
-
-	return 0;
+    std::cout << "Hello World!\n"; 
+	move(3, 1, 3, 2);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
