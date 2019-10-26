@@ -1,38 +1,28 @@
-// 6.38.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// 6.42.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include "pch.h"
 #include <iostream>
+#include <cmath>
 
-static int n = 0;
+typedef double _3dPoint[3];
+#define X 0
+#define Y 1
+#define Z 2
 
-void move(int count, int start, int end, int temp)
+double distance(_3dPoint x, _3dPoint y)
 {
-	if (count > 0)
-	{
-		move(count - 1, start, temp, end);
-		n++;
-		std::cout << n;
-		std::cout << "," << count << "," << start << "," << end << std::endl;
-		move(count - 1, temp, end, start);
-	}
+	return sqrt(pow(x[X] - y[X], 2) + pow(x[Y] - y[Y], 2) + pow(x[Z] - y[Z], 2));
 }
 
 int main()
 {
-	while (true)
-	{
-		n = 0;
-		std::cout << "Input the parameters: count, start, end, temp, 0 of any of them to quit!\n";
-		int count, start, end, temp;
-		std::cin >> count >> start >> end >> temp;
-		if (0 == count || 0 == start || 0 == end || 0 == temp)
-		{
-			break;
-		}
-		move(count, start, end, temp);
-	}
-    
+	_3dPoint x = { 1,3,5 };
+	_3dPoint y = { 2,7,9 };
+    std::cout << "(" << x[X] << "," << x[Y] << "," << x[Z] <<")"
+		<< " to "
+		<< "(" << y[X] << "," << y[Y] << "," << y[Z] << "): " << distance(x, y) << '\n'; 
+
 	return 0;
 }
 
