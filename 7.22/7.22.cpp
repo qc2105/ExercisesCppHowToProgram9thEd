@@ -12,26 +12,17 @@ public:
 
 	int mSize;
 	int mCount;
-	int mInvalidMoveCount;
 
 	std::array<int, 8> mArrayHorrizontal = { 2, 1, -1, -2, -2, -1, 1, 2 };
 	std::array<int, 8> mArrayVertical = { -1, -2, -2, -1, 1, 2, 2, 1 };
-	std::array< std::array<int, 8>, 8> mChessBoard = { 0 };
-	std::array< std::array<int, 8>, 8> accessibility = {
-		2, 3, 4, 4, 4, 4, 3, 2,
-		3, 4, 6, 6, 6, 6, 4, 3,
-		4, 6, 8, 8, 8, 8, 6, 4,
-		4, 6, 8, 8, 8, 8, 6, 4,
-		4, 6, 8, 8, 8, 8, 6, 4,
-		4, 6, 8, 8, 8, 8, 6, 4,
-		3, 4, 6, 6, 6, 6, 4, 3,
-		2, 3, 4, 4, 4, 4, 3, 2
-	};
+	std::array< std::array<int, 8>, 8> mChessBoard;
+	std::array< std::array<int, 8>, 8> accessibility;
 
-	int mCurrentRow = 3;
-	int mCurrentColumn = 4;
+	int mCurrentRow = 0;
+	int mCurrentColumn = 0;
 
-	KnightTour(int size = 64);
+	KnightTour(int size = 64, int initialRow = 0, int initialColumn = 0);
+	void initialize(int initialRow = 0, int initialColumn = 0);
 
 	void move(int moveType);
 
@@ -50,36 +41,68 @@ public:
 int main()
 {
 	KnightTour testRun;
+	int nFullTour = 0;
 
-	while (testRun.mCount <= 64)
+	for (int initialRow = 0; initialRow < 8; initialRow++)
 	{
-		int i;
-		for (i = 0, testRun.mInvalidMoveCount = 0; i < 8; i++)
+		for (int initialColumn = 0; initialColumn < 8; initialColumn++)
 		{
-			if(testRun.isMoveValid(i))
+			std::cout << "Initialized on location: [" << initialRow << ","
+				<< initialColumn << "] ";
+			testRun.initialize(initialRow, initialColumn);
+
+			while (testRun.mCount <= 64)
 			{
+				int i = testRun.nextMoveType();
 				testRun.move(i);
+
+				if (testRun.isTheEnd())
+				{
+					break;
+				}
 			}
-			if (testRun.isTheEnd())
+			std::cout << testRun.mCount << '\n';
+			testRun.showChessBoard();
+			if (testRun.mCount == 63)
 			{
-				goto stop;
+				nFullTour++;
 			}
 		}
 	}
 
-stop:
-	std::cout << testRun.mCount << '\n';
-	testRun.showChessBoard();
+	std::cout << "Got " << nFullTour << " full tours\n";
 
 	return 0;
 }
 
 
-KnightTour::KnightTour(int size)
+KnightTour::KnightTour(int size, int initializeRow, int initializeColumn)
 	:mSize(size),
 	mCount(0),
-	mInvalidMoveCount(0)
+	accessibility({0}),
+	mChessBoard({0})
 {
+	initialize(initializeRow, initializeColumn);
+}
+
+void KnightTour::initialize(int initialRow, int initialColumn)
+{
+	mCount = 0;
+	mChessBoard = { 0 };
+	accessibility = std::array< std::array<int, 8>, 8> {
+			2, 3, 4, 4, 4, 4, 3, 2,
+			3, 4, 6, 6, 6, 6, 4, 3,
+			4, 6, 8, 8, 8, 8, 6, 4,
+			4, 6, 8, 8, 8, 8, 6, 4,
+			4, 6, 8, 8, 8, 8, 6, 4,
+			4, 6, 8, 8, 8, 8, 6, 4,
+			3, 4, 6, 6, 6, 6, 4, 3,
+			2, 3, 4, 4, 4, 4, 3, 2
+	}; 
+
+	mCurrentRow = initialRow;
+	mCurrentColumn = initialColumn;
+
 	mChessBoard[mCurrentRow][mCurrentColumn] = 1;
 	for (int i = 0; i < 8; i++)
 	{
@@ -109,9 +132,9 @@ void KnightTour::move(int moveType)
 		}
 	}
 
-	std::cout << " -> " << mCurrentRow  << ", " << mCurrentColumn << ", movement ";
+	//std::cout << " -> " << mCurrentRow  << ", " << mCurrentColumn << ", movement ";
 	mCount++;
-	std::cout << mCount << '\n';
+	//std::cout << mCount << '\n';
 }
 
 bool KnightTour::isMoveValid(int moveType)

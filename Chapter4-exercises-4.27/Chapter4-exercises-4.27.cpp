@@ -15,7 +15,7 @@ int main()
 	unsigned long long devided = 0;
 	int digit = -1;
 	unsigned i = 0;
-	std::vector<unsigned> digits;
+	std::vector<unsigned long long> digits;
 
 	while (true)
 	{
