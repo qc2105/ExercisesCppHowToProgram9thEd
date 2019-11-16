@@ -12,10 +12,21 @@ public:
 
 	int mSize;
 	int mCount;
+	int mInvalidMoveCount;
 
 	std::array<int, 8> mArrayHorrizontal = { 2, 1, -1, -2, -2, -1, 1, 2 };
 	std::array<int, 8> mArrayVertical = { -1, -2, -2, -1, 1, 2, 2, 1 };
 	std::array< std::array<int, 8>, 8> mChessBoard = { 0 };
+	std::array< std::array<int, 8>, 8> accessibility = {
+		2, 3, 4, 4, 4, 4, 3, 2,
+		3, 4, 6, 6, 6, 6, 4, 3,
+		4, 6, 8, 8, 8, 8, 6, 4,
+		4, 6, 8, 8, 8, 8, 6, 4,
+		4, 6, 8, 8, 8, 8, 6, 4,
+		4, 6, 8, 8, 8, 8, 6, 4,
+		3, 4, 6, 6, 6, 6, 4, 3,
+		2, 3, 4, 4, 4, 4, 3, 2
+	};
 
 	int mCurrentRow = 3;
 	int mCurrentColumn = 4;
@@ -23,6 +34,15 @@ public:
 	KnightTour(int size = 64);
 
 	void move(int moveType);
+
+	bool isMoveValid(int moveType);
+
+	void showChessBoard();
+
+	bool isTheEnd();
+
+	// Get next move heuristicly according to the accessibility metrix.
+	int nextMoveType();
 
 };
 
@@ -33,13 +53,23 @@ int main()
 
 	while (testRun.mCount <= 64)
 	{
-		for (int i = 0; i < 8; i++)
+		int i;
+		for (i = 0, testRun.mInvalidMoveCount = 0; i < 8; i++)
 		{
-			testRun.move(i);
+			if(testRun.isMoveValid(i))
+			{
+				testRun.move(i);
+			}
+			if (testRun.isTheEnd())
+			{
+				goto stop;
+			}
 		}
 	}
 
+stop:
 	std::cout << testRun.mCount << '\n';
+	testRun.showChessBoard();
 
 	return 0;
 }
@@ -47,40 +77,138 @@ int main()
 
 KnightTour::KnightTour(int size)
 	:mSize(size),
-	mCount(0)
+	mCount(0),
+	mInvalidMoveCount(0)
 {
-	
+	mChessBoard[mCurrentRow][mCurrentColumn] = 1;
+	for (int i = 0; i < 8; i++)
+	{
+		if (isMoveValid(i))
+		{
+			int row = mArrayVertical[i] + mCurrentRow;
+			int column = mArrayHorrizontal[i] + mCurrentColumn;
+			accessibility[row][column]--;
+		}
+	}
 }
 
 void KnightTour::move(int moveType)
 {
+	accessibility[mCurrentRow][mCurrentColumn]--;
+	mCurrentRow += mArrayVertical[moveType];
+	mCurrentColumn += mArrayHorrizontal[moveType];
+	mChessBoard[mCurrentRow][mCurrentColumn] = 1;
+
+	for (int i = 0; i < 8; i++)
+	{
+		if (isMoveValid(i))
+		{
+			int row = mArrayVertical[i] + mCurrentRow;
+			int column = mArrayHorrizontal[i] + mCurrentColumn;
+			accessibility[row][column]--;
+		}
+	}
+
+	std::cout << " -> " << mCurrentRow  << ", " << mCurrentColumn << ", movement ";
+	mCount++;
+	std::cout << mCount << '\n';
+}
+
+bool KnightTour::isMoveValid(int moveType)
+{
+	int row, column;
 	if (moveType >= 0 && moveType < 8)
 	{
-		mCurrentRow += mArrayVertical[moveType];
-		mCurrentColumn += mArrayHorrizontal[moveType];
+		row = mArrayVertical[moveType] + mCurrentRow;
+		column = mArrayHorrizontal[moveType] + mCurrentColumn;
 
-		if (mCurrentColumn > 7 || mCurrentRow > 7 || mCurrentColumn < 0 || mCurrentRow < 0)
+		if (column > 7 || row > 7 || column < 0 || row < 0)
 		{
-			mCurrentColumn -= mArrayHorrizontal[moveType];
-			mCurrentRow -= mArrayVertical[moveType];
+			return false;
 		}
-		else if (mChessBoard[mCurrentRow][mCurrentColumn] == 1)
+		else if (mChessBoard[row][column] == 1)
 		{
-			mCurrentColumn -= mArrayHorrizontal[moveType];
-			mCurrentRow -= mArrayVertical[moveType];
+			return false;
 		}
 		else
 		{
-			mChessBoard[mCurrentRow][mCurrentColumn] = 1;
-			std::cout << mCurrentRow << ", " << mCurrentColumn << " -> ";
-			mCount++;
-			std::cout << mCount << '\n';
+			return true;
 		}
 	}
 	else
 	{
-		std::cout << "illeagal moveType: " << moveType << '\n';
+		return false;
 	}
+
+	return false;
+}
+
+void KnightTour::showChessBoard()
+{
+	for (auto row : mChessBoard)
+	{
+		for (auto v : row)
+		{
+			if (v == 1)
+			{
+				std::cout << "*";
+			}
+			else
+			{
+				std::cout << "o";
+			}
+		}
+		std::cout << '\n';
+	}
+
+	for (auto row : accessibility)
+	{
+		for (auto v : row)
+		{
+			std::cout << v;
+		}
+		std::cout << "\n";
+	}
+}
+
+bool KnightTour::isTheEnd()
+{
+	int i, nInvalid;
+	for (i = 0, nInvalid = 0; i < 8; i++)
+	{
+		if (!isMoveValid(i))
+		{
+			nInvalid++;
+		}
+	}
+
+	if (nInvalid < 8)
+	{
+		return false;
+	}
+	return true;
+}
+
+int KnightTour::nextMoveType()
+{
+	int ret = 0;
+	int mostInaccessible = 8;
+	for (int i = 0; i < 8; i++)
+	{
+		if (isMoveValid(i))
+		{
+			int row = mCurrentRow + mArrayVertical[i];
+			int column = mCurrentColumn + mArrayHorrizontal[i];
+			int newInaccessible = accessibility[row][column];
+			if (newInaccessible < mostInaccessible)
+			{
+				mostInaccessible = newInaccessible;
+				ret = i;
+			}
+		}
+	}
+
+	return ret;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
