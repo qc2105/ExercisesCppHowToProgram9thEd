@@ -47,7 +47,7 @@ int main()
 	{
 		for (int initialColumn = 0; initialColumn < 8; initialColumn++)
 		{
-			std::cout << "Initialized on location: [" << initialRow << ","
+			std::cout << "Initialized at location: [" << initialRow << ","
 				<< initialColumn << "] ";
 			testRun.initialize(initialRow, initialColumn);
 
