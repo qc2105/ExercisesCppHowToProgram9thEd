@@ -27,8 +27,10 @@ void displayWinMessage(const int currentTortoisePosition, const int currentHareP
 
 int main()
 {
-	char positionLine[77];
+	char positionLine[80];
 	memset(positionLine, ' ', sizeof(positionLine));
+	positionLine[76] = '\0';
+
 	int tortoisePosition = 1;
 	int harePosition = 1;
 	srand(static_cast<unsigned int>(time(0)));
@@ -65,7 +67,10 @@ int main()
 
 void moveTortoise(const int i, int * currentTortoisePosition, char * const positionLine)
 {
-	positionLine[*currentTortoisePosition] = ' ';
+	if (positionLine[*currentTortoisePosition] != 'H')
+	{
+		positionLine[*currentTortoisePosition] = ' ';
+	}
 	// fast plod
 	if (1 <= i and i <= 5)
 	{
