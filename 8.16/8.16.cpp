@@ -42,7 +42,10 @@ int main()
 	int operand = 0;
 	// Memory
 	int memory[MEMORY_SIZE] = { 0 };
-	int inputWord = 0;
+	int inputWorld = 0;
+	int inputInteger = 0;
+
+	bool halted = false;
 
 	welcome();
 
@@ -50,16 +53,181 @@ int main()
 
 	for (int instructionCounter = 0; instructionCounter < MEMORY_SIZE; instructionCounter++)
 	{
-		std::cout << std::setw(std::string("00").size()) << std::setfill('0') << i << ' ' << "? ";
-		std::cin >> memory[instructionCounter];
-	}
-    
-	dump(accumulator, 
-		instructionRegister, 
-		instructionCounter, 
-		operationCode, 
-		operand, memory);
+		std::cout << std::setw(std::string("00").size()) << std::setfill('0') << instructionCounter << ' ' << "? ";
+		while (true)
+		{
+			std::cin >> inputWorld;
+			if (-99999 == inputWorld)
+			{
+				break;
+			}
+			if (-9999 <= inputWorld && inputWorld <= +9999)
+			{
+				break;
+			}
+			else
+			{
+				std::cout << "Invalid input.\n";
+				std::cout << "Valid range: [-9999, +9999]\n";
+				std::cout << "Please input again:\n";
+			}
+		}
 
+		if (inputWorld == -99999)
+		{
+			std::cout << "*** Program loading completed ***\n";
+			break;
+		}
+		else
+		{
+			memory[instructionCounter] = inputWorld;
+		}
+	}
+
+	std::cout << "*** Program execution begins  ***\n";
+
+	for (int instructionCounter = 0; instructionCounter < MEMORY_SIZE && halted == false; instructionCounter++)
+	{
+		instructionRegister = memory[instructionCounter];
+		operationCode = instructionRegister / 100;
+		operand = instructionRegister % 100;
+		switch (operationCode)
+		{
+		case READ:
+			std::cout << "*** Please input an integer: ***\n";
+			while (true)
+			{
+				std::cin >> inputInteger;
+				if (-9999 <= inputInteger && inputInteger <= +9999)
+				{
+					break;
+				}
+				else
+				{
+					std::cout << "Invalid input.\n";
+					std::cout << "Valid range: [-9999, +9999]\n";
+					std::cout << "Please input again:\n";
+				}
+			}
+			if (operand > 99 || operand < 0)
+			{
+				std::cout << "*** Fatal: invalid memory location ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
+			memory[operand] = inputInteger;
+			break;
+		case WRITE:
+			std::cout << "\n*** Write out memory[" << operand << "]: " << memory[operand] << " ***\n" << std::endl;
+			break;
+		case LOAD:
+			accumulator = memory[operand];
+			break;
+		case STORE:
+			memory[operand] = accumulator;
+			break;
+		case ADD:
+			accumulator += memory[operand];
+
+			if (accumulator > +9999 || accumulator < -9999)
+			{
+				std::cout << "*** Fatal: overflow ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
+			break;
+		case SUBTRACT:
+			accumulator -= memory[operand];
+
+			if (accumulator > +9999 || accumulator < -9999)
+			{
+				std::cout << "*** Fatal: overflow ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
+			break;
+		case DIVIDE:
+			if (0 == memory[operand])
+			{
+				std::cout << "*** Fatal: divide by zero ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
+
+			accumulator /= memory[operand];
+
+			if (accumulator > +9999 || accumulator < -9999)
+			{
+				std::cout << "*** Fatal: overflow ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
+			break;
+		case MULTIPLY:
+			accumulator *= memory[operand];
+
+			if (accumulator > +9999 || accumulator < -9999)
+			{
+				std::cout << "*** Fatal: overflow ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
+			break;
+		case BRANCH:
+			instructionCounter = operand;
+			
+			if (operand > 99 || operand < 0)
+			{
+				std::cout << "*** Fatal: invalid memory location ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
+			instructionCounter--; // To mitigate ++ in the for loop
+			break;
+		case BRANCHNEG:
+			if (operand > 99 || operand < 0)
+			{
+				std::cout << "*** Fatal: invalid memory location ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
+
+			if (0 > accumulator)
+			{
+				instructionCounter = operand;
+			}
+			instructionCounter--; // To mitigate ++ in the for loop
+			break;
+		case BRANCHZERO:
+			if (0 == accumulator)
+			{
+				instructionCounter = operand;
+			}
+
+			if (operand > 99 || operand < 0)
+			{
+				std::cout << "*** Fatal: invalid memory location ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
+			instructionCounter--; // To mitigate ++ in the for loop
+			break;
+		case HALT:
+			dump(accumulator,
+				instructionRegister,
+				instructionCounter,
+				operationCode,
+				operand, memory);
+			halted = true;
+			break;
+		default:
+			std::cout << "*** Fatal: unknown instruction! ***" << std::endl;
+			std::cout << "*** Simpletron execution abnormally terminated ***\n";
+			exit(-1);
+			break;
+		}
+	}
+   
 	return 0;
 }
 
