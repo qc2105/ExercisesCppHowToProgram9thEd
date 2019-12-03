@@ -45,6 +45,7 @@ int main()
 	int inputWorld = 0;
 	int inputInteger = 0;
 
+	int appSize = 0;
 	bool halted = false;
 
 	welcome();
@@ -81,6 +82,7 @@ int main()
 		else
 		{
 			memory[instructionCounter] = inputWorld;
+			appSize++;
 		}
 	}
 
@@ -109,7 +111,7 @@ int main()
 					std::cout << "Please input again:\n";
 				}
 			}
-			if (operand > 99 || operand < 0)
+			if (operand >= appSize || operand < 0)
 			{
 				std::cout << "*** Fatal: invalid memory location ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
@@ -118,6 +120,12 @@ int main()
 			memory[operand] = inputInteger;
 			break;
 		case WRITE:
+			if (operand >= appSize || operand < 0)
+			{
+				std::cout << "*** Fatal: invalid memory location ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
 			std::cout << "\n*** Write out memory[" << operand << "]: " << memory[operand] << " ***\n" << std::endl;
 			break;
 		case LOAD:
@@ -174,18 +182,18 @@ int main()
 			}
 			break;
 		case BRANCH:
-			instructionCounter = operand;
-			
-			if (operand > 99 || operand < 0)
+			if (operand >= appSize || operand < 0)
 			{
 				std::cout << "*** Fatal: invalid memory location ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
+
+			instructionCounter = operand;
 			instructionCounter--; // To mitigate ++ in the for loop
 			break;
 		case BRANCHNEG:
-			if (operand > 99 || operand < 0)
+			if (operand >= appSize || operand < 0)
 			{
 				std::cout << "*** Fatal: invalid memory location ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
@@ -195,22 +203,22 @@ int main()
 			if (0 > accumulator)
 			{
 				instructionCounter = operand;
+				instructionCounter--; // To mitigate ++ in the for loop
 			}
-			instructionCounter--; // To mitigate ++ in the for loop
 			break;
 		case BRANCHZERO:
-			if (0 == accumulator)
-			{
-				instructionCounter = operand;
-			}
-
-			if (operand > 99 || operand < 0)
+			if (operand >= appSize || operand < 0)
 			{
 				std::cout << "*** Fatal: invalid memory location ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
-			instructionCounter--; // To mitigate ++ in the for loop
+
+			if (0 == accumulator)
+			{
+				instructionCounter = operand;
+				instructionCounter--; // To mitigate ++ in the for loop
+			}
 			break;
 		case HALT:
 			dump(accumulator,
