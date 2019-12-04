@@ -1,38 +1,40 @@
 //sml app a)
-00	+1007	; read keyboard input to location 07
-01	+2007	; load 07 to accumulator
-02	+4105	; branch to 05 if accumulator is negative
-03	+3008	; add 08 to accumulator
-04	+2108	; store accumulator to 08
-05	+1108	; write 08 to screen
-06	+4300	; halt
-07	+0000	; data word initialized to 0
+00	+1008	; read keyboard input to location 07
+01	+2008	; load 07 to accumulator
+02	+4106	; branch to 05 if accumulator is negative
+03	+3009	; add 08 to accumulator
+04	+2109	; store accumulator to 08
+05	+4000	; read the next number
+06	+1109	; write 09 to screen
+07	+4300	; halt
 08	+0000	; data word initialized to 0
+09	+0000	; data word initialized to 0
 //end
 
 //sml app b)
-00	+1016	; read keybord input to localtion user input data word
-01	+2017	; load count to accumulator
-02	+3018	; acuumulator++
-03	+2117	; store count to *count
-04	+3119	; accumulator -7
+00	+1017	; read keybord input to localtion user input data word
+01	+2018	; load count to accumulator
+02	+3019	; acuumulator++
+03	+2118	; store count to *count
+04	+3120	; accumulator - 7
 05	+4211	; goto 11 if accumulator == 0 <- got seven numbers
-06	+2016	; load userinput to accumulator
-07	+3020	; accumulator += sum
-08	+2120	; store accumulator to sum
-09	+3120	; accumulator set to 0
+06	+2017	; load userinput to accumulator
+07	+3021	; accumulator += sum
+08	+2121	; store accumulator to sum
+09	+3121	; accumulator set to 0
 10	+4200	; goto 00
-11	+2020	; load sum
-12	+3219	; sum /= 7
-13	+2121	; store sum / 7 to result
-14	+1121	; write result to screen
-15	+4300	; halt
-16	+0000	; data word to store user input
-17	+0000	; data word to store count
-18	+0001	; data word to represent 1
-19	+0007	; data word to represent 7
-20	+0000	; data word to store sum
-21	+0000	; data word to store result
+11	+2021	; load sum
+12  +3017	; sum += userInput
+13	+3220	; sum /= 7
+14	+2122	; store sum / 7 to result
+15	+1122	; write result to screen
+16	+4300	; halt
+17	+0000	; data word to store user input
+18	+0000	; data word to store count
+19	+0001	; data word to represent 1
+20	+0007	; data word to represent 7
+21	+0000	; data word to store sum
+22	+0000	; data word to store result
 //end
 
 //sml app c)

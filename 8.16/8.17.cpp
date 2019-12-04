@@ -3,17 +3,18 @@
 
 #include "pch.h"
 #include <iostream>
+#include <fstream>
 #include <array>
 #include <iomanip>
 #include <string>
 
-const int MEMORY_SIZE = 1000;
+const int MEMORY_SIZE = 100;
 
 enum OperationCode
 {
 	READ = 10, WRITE = 11,
 	LOAD = 20, STORE = 21,
-	ADD = 30, SUBTRACT = 31, DIVIDE = 32, MULTIPLY = 33,
+	ADD = 30, SUBTRACT = 31, DIVIDE = 32, MULTIPLY = 33, MODULUS = 34,
 	BRANCH = 40, BRANCHNEG = 41, BRANCHZERO = 42, HALT = 43
 };
 
@@ -32,8 +33,14 @@ void displayCounter(std::string str, int counter);
 void displayRegister(std::string str, int Register);
 void displayMemory(int memory[], int size);
 
-int main()
+int main(int argc, char *argv[])
 {
+	if (argc != 2)
+	{
+		std::cerr << "Usage: " << argv[0] << " <path to sml source file>\n";
+		exit(-1);
+	}
+
 	// Registers
 	int accumulator = 0;
 	int instructionRegister = 0;
@@ -48,6 +55,14 @@ int main()
 	int appSize = 0;
 	bool halted = false;
 
+	std::string line;
+	std::ifstream sourceFile(argv[1]);
+	if (!sourceFile.is_open())
+	{
+		std::cout << "Open source.sml failed\n";
+		return -1;
+	}
+
 	welcome();
 
 	std::cout << std::endl;
@@ -55,36 +70,29 @@ int main()
 	for (int instructionCounter = 0; instructionCounter < MEMORY_SIZE; instructionCounter++)
 	{
 		std::cout << std::setw(std::string("00").size()) << std::setfill('0') << instructionCounter << ' ' << "? ";
-		while (true)
-		{
-			std::cin >> inputWorld;
-			if (-99999 == inputWorld)
-			{
-				break;
-			}
-			if (-9999 <= inputWorld && inputWorld <= +9999)
-			{
-				break;
-			}
-			else
-			{
-				std::cout << "Invalid input.\n";
-				std::cout << "Valid range: [-9999, +9999]\n";
-				std::cout << "Please input again:\n";
-			}
-		}
-
+		
+		std::getline(sourceFile, line);
+		inputWorld = std::stoi(line);
+		std::cout << inputWorld << std::endl;
 		if (inputWorld == -99999)
 		{
 			std::cout << "*** Program loading completed ***\n";
 			break;
 		}
-		else
+		else if (-9999 <= inputWorld && inputWorld <= +9999)
 		{
 			memory[instructionCounter] = inputWorld;
 			appSize++;
 		}
+		else
+		{
+			std::cout << "Invalid input in line: " << appSize << std::endl;
+			std::cout << "Valid range: [-9999, +9999]\n";
+			return -1;
+		}
 	}
+
+	sourceFile.close();
 
 	std::cout << "*** Program execution begins  ***\n";
 
@@ -173,6 +181,16 @@ int main()
 			break;
 		case MULTIPLY:
 			accumulator *= memory[operand];
+
+			if (accumulator > +9999 || accumulator < -9999)
+			{
+				std::cout << "*** Fatal: overflow ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
+			break;
+		case MODULUS:
+			accumulator %= memory[operand];
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
