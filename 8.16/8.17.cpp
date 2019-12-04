@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <string>
 
-const int MEMORY_SIZE = 100;
+const int MEMORY_SIZE = 1000;
 
 enum OperationCode
 {
@@ -317,5 +317,5 @@ void dump(int accumulator,
 
 	std::cout << std::endl;
 	std::cout << "MEMORY:\n";
-	displayMemory(memory, 100);
+	displayMemory(memory, MEMORY_SIZE);
 }
