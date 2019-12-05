@@ -14,8 +14,9 @@ enum OperationCode
 {
 	READ = 10, WRITE = 11,
 	LOAD = 20, STORE = 21,
-	ADD = 30, SUBTRACT = 31, DIVIDE = 32, MULTIPLY = 33, MODULUS = 34,
-	BRANCH = 40, BRANCHNEG = 41, BRANCHZERO = 42, HALT = 43
+	ADD = 30, SUBTRACT = 31, DIVIDE = 32, MULTIPLY = 33, MODULUS = 34, POWER = 35,
+	BRANCH = 40, BRANCHNEG = 41, BRANCHZERO = 42, HALT = 43,
+	NEWLINE = 50
 };
 
 void dump(
@@ -59,7 +60,7 @@ int main(int argc, char *argv[])
 	std::ifstream sourceFile(argv[1]);
 	if (!sourceFile.is_open())
 	{
-		std::cout << "Open source.sml failed\n";
+		std::cout << "Open sml source file failed\n";
 		return -1;
 	}
 
@@ -199,6 +200,16 @@ int main(int argc, char *argv[])
 				exit(-1);
 			}
 			break;
+		case POWER:
+			accumulator = pow(accumulator, memory[operand]);
+
+			if (accumulator > +9999 || accumulator < -9999)
+			{
+				std::cout << "*** Fatal: overflow ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
+			break;
 		case BRANCH:
 			if (operand >= appSize || operand < 0)
 			{
@@ -237,6 +248,9 @@ int main(int argc, char *argv[])
 				instructionCounter = operand;
 				instructionCounter--; // To mitigate ++ in the for loop
 			}
+			break;
+		case NEWLINE:
+			std::cout << "\n";
 			break;
 		case HALT:
 			dump(accumulator,
