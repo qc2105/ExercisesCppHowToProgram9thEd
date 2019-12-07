@@ -1,7 +1,18 @@
 #include "Simpletron.h"
 
 Simpletron::Simpletron()
+	: accumulator(0),
+	instructionRegister(0),
+	instructionCounter(0),
+	operationCode(0),
+	operand(0),
+	memory(),
+	inputWorld(0),
+	inputInteger(0),
+	appSize(0),
+	halted(false)
 {
+	
 }
 
 Simpletron::~Simpletron()
@@ -99,7 +110,7 @@ int Simpletron::execute()
 			}
 			if (operand >= appSize || operand < 0)
 			{
-				std::cout << "*** Fatal: invalid memory location ***\n";
+				std::cout << "*** Fatal: READ invalid memory location ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
@@ -108,7 +119,7 @@ int Simpletron::execute()
 		case WRITE:
 			if (operand >= appSize || operand < 0)
 			{
-				std::cout << "*** Fatal: invalid memory location ***\n";
+				std::cout << "*** Fatal: WRITE invalid memory location ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
@@ -125,7 +136,7 @@ int Simpletron::execute()
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
-				std::cout << "*** Fatal: overflow ***\n";
+				std::cout << "*** Fatal: ADD overflow ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
@@ -135,7 +146,7 @@ int Simpletron::execute()
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
-				std::cout << "*** Fatal: overflow ***\n";
+				std::cout << "*** Fatal: SUBTRACT overflow ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
@@ -152,7 +163,7 @@ int Simpletron::execute()
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
-				std::cout << "*** Fatal: overflow ***\n";
+				std::cout << "*** Fatal: DIVIDE overflow ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
@@ -162,7 +173,7 @@ int Simpletron::execute()
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
-				std::cout << "*** Fatal: overflow ***\n";
+				std::cout << "*** Fatal: MULTIPLY overflow ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
@@ -172,7 +183,7 @@ int Simpletron::execute()
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
-				std::cout << "*** Fatal: overflow ***\n";
+				std::cout << "*** Fatal: MODULUS overflow ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
@@ -182,7 +193,7 @@ int Simpletron::execute()
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
-				std::cout << "*** Fatal: overflow ***\n";
+				std::cout << "*** Fatal: POWER overflow ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
@@ -190,7 +201,7 @@ int Simpletron::execute()
 		case BRANCH:
 			if (operand >= appSize || operand < 0)
 			{
-				std::cout << "*** Fatal: invalid memory location ***\n";
+				std::cout << "*** Fatal: BRANCH invalid memory location ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
@@ -201,7 +212,7 @@ int Simpletron::execute()
 		case BRANCHNEG:
 			if (operand >= appSize || operand < 0)
 			{
-				std::cout << "*** Fatal: invalid memory location ***\n";
+				std::cout << "*** Fatal: BRANCHNEG invalid memory location ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
@@ -215,7 +226,7 @@ int Simpletron::execute()
 		case BRANCHZERO:
 			if (operand >= appSize || operand < 0)
 			{
-				std::cout << "*** Fatal: invalid memory location ***\n";
+				std::cout << "*** Fatal: BRANCHZERO invalid memory location ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}

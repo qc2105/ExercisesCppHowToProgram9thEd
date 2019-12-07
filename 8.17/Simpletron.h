@@ -26,17 +26,20 @@ public:
 
 private:
 	// Registers
-	int accumulator = 0;
-	int instructionRegister = 0;
-	int instructionCounter = 0;
-	int operationCode = 0;
-	int operand = 0;
+	int accumulator;
+	int instructionRegister;
+	int instructionCounter;
+	int operationCode;
+	int operand;
 	
 	// Memory
 	static const int MEMORY_SIZE = 100;
-	int memory[MEMORY_SIZE] = { 0 };
-	int inputWorld = 0;
-	int inputInteger = 0;
+	int memory[MEMORY_SIZE];
+	int inputWorld;
+	int inputInteger;
+
+	int appSize;
+	bool halted;
 
 	// Instruction Operators
 	enum OperationCode
@@ -47,8 +50,5 @@ private:
 		BRANCH = 40, BRANCHNEG = 41, BRANCHZERO = 42, HALT = 43,
 		NEWLINE = 50
 	};
-
-	int appSize = 0;
-	bool halted = false;
 };
 
