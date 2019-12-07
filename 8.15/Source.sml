@@ -38,35 +38,33 @@
 //end
 
 //sml app c)
-00	+1026	; read to counterLimit
-01	+2026	; load counterLimit to accumulator
-02	+4121	; halt if counterLimit is negative
-03	+4221	; halt if counterLimit is zero
-04	+1027	; read to number	/*readNextNumber()*/ ~ 09
-05	+2028	; load counter(which was initialized to zero)
-06	+3029	; counter++
-07	+2128	; store the counter
-08	+3129	; accumulator/counter - 1 = accumulator
-09	+4222	; goto initialize max
-10	+2026	; load the counterLimit
-11	+3128	; substract counter from accumulator/counterLimit
-12	+4220	; have read the needed number of numbers
-13	+2027	; load number
-14	+3130	; number - max -> accumulator
+00	+1024	; read to counterLimit
+01	+2024	; load counterLimit to accumulator
+02	+4120	; halt if counterLimit is negative
+03	+4220	; halt if counterLimit is zero
+04	+1025	; read to number	/*readNextNumber()*/ ~ 09
+05	+2026	; load counter(which was initialized to zero)
+06	+3027	; counter++
+07	+2126	; store the counter
+08	+3127	; accumulator/counter - 1 = accumulator
+09	+4221	; goto initialize max
+10	+2024	; load the counterLimit
+11	+3126	; substract counter from accumulator/counterLimit
+12	+4219	; have read the needed number of numbers
+13	+2025	; load number
+14	+3128	; number - max -> accumulator
 15	+4104	; branch to *readNextNumber() if max > number
-16	+2027	; load number	/*replaceMax()*/ ~ 19
-17	+2130	; replace max with number
-18	+3130	; accumulator -> 0
-19	+4204	; branch to *readNextNumber() if accumulator = 0;
-20	+1130	; *showMax()	/*showMax()*/ ~ 21
-21	+4300	; halt
-22	+2027	; load number	/*initMax()*/ ~ 25
-23	+2130	; init max = number;
-24	+3130	; accumulator = 0
-25	+4204	; read next number
-26	+0000	; counterLimit	/*data*/ ~ 30
-27	+0000	; number
-28	+0000	; counter
-29	+0001	; 1
-30	+0000	; max
+16	+2025	; load number	/*replaceMax()*/ ~ 19
+17	+2128	; replace max with number
+18	+4004	; read the next number
+19	+1128	; *showMax()	/*showMax()*/ ~ 21
+20	+4300	; halt
+21	+2025	; load number	/*initMax()*/ ~ 25
+22	+2128	; init max = number;
+23	+4004	; read the next number
+24	+0000	; counterLimit	/*data*/ ~ 30
+25	+0000	; number
+26	+0000	; counter
+27	+0001	; 1
+28	+0000	; max
 //end
