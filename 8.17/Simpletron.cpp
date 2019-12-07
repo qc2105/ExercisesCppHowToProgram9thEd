@@ -10,7 +10,8 @@ Simpletron::Simpletron()
 	inputWorld(0),
 	inputInteger(0),
 	appSize(0),
-	halted(false)
+	halted(false),
+	debugON(false)
 {
 	
 }
@@ -30,7 +31,8 @@ void Simpletron::welcome()
 		<< "*** your program. ***" << std::endl << std::endl;
 }
 
-void Simpletron::displayCounter(std::string str, int counter)
+template <class T>
+void Simpletron::displayCounter(std::string str, T counter)
 {
 	size_t firstColumnWidth = std::string("instructionRegister  ").size();
 	int counterWidth = 2;
@@ -45,7 +47,8 @@ void Simpletron::displayCounter(std::string str, int counter)
 		<< counter << std::endl;
 }
 
-void Simpletron::displayRegister(std::string str, int Register)
+template <class T>
+void Simpletron::displayRegister(std::string str, T Register)
 {
 	size_t firstColumnWidth = std::string("instructionRegister  ").size();
 	size_t wordWidth = std::string("+0000").size();
@@ -59,7 +62,8 @@ void Simpletron::displayRegister(std::string str, int Register)
 		<< std::setfill('0') << std::internal << Register << "\n";
 }
 
-void Simpletron::displayMemory(int memory[], int size)
+template <class T>
+void Simpletron::displayMemory(T memory[], int size)
 {
 	std::cout << "  ";
 	for (int i = 0; i < 10; i++)
@@ -88,8 +92,8 @@ int Simpletron::execute()
 	for (instructionCounter = 0; instructionCounter < MEMORY_SIZE && halted == false; instructionCounter++)
 	{
 		instructionRegister = memory[instructionCounter];
-		operationCode = instructionRegister / 100;
-		operand = instructionRegister % 100;
+		operationCode = static_cast<int>(instructionRegister / 100);
+		operand = fmod(instructionRegister, 100);
 		switch (operationCode)
 		{
 		case READ:
@@ -114,7 +118,7 @@ int Simpletron::execute()
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
-			memory[operand] = inputInteger;
+			memory[static_cast<int>(operand)] = inputInteger;
 			break;
 		case WRITE:
 			if (operand >= appSize || operand < 0)
@@ -123,16 +127,16 @@ int Simpletron::execute()
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
-			std::cout << "\n*** Write out memory[" << operand << "]: " << memory[operand] << " ***\n" << std::endl;
+			std::cout << "\n*** Write out memory[" << operand << "]: " << memory[static_cast<int>(operand)] << " ***\n" << std::endl;
 			break;
 		case LOAD:
-			accumulator = memory[operand];
+			accumulator = memory[static_cast<int>(operand)];
 			break;
 		case STORE:
-			memory[operand] = accumulator;
+			memory[static_cast<int>(operand)] = accumulator;
 			break;
 		case ADD:
-			accumulator += memory[operand];
+			accumulator += memory[static_cast<int>(operand)];
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
@@ -142,7 +146,7 @@ int Simpletron::execute()
 			}
 			break;
 		case SUBTRACT:
-			accumulator -= memory[operand];
+			accumulator -= memory[static_cast<int>(operand)];
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
@@ -152,14 +156,14 @@ int Simpletron::execute()
 			}
 			break;
 		case DIVIDE:
-			if (0 == memory[operand])
+			if (0 == memory[static_cast<int>(operand)])
 			{
 				std::cout << "*** Fatal: divide by zero ***\n";
 				std::cout << "*** Simpletron execution abnormally terminated ***\n";
 				exit(-1);
 			}
 
-			accumulator /= memory[operand];
+			accumulator /= memory[static_cast<int>(operand)];
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
@@ -169,7 +173,7 @@ int Simpletron::execute()
 			}
 			break;
 		case MULTIPLY:
-			accumulator *= memory[operand];
+			accumulator *= memory[static_cast<int>(operand)];
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
@@ -179,7 +183,7 @@ int Simpletron::execute()
 			}
 			break;
 		case MODULUS:
-			accumulator %= memory[operand];
+			accumulator = ::fmod(accumulator, memory[static_cast<int>(operand)]);
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
@@ -189,7 +193,7 @@ int Simpletron::execute()
 			}
 			break;
 		case POWER:
-			accumulator = pow(accumulator, memory[operand]);
+			accumulator = pow(accumulator, memory[static_cast<int>(operand)]);
 
 			if (accumulator > +9999 || accumulator < -9999)
 			{
@@ -206,7 +210,7 @@ int Simpletron::execute()
 				exit(-1);
 			}
 
-			instructionCounter = operand;
+			instructionCounter = static_cast<int>(operand);
 			instructionCounter--; // To mitigate ++ in the for loop
 			break;
 		case BRANCHNEG:
@@ -219,7 +223,7 @@ int Simpletron::execute()
 
 			if (0 > accumulator)
 			{
-				instructionCounter = operand;
+				instructionCounter = static_cast<int>(operand);
 				instructionCounter--; // To mitigate ++ in the for loop
 			}
 			break;
@@ -233,12 +237,22 @@ int Simpletron::execute()
 
 			if (0 == accumulator)
 			{
-				instructionCounter = operand;
+				instructionCounter = static_cast<int>(operand);;
 				instructionCounter--; // To mitigate ++ in the for loop
 			}
 			break;
 		case NEWLINE:
 			std::cout << "\n";
+			break;
+		case SML_DEBUG:
+			if (operand)
+			{
+				debugON = true;
+			}
+			else
+			{
+				debugON = false;
+			}
 			break;
 		case HALT:
 			dump();
@@ -249,6 +263,11 @@ int Simpletron::execute()
 			std::cout << "*** Simpletron execution abnormally terminated ***\n";
 			exit(-1);
 			break;
+		}
+
+		if (debugON)
+		{
+			dump();
 		}
 	}
 

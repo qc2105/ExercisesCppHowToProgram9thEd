@@ -5,6 +5,7 @@
 #include <array>
 #include <iomanip>
 #include <string>
+#include <cmath>
 
 class Simpletron
 {
@@ -16,9 +17,12 @@ public:
 
 	void welcome();
 
-	void displayCounter(std::string str, int counter);
-	void displayRegister(std::string str, int Register);
-	void displayMemory(int memory[], int size);
+	template <class T>
+	void displayCounter(std::string str, T counter);
+	template <class T>
+	void displayRegister(std::string str, T Register);
+	template <class T>
+	void displayMemory(T memory[], int size);
 
 	int execute();
 
@@ -26,20 +30,21 @@ public:
 
 private:
 	// Registers
-	int accumulator;
-	int instructionRegister;
+	double accumulator;
+	double instructionRegister;
 	int instructionCounter;
 	int operationCode;
-	int operand;
+	double operand;
 	
 	// Memory
 	static const int MEMORY_SIZE = 100;
-	int memory[MEMORY_SIZE];
+	double memory[MEMORY_SIZE];
 	int inputWorld;
 	int inputInteger;
 
 	int appSize;
 	bool halted;
+	bool debugON;
 
 	// Instruction Operators
 	enum OperationCode
@@ -47,7 +52,7 @@ private:
 		READ = 10, WRITE = 11,
 		LOAD = 20, STORE = 21,
 		ADD = 30, SUBTRACT = 31, DIVIDE = 32, MULTIPLY = 33, MODULUS = 34, POWER = 35,
-		BRANCH = 40, BRANCHNEG = 41, BRANCHZERO = 42, HALT = 43,
+		BRANCH = 40, BRANCHNEG = 41, BRANCHZERO = 42, HALT = 43, SML_DEBUG = 44,
 		NEWLINE = 50
 	};
 };
