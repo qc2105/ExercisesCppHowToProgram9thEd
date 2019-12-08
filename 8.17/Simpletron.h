@@ -41,6 +41,7 @@ private:
 	double memory[MEMORY_SIZE];
 	int inputWorld;
 	int inputInteger;
+	std::string inputString;
 
 	int appSize;
 	bool halted;
@@ -49,7 +50,7 @@ private:
 	// Instruction Operators
 	enum OperationCode
 	{
-		READ = 10, WRITE = 11,
+		READ = 10, WRITE = 11, READ_STR = 12, WRITE_STR = 13,
 		LOAD = 20, STORE = 21,
 		ADD = 30, SUBTRACT = 31, DIVIDE = 32, MULTIPLY = 33, MODULUS = 34, POWER = 35,
 		BRANCH = 40, BRANCHNEG = 41, BRANCHZERO = 42, HALT = 43, SML_DEBUG = 44,

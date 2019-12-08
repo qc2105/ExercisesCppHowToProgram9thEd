@@ -1,4 +1,5 @@
 #include "Simpletron.h"
+#include <cassert>
 
 Simpletron::Simpletron()
 	: accumulator(0),
@@ -9,6 +10,7 @@ Simpletron::Simpletron()
 	memory(),
 	inputWorld(0),
 	inputInteger(0),
+	inputString(""),
 	appSize(0),
 	halted(false),
 	debugON(false)
@@ -68,7 +70,7 @@ void Simpletron::displayMemory(T memory[], int size)
 	std::cout << "  ";
 	for (int i = 0; i < 10; i++)
 	{
-		std::cout << std::setw(std::string(" +0000").size()) << std::setfill(' ') << i;
+		std::cout << std::setw(std::string("0x0000000000000000 ").size()) << std::setfill(' ') << i;
 	}
 	std::cout << std::endl;
 	for (int i = 0; i < size; i++)
@@ -77,7 +79,9 @@ void Simpletron::displayMemory(T memory[], int size)
 		{
 			std::cout << std::setw(std::string("00").size()) << std::setfill(' ') << std::noshowpos << i << ' ';
 		}
-		std::cout << std::setw(std::string("+0000").size()) << std::setfill('0') << std::internal << std::showpos << memory[i] << ' ';
+		assert(sizeof(long long) == sizeof(double));
+		long long* longPtr = (long long *)(memory + i);
+		std::cout << "0x" << std::setw(std::string("0000000000000000").size()) << std::setfill('0') << std::hex << *longPtr << ' ';
 		if ((i - 9) % 10 == 0)
 		{
 			std::cout << std::endl;
@@ -88,6 +92,9 @@ void Simpletron::displayMemory(T memory[], int size)
 int Simpletron::execute()
 {
 	std::cout << "*** Program execution begins  ***\n";
+	size_t stringLength = 0;
+	long* stringHead = NULL;
+	long* iter = NULL;
 
 	for (instructionCounter = 0; instructionCounter < MEMORY_SIZE && halted == false; instructionCounter++)
 	{
@@ -128,6 +135,34 @@ int Simpletron::execute()
 				exit(-1);
 			}
 			std::cout << "\n*** Write out memory[" << operand << "]: " << memory[static_cast<int>(operand)] << " ***\n" << std::endl;
+			break;
+		case READ_STR:
+			std::cout << "*** Please input a string: ***\n";
+			std::getline(std::cin, inputString);
+			stringLength = inputString.length();
+			assert(sizeof(long) * 2 == sizeof(double));
+			stringHead = (long*)(memory + static_cast<int>(operand));
+			if (stringLength > INT_MAX)
+			{
+				std::cout << "*** Fatal: READ_STR input string too long ***\n";
+				std::cout << "*** Simpletron execution abnormally terminated ***\n";
+				exit(-1);
+			}
+			stringHead[0] = static_cast<int>(stringLength);
+			iter = stringHead + 1;
+			for (size_t i = 0; i < stringLength; i++)
+			{
+				iter[i] = inputString[i];
+			}
+			break;
+		case WRITE_STR:
+			stringHead = (long*)(memory + static_cast<int>(operand));
+			stringLength = *stringHead;
+			for (size_t i = 1; i <= stringLength; i++)
+			{
+				std::cout << static_cast<char>(stringHead[i]);
+			}
+			std::cout << std::endl;
 			break;
 		case LOAD:
 			accumulator = memory[static_cast<int>(operand)];
