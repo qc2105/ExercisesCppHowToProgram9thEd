@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Simpletron.h"
 
+Simpletron theSimpletron; //global object. So exit will call its destructor
 
 int main(int argc, char *argv[])
 {
@@ -13,8 +14,6 @@ int main(int argc, char *argv[])
 		exit(-1);
 	}
 		
-	Simpletron theSimpletron;
-
 	theSimpletron.loadSource(argv[1]);
 	theSimpletron.execute();
 
