@@ -1,0 +1,13 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: ilammy/msvc-dev-cmd@v1.0.0
+    - name:  Enable Developer Command Prompt
+      run: echo Hello, world!
