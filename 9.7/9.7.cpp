@@ -2,10 +2,22 @@
 //
 
 #include <iostream>
+#include "Time.h"
 
 int main()
 {
     std::cout << "Hello World!\n";
+
+	Time myTime(0, 0, 0);
+
+	for (int i = 0; i < 3600 * 24 + 60; i++)
+	{
+		myTime.tick();
+	}
+
+	myTime.printUniversal();
+
+	return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
