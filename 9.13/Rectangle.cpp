@@ -32,7 +32,13 @@ Rectangle & Rectangle::set(Point leftTop, Point leftBottom, Point rightTop, Poin
 	if (::fabs(::pow(leftTop.distance(leftBottom), 2) + ::pow(leftBottom.distance(rightBottom), 2) - ::pow(leftTop.distance(rightBottom), 2)) >= TOLERANCE ||
 		::fabs(::pow(leftTop.distance(rightTop), 2) + ::pow(rightBottom.distance(rightTop), 2) - ::pow(leftTop.distance(rightBottom), 2)) >= TOLERANCE)
 	{
-		throw "Not a Rectangle\n";
+		throw "Not a rectangle\n";
+	}
+
+	if (leftTop.x >= rightTop.x ||
+		leftTop.y <= leftBottom.y)
+	{
+		throw "Point leftTop.x must be less than rightTop.x && leftTop.y must be bigger than leftBottom.y\n";
 	}
 
 	this->leftTop = leftTop;
@@ -48,32 +54,124 @@ double Rectangle::area(void) const
 	return width() * length();
 }
 
+Point Rectangle::center(void) const
+{
+	double k1 = (rightBottom.y - leftTop.y) / (rightBottom.x - leftTop.x);
+	double k2 = (rightTop.y - leftBottom.y) / (rightTop.x - leftBottom.x);
+	double b1 = rightBottom.y - k1 * rightBottom.x;
+	double b2 = rightTop.y - k2 * rightTop.x;
+
+	return Point((b1 - b2) / (k2 - k1), k1*(b1 - b2) / (k2 - k1) + b1);
+}
+
+Rectangle & Rectangle::move(Point newCenter)
+{
+	// TODO: insert return statement here
+	moveWithOutCheck(newCenter);
+
+	this->set(leftTop, leftBottom, rightTop, rightBottom);
+
+	return *this;
+}
+
+Rectangle & Rectangle::moveWithOutCheck(Point newCenter)
+{
+	// TODO: insert return statement here
+	double deltaX = newCenter.x - center().x;
+	double deltaY = newCenter.y - center().y;
+		
+	leftTop.x += deltaX;
+	leftTop.y += deltaY;
+	leftBottom.x += deltaX;
+	leftBottom.y += deltaY;
+
+	rightTop.x += deltaX;
+	rightTop.y += deltaY;
+	rightBottom.x += deltaX;
+	rightBottom.y += deltaY;
+
+	return *this;
+}
+
+Rectangle & Rectangle::moveByVec(vec2d _vec)
+{
+	// TODO: insert return statement here
+	Point newCenter;
+	newCenter.x = center().x + _vec.x;
+	newCenter.y = center().y + _vec.y;
+
+	return move(newCenter);
+}
+
+Rectangle & Rectangle::rotate(double theta)
+{
+	// TODO: insert return statement here
+	Point oldCenter = center();
+
+	this->moveWithOutCheck(Point(0, 0));
+	Point newLeftTop, newLeftBottom, newRightTop, newRightBottom;
+	
+	newLeftTop.x = leftTop.x * ::cos(theta) - leftTop.y * ::sin(theta);
+	newLeftTop.y = leftTop.x * ::sin(theta) + leftTop.y * ::cos(theta);
+	
+	newLeftBottom.x = leftBottom.x * ::cos(theta) - leftBottom.y * ::sin(theta);
+	newLeftBottom.y = leftBottom.x * ::sin(theta) + leftBottom.y * ::cos(theta);
+
+	newRightTop.x = rightTop.x * ::cos(theta) - rightTop.y * ::sin(theta);
+	newRightTop.y = rightTop.x * ::sin(theta) + rightTop.y * ::cos(theta);
+
+	newRightBottom.x = rightBottom.x * ::cos(theta) - rightBottom.y * ::sin(theta);
+	newRightBottom.y = rightBottom.x * ::sin(theta) + rightBottom.y * ::cos(theta);
+	
+	leftTop = newLeftTop;
+	leftBottom = newLeftBottom;
+	rightTop = newRightTop;
+	rightBottom = newRightBottom;
+
+	this->move(oldCenter);
+
+	return *this;
+}
+
+Rectangle & Rectangle::scale(double ratio)
+{
+	// TODO: insert return statement here
+	Point newLeftTop, newLeftBottom, newRightTop, newRightBottom;
+
+	newLeftTop.x = leftTop.x * ratio ;
+	newLeftTop.y = leftTop.y * ratio;
+
+	newLeftBottom.x = leftBottom.x * ratio ;
+	newLeftBottom.y = leftBottom.y * ratio;
+
+	newRightTop.x = rightTop.x * ratio;
+	newRightTop.y = rightTop.y * ratio;
+
+	newRightBottom.x = rightBottom.x * ratio;
+	newRightBottom.y = rightBottom.y * ratio;
+
+	Point cen = center();
+
+	this->set(newLeftTop, newLeftBottom, newRightTop, newRightBottom);
+
+	this->move(cen);
+
+	return *this;
+}
+
 void Rectangle::draw(void)
 {
-	for (int i = 0; i < 25; i++)
-	{
-		for (int j = 0; j < 25; j++)
-		{
-			if (i >= (int)leftTop.x + 1 && i <= (int)rightTop.x - 1 &&
-				j >= (int)leftBottom.y + 1 && j <= (int)leftTop.y - 1)
-			{
-				screen.at(i).at(j) = fillCharacter;
-			}
-		}
-	}
+	std::vector<Point> leftSidePoints, rightSidePoints;
+	line(leftSidePoints, leftTop, leftBottom, perimeterCharacter);
+	line(leftBottom, rightBottom, perimeterCharacter);
+	line(rightSidePoints, rightTop, rightBottom, perimeterCharacter);
+	line(rightTop, leftTop, perimeterCharacter);
 
-	for (int i = (int)leftTop.x; i <= (int)rightTop.x; i++)
+	for (size_t i = 1; i < rightSidePoints.size() - 1; i++)
 	{
-		screen.at(i).at((int)leftTop.y) = perimeterCharacter;
-		screen.at(i).at((int)leftBottom.y) = perimeterCharacter;
+		line(Point(leftSidePoints.at(i).x + 1, leftSidePoints.at(i).y), Point(rightSidePoints.at(i).x - 1, rightSidePoints.at(i).y), fillCharacter);
 	}
-
-	for (int j = (int)leftBottom.y; j <= (int)leftTop.y; j++)
-	{
-		screen.at((int)leftTop.x).at(j) = perimeterCharacter;
-		screen.at((int)rightTop.x).at(j) = perimeterCharacter;
-	}
-
+		
 	for (auto row : screen)
 	{
 		for (auto v : row)
@@ -82,6 +180,8 @@ void Rectangle::draw(void)
 		}
 		std::cout << std::endl;
 	}
+
+	return;
 }
 
 void Rectangle::setFillCharacter(char c)
@@ -105,6 +205,59 @@ bool Rectangle::isPointInRec(Point testObject, Point recTopLeft, Point recRightB
 	}
 	
 	return false;
+}
+
+void Rectangle::line(Point start, Point end, char c)
+{
+	std::vector<Point> temp;
+	line(temp, start, end, c);
+}
+
+void Rectangle::line(std::vector<Point>& linePoints, Point start, Point end, char c)
+{
+	if (start.x > end.x)
+	{
+		Point temp = start;
+		start = end;
+		end = temp;
+	}
+	if (::fabs(start.x - end.x) < TOLERANCE)
+	{
+		if (start.y > end.y)
+		{
+			Point temp = start;
+			start = end;
+			end = temp;
+		}
+
+		for (int i = (int)start.y; i <= (int)end.y; i++)
+		{
+			screen.at((int)start.x).at(i) = c;
+			linePoints.push_back(Point((int)start.x, i));
+		}
+		return;
+	}
+	else if (::fabs(start.y - end.y) < TOLERANCE)
+	{
+		for (int i = (int)start.x; i <= (int)end.x; i++)
+		{
+			screen.at(i).at((int)start.y) = c;
+			linePoints.push_back(Point(i, (int)start.y));
+		}
+		return;
+	}
+	else
+	{
+		for (int i = (int)start.x; i <= (int)end.x; i++)
+		{
+			double k = (end.y - start.y) / (end.x - start.x);
+			double b = end.y - k * end.x;
+			int y = static_cast<int>(k * i + b);
+			screen.at(i).at(y) = c;
+			linePoints.push_back(Point(i, y));
+		}
+		return;
+	}
 }
 
 double Rectangle::premeter(void) const

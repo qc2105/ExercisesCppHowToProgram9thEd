@@ -10,16 +10,20 @@ int main()
 
 	try
 	{
-		Rectangle rec(Point(1, 3), Point(3, 1), Point(3, 5), Point(5, 3));
+		Rectangle rec(Point(2, 5), Point(2, 2), Point(5, 5), Point(5, 2));
 		std::cout << "Length x width: " << rec.length() << " x " << rec.width() << std::endl;
 		std::cout << "Area: " << rec.area() << std::endl;
 		std::cout << "Premeter: " << rec.premeter() << std::endl;
+		rec.moveByVec(vec2d(0, 5));
+		rec.rotate(3.1415926 / 4);
 		rec.draw();
 	}
 	catch (const char *e)
 	{
 		std::cout << e;
 	}
+
+	return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
