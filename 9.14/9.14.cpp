@@ -1,31 +1,39 @@
-// 9.13.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// 9.14.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include <iostream>
-#include "Rectangle.h"
+#include <string>
+#include "HugeInteger.h"
 
 int main()
 {
     std::cout << "Hello World!\n";
+	std::string num = "-1234";
+	std::string num2 = "-222";
 
-	try
-	{
-		Rectangle rec(Point(2, 5), Point(2, 2), Point(5, 5), Point(5, 2));
-		std::cout << "Length x width: " << rec.length() << " x " << rec.width() << std::endl;
-		std::cout << "Area: " << rec.area() << std::endl;
-		std::cout << "Premeter: " << rec.premeter() << std::endl;
-		rec.moveByVec(vec2d(5, 5));
-		rec.rotate(3.1415926 / 4);
-		rec.scale(1.2);
-		rec.draw();
-	}
-	catch (const char *e)
-	{
-		std::cout << e;
-	}
+	HugeInteger hi;
+	hi.input(num);
+	hi.output();
 
+	HugeInteger hi2;
+	hi2.input(num2);
+	hi2.output();
+
+	std::cout << hi2.add(hi).output() << std::endl;
+	std::cout << hi2.subtract(hi).output() << std::endl;
+
+	HugeInteger i1("1234");
+	HugeInteger i2("1000");
+
+	std::cout << i1.subtract(i2).output() << std::endl;
+	std::cout << HugeInteger("1000").subtract(HugeInteger("1234")).output() << std::endl;
+
+	HugeInteger("1234").isEqualTo(HugeInteger("+1234")) ? std::cout << "equal" : std::cout << "!equal";
+	std::cout << std::endl;
+	
 	return 0;
 }
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
