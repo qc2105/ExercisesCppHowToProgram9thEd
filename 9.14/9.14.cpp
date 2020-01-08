@@ -30,6 +30,16 @@ int main()
 
 	HugeInteger("1234").isEqualTo(HugeInteger("+1234")) ? std::cout << "equal" : std::cout << "!equal";
 	std::cout << std::endl;
+
+	HugeInteger h("12");
+	std::cout << h.add(h).output();
+
+	HugeInteger h5("-111");
+	HugeInteger h6("60");
+
+	h5.multiply(h6);
+
+	std::cout << h5.output();
 	
 	return 0;
 }

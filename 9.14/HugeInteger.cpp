@@ -125,6 +125,32 @@ HugeInteger & HugeInteger::subtract(const HugeInteger & b)
 	return this->add(temp);
 }
 
+HugeInteger & HugeInteger::multiply(const HugeInteger & b)
+{
+	// TODO: insert return statement here
+	HugeInteger temp(b);
+	temp.sign = '+';
+
+	HugeInteger temp2(*this);
+	temp2.sign = '+';
+		
+	while (temp.subtract(HugeInteger("1")).isGreaterThan(HugeInteger("1")))
+	{
+		this->absoluteAdd(temp2);
+	}
+
+	if (this->sign != b.sign)
+	{
+		this->sign = '-';
+	}
+	else
+	{
+		this->sign = '+';
+	}
+
+	return *this;
+}
+
 HugeInteger & HugeInteger::operator=(const HugeInteger & b)
 {
 	// TODO: insert return statement here
@@ -143,7 +169,7 @@ HugeInteger & HugeInteger::absoluteAdd(const HugeInteger & b)
 	for (int i = nDigits - 1; i >= 0; i--)
 	{
 		this->digits[i] += b.digits[i];
-		if (this->digits[i] > 10)
+		if (this->digits[i] >= 10)
 		{
 			if (i >= 1)
 			{
