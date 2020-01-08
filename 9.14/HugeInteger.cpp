@@ -37,7 +37,7 @@ std::string HugeInteger::output(void) const
 {
 	size_t i = 0;
 	
-	for (; digits[i] == 0; i++)
+	for (; digits[i] == 0 && i < nDigits-1; i++)
 	{
 		std::cout << ' ';
 	}
@@ -125,6 +125,7 @@ HugeInteger & HugeInteger::subtract(const HugeInteger & b)
 	return this->add(temp);
 }
 
+//Slow version, the performance can be improved
 HugeInteger & HugeInteger::multiply(const HugeInteger & b)
 {
 	// TODO: insert return statement here
@@ -146,6 +147,52 @@ HugeInteger & HugeInteger::multiply(const HugeInteger & b)
 	else
 	{
 		this->sign = '+';
+	}
+
+	return *this;
+}
+
+//This is a slow version, can be improved
+HugeInteger & HugeInteger::divide(const HugeInteger & b)
+{
+	if (b.isZero())
+	{
+		throw("Devided by zero");
+	}
+	char quotientSign = '+';
+	if (this->sign != b.sign)
+	{
+		quotientSign = '-';
+	}
+
+	HugeInteger absoluteThis = *this;
+	absoluteThis.sign = '+';
+	HugeInteger absoluteB = b;
+	absoluteB.sign = '+';
+
+	HugeInteger quotient("0");
+
+	if (absoluteThis.isEqualTo(absoluteB))
+	{
+		quotient = HugeInteger("1");
+		quotient.sign = quotientSign;
+		this->operator=(quotient);
+		return *this;
+	}
+	else if (this->isAbsoluteNotLessThan(b))
+	{
+		while (absoluteThis.subtract(absoluteB).isGreaterThan(HugeInteger("0")))
+		{
+			quotient.add(HugeInteger("1"));
+		}
+		quotient.sign = quotientSign;
+		this->operator=(quotient);
+		return *this;
+	}
+	else
+	{
+		this->operator=(HugeInteger("0"));
+		return *this;
 	}
 
 	return *this;

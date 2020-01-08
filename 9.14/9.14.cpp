@@ -40,6 +40,19 @@ int main()
 	h5.multiply(h6);
 
 	std::cout << h5.output();
+
+	HugeInteger h7("16");
+	HugeInteger h8("-3");
+
+	try 
+	{
+		std::cout << h7.divide(h8).output();
+	}
+	catch (const char *e)
+	{
+		std::cout << e << std::endl;
+	}
+	
 	
 	return 0;
 }
