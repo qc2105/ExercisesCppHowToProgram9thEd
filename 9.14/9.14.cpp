@@ -53,7 +53,16 @@ int main()
 		std::cout << e << std::endl;
 	}
 	
-	
+	HugeInteger h9("-9000");
+	HugeInteger h10("-2");
+	try
+	{
+		std::cout << h9.modulus(h10).output();
+	}
+	catch (const char *e)
+	{
+		std::cout << e << std::endl;
+	}
 	return 0;
 }
 

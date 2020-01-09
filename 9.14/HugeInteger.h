@@ -25,6 +25,7 @@ public:
 	bool isGreateThanOrEqualTo(const HugeInteger &b) const;
 	bool isLessThanOrEqualTo(const HugeInteger &b) const;
 	bool isZero(void) const;
+	const HugeInteger absolute(void) const;
 
 	std::array<int, nDigits> digits;
 	char sign;

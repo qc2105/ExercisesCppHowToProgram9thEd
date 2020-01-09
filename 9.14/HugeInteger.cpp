@@ -198,6 +198,41 @@ HugeInteger & HugeInteger::divide(const HugeInteger & b)
 	return *this;
 }
 
+HugeInteger & HugeInteger::modulus(const HugeInteger &b)
+{
+	// TODO: insert return statement here
+	if (b.isZero())
+	{
+		throw("Modulus zero is undefined");
+	}
+	HugeInteger result = this->absolute();
+	HugeInteger numerator = this->absolute();
+	HugeInteger denominator = b.absolute();
+	numerator.divide(denominator);
+
+	if (numerator.multiply(denominator).isEqualTo(this->absolute()))
+	{
+		this->operator=(HugeInteger("0"));
+		return *this;
+	}
+	else
+	{
+		result.subtract(numerator);
+		if (this->sign == b.sign)
+		{
+			result.sign = '+';
+		}
+		else
+		{
+			result.sign = '-';
+		}
+
+		this->operator=(result);
+	}
+	
+	return *this;
+}
+
 HugeInteger & HugeInteger::operator=(const HugeInteger & b)
 {
 	// TODO: insert return statement here
@@ -227,6 +262,14 @@ HugeInteger & HugeInteger::absoluteAdd(const HugeInteger & b)
 	}
 
 	return *this;
+}
+
+const HugeInteger HugeInteger::absolute(void) const
+{
+	HugeInteger abs(*this);
+	abs.sign = '+';
+
+	return abs;
 }
 
 bool HugeInteger::isAbsoluteNotLessThan(const HugeInteger & b) const
