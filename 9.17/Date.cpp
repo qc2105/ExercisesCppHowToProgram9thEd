@@ -4,9 +4,13 @@
 #include <array>
 #include <iostream>
 #include <stdexcept>
+#include <string>
 #include <iomanip>
 #include "Date.h" // include Date class definition
 using namespace std;
+
+const std::array<int, Date::monthsPerYear+1> Date::daysPerMonth =
+{ 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 // constructor confirms proper value for month; calls
 // utility function checkDay to confirm proper value for day
@@ -37,14 +41,70 @@ void Date::printDDD_YYYY() const
 	int ddd = 0; 
 	for (unsigned int i = 1; i <= month-1; i++)
 	{
-		static const array< int, monthsPerYear + 1 > daysPerMonth =
-		{ 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 		ddd += daysPerMonth[i];
 	}
 	ddd += day;
 
 	std::setfill('0');
 	std::cout << std::setw(3) << ddd << " " << year << std::endl;
+}
+
+void Date::printMM_DD_YY() const
+{
+	int YY = year % 100;
+	int MM = month;
+	int DD = day;
+
+	std::cout << MM << "/" << DD << "/" << YY << std::endl;
+}
+
+void Date::printEn_US() const
+{
+	std::string monthString;
+	switch (month)
+	{
+	case 1:
+		monthString = "January";
+		break;
+	case 2:
+		monthString = "February";
+		break;
+	case 3:
+		monthString = "March";
+		break;
+	case 4:
+		monthString = "April";
+		break;
+	case 5:
+		monthString = "May";
+		break;
+	case 6:
+		monthString = "June";
+		break;
+	case 7:
+		monthString = "July";
+		break;
+	case 8:
+		monthString = "August";
+		break;
+	case 9:
+		monthString = "September";
+		break;
+	case 10:
+		monthString = "October";
+		break;
+	case 11:
+		monthString = "November";
+		break;
+	case 12:
+		monthString = "December";
+		break;
+	default:
+		monthString = "Unkown";
+		break;
+	}
+
+	std::cout << monthString << " " << day << ", " << year << std::endl;
 }
 
 // output Date object to show when its destructor is called
@@ -59,9 +119,6 @@ Date::~Date()
 // month and year; handles leap years, too
 unsigned int Date::checkDay( int testDay ) const
 {
-   static const array< int, monthsPerYear + 1 > daysPerMonth = 
-      { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-
    // determine whether testDay is valid for specified month
    if ( testDay > 0 && testDay <= daysPerMonth[ month ] )
       return testDay;

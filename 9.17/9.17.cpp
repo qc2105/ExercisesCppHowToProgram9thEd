@@ -11,6 +11,8 @@ int main()
 	Date tdate(12, 31, 2019);
 
 	tdate.printDDD_YYYY();
+	tdate.printMM_DD_YY();
+	tdate.printEn_US();
 
 	return 0;
 }
