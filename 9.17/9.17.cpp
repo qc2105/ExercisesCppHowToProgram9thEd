@@ -14,6 +14,15 @@ int main()
 	tdate.printMM_DD_YY();
 	tdate.printEn_US();
 
+	Date tdate2("June 14, 1992");
+	tdate2.printEn_US();
+
+	Date tdate3("365 2020");
+	tdate3.printEn_US();
+
+	Date tdate4("1/14/2020");
+	tdate4.printEn_US();
+
 	return 0;
 }
 

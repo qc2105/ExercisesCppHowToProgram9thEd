@@ -6,11 +6,32 @@
 #include <stdexcept>
 #include <string>
 #include <iomanip>
+
+#include <sstream>
+#include <vector>
+
 #include "Date.h" // include Date class definition
 using namespace std;
 
 const std::array<int, Date::monthsPerYear+1> Date::daysPerMonth =
 { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+const std::array<std::string, Date::monthsPerYear + 1> Date::monthNames =
+{
+	"unkown",
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December"
+};
 
 // constructor confirms proper value for month; calls
 // utility function checkDay to confirm proper value for day
@@ -29,6 +50,92 @@ Date::Date( int mn, int dy, int yr )
    print();                   
    cout << endl;
 } // end Date constructor
+
+Date::Date(std::string dateString)
+	:month(0),
+	day(0),
+	year(0)
+{
+	if (dateString.find(",") != std::string::npos)	// June 14, 1992 
+	{
+		size_t pos_first_space = dateString.find(" ");
+		if (pos_first_space == std::string::npos)
+		{
+			throw("Invalid date string.");
+		}
+		else
+		{
+			try 
+			{
+				std::string monthString = dateString.substr(0, pos_first_space);
+				month = getMonthFromString(monthString);
+				size_t pos_comma = dateString.find(",");
+				std::string dayString = dateString.substr(pos_first_space + 1, pos_comma - pos_first_space - 1);
+				day = std::stoi(dayString);
+				std::string yearString = dateString.substr(pos_comma + 2, dateString.length() - pos_comma);
+				year = std::stoi(yearString);
+			}
+			catch (std::exception &e)
+			{
+				std::cout << e.what() << std::endl;
+			}
+			
+		}
+	}
+	else if (dateString.find(" ") != std::string::npos) // DDD YYYY
+	{
+		size_t pos_space = dateString.find(" ");
+		std::string dayOfYearString = dateString.substr(0, pos_space);
+		int DDD = std::stoi(dayOfYearString);
+		std::string yearString = dateString.substr(pos_space + 1, dateString.length() - pos_space - 1);
+		year = std::stoi(yearString);
+
+		month = 0;
+		for (int i = 0; i <= daysPerMonth.size() - 1; i++)
+		{
+			if (DDD <= daysPerMonth[i])
+			{
+				month = i;
+				day = DDD;
+				break;
+			}
+			DDD -= daysPerMonth[i];
+		}
+	}
+	else if (dateString.find("/") != std::string::npos) //
+	{
+		std::vector<std::string> strings;
+		std::istringstream f(dateString);
+		string s;
+		while (getline(f, s, '/'))
+		{
+			strings.push_back(s);
+		}
+
+		std::string monthString = strings.at(0);
+		month = std::stoi(monthString);
+		std::string dayString = strings.at(1);
+		day = std::stoi(dayString);
+		std::string yearString = strings.at(2);
+		year = std::stoi(yearString);
+	}
+	else
+	{
+		throw("Invalid input string");
+	}
+
+	if (month > 0 && month <= monthsPerYear) // validate the month
+		month = month;
+	else
+		throw invalid_argument("month must be 1-12");
+
+	day = checkDay(day); // validate the day
+
+	// output Date object to show when its constructor is called
+	cout << "Date object constructor for date ";
+	print();
+	cout << endl;
+}
 
 // print Date object in form month/day/year
 void Date::print() const
@@ -114,6 +221,18 @@ Date::~Date()
    print();
    cout << endl;
 } // end ~Date destructor
+
+int Date::getMonthFromString(std::string monthString) const
+{
+	for (int i = 0; i < static_cast<int>(monthNames.size()); i++)
+	{
+		if (monthString == monthNames.at(i))
+		{
+			return i;
+		}
+	}
+	return 1;
+}
 
 // utility function to confirm proper day value based on 
 // month and year; handles leap years, too
