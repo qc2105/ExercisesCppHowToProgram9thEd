@@ -3,13 +3,17 @@
 #ifndef DATE_H
 #define DATE_H
 #include <array>
+#include <ctime>
 
 class Date 
 {
 public:
    static const unsigned int monthsPerYear = 12; // months in a year
+   
    explicit Date( int = 1, int = 1, int = 1900 ); // default constructor
    Date(std::string);
+   Date(time_t);
+
    void print() const; // print date in month/day/year format
    void printDDD_YYYY() const;
    void printMM_DD_YY() const;

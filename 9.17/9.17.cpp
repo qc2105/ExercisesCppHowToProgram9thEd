@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <iostream>
 #include "Date.h"
+#include <ctime>
 
 int main()
 {
@@ -22,6 +23,9 @@ int main()
 
 	Date tdate4("1/14/2020");
 	tdate4.printEn_US();
+
+	Date tdate5(time(0));
+	tdate5.printEn_US();
 
 	return 0;
 }

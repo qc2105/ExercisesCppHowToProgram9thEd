@@ -137,6 +137,34 @@ Date::Date(std::string dateString)
 	cout << endl;
 }
 
+Date::Date(time_t time)
+	:day(0),
+	month(0),
+	year(0)
+{
+	struct tm strTm;
+	errno_t en = ::localtime_s(&strTm, &time);
+	if (en == EINVAL)
+	{
+		throw("Invalid ctime input");
+	}
+	day = strTm.tm_mday;
+	month = strTm.tm_mon + 1;
+	year = strTm.tm_year + 1900;
+
+	if (month > 0 && month <= monthsPerYear) // validate the month
+		month = month;
+	else
+		throw invalid_argument("month must be 1-12");
+
+	day = checkDay(day); // validate the day
+
+	// output Date object to show when its constructor is called
+	cout << "Date object constructor for date ";
+	print();
+	cout << endl;
+}
+
 // print Date object in form month/day/year
 void Date::print() const
 {
