@@ -24,6 +24,16 @@ bool Card::operator==(const Card & b) const
 	return this->getFace() == b.getFace();
 }
 
+bool Card::is(const Card & b) const
+{
+	if (this->getFace() != b.getFace() || this->getSuit() != b.getSuit())
+	{
+		return false;
+	}
+
+	return true;
+}
+
 bool Card::operator>(const Card & b) const
 {
 	if (*this < b || *this == b)

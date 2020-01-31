@@ -79,17 +79,28 @@ void Dealer::replace(std::vector<Card>* cards)
 	// find the left cards, return them back to the deck
 	std::vector<Card> cardsHold, cardsLeft;
 	currentHand.getCards(cardsHold);
-	std::sort(eightCardsPool.rbegin(), eightCardsPool.rend(), cardCompare);
 
 	for (size_t i = 0; i < eightCardsPool.size() && cardsLeft.size() < level; i++)
 	{
-		if (!std::binary_search(cardsHold.rbegin(), cardsHold.rend(), eightCardsPool.at(i), cardCompare))
+		if (!isCardInVec(eightCardsPool.at(i), cardsHold))
 		{
 			cardsLeft.push_back(eightCardsPool.at(i));
 		}
 	}
 
 	deck.receiveCards(cardsLeft);
+}
+
+bool Dealer::isCardInVec(Card & card, std::vector<Card>& vec)
+{
+	for (size_t i = 0; i < vec.size(); i++)
+	{
+		if (card.is(vec.at(i)))
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void Dealer::upgradeCurrentHand(void)

@@ -13,6 +13,7 @@ public:
 private:
 	void draw(size_t numberOfCardsToDraw, std::vector<Card> *cards);
 	void replace(std::vector<Card> *cards);
+	bool isCardInVec(Card &card, std::vector<Card> &vec);
 
 	DeckOfCards &deck;
 	PokerHand currentHand;

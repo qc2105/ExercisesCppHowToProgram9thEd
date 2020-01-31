@@ -14,6 +14,7 @@ public:
 
 	bool operator <(const Card &b) const;
 	bool operator ==(const Card &b) const;
+	bool is(const Card &b) const;
 	bool operator >(const Card &b) const;
 
 private:
