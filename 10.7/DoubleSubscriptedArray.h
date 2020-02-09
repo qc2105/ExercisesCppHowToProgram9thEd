@@ -11,7 +11,7 @@ class DoubleSubscriptedArray
 	template <class T1>
 	friend std::istream & operator>> (std::istream &in, DoubleSubscriptedArray<T1> &right);
 public:
-	DoubleSubscriptedArray(int row = 3, int column = 3);
+	explicit DoubleSubscriptedArray(int row = 3, int column = 3);
 	DoubleSubscriptedArray(const DoubleSubscriptedArray<T> &right);
 	~DoubleSubscriptedArray();
 
