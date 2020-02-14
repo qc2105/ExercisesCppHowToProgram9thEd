@@ -103,6 +103,14 @@ TEST(Test10_11, TestAssignment)
 	outputTerms.clear();
 	poly.getTerms(outputTerms);
 	EXPECT_EQ(terms1, outputTerms);
+
+	std::vector<Term> terms2 = { Term(9.9, 9) };
+	Polynomial poly3(terms2);
+
+	Polynomial poly4;
+	poly4 = poly = poly3;
+
+	EXPECT_EQ(poly4, poly3);
 }
 
 TEST(Test10_11, Test2PoliesMultiply)

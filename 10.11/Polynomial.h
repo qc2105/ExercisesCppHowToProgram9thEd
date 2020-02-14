@@ -82,7 +82,8 @@ public:
 	Polynomial operator* (const Term&) const;
 	Polynomial operator*= (const Term&);
 
-	Polynomial operator= (const Polynomial &right)
+	//const return to avoid (a = b) = c;
+	const Polynomial &operator= (const Polynomial &right)
 	{
 		if (this == &right)
 		{
