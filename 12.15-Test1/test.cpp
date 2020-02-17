@@ -62,9 +62,8 @@ TEST_F(TestPieceWorker, TestSetWagePerPieceInvalid)
 		{
 			std::string realExceptStr = e.what();
 			EXPECT_EQ(expectExceptStr, realExceptStr);
+			return;
 		}
-
-		return;
 	}
 
 	// shouldn't reach here
@@ -100,7 +99,6 @@ TEST_F(TestPieceWorker, TestSetNPiecesInvalid)
 		{
 			std::string realExceptStr = e.what();
 			EXPECT_EQ(expectExceptStr, realExceptStr);
-
 			return;
 		}
 	}
@@ -175,7 +173,6 @@ TEST_F(TestHourlyWorker, TestSetWagePerHourInvalid)
 		{
 			std::string realExceptStr = e.what();
 			EXPECT_EQ(expectExceptStr, realExceptStr);
-
 			return;
 		}
 	}
@@ -207,7 +204,6 @@ TEST_F(TestHourlyWorker, TestSetNHoursInvalid)
 		{
 			std::string realExceptStr = e.what();
 			EXPECT_EQ(expectExceptStr, realExceptStr);
-
 			return;
 		}
 	}
