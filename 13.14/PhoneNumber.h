@@ -14,10 +14,10 @@ private:
    std::string areaCode; // 3-digit area code 
    std::string exchange; // 3-digit exchange 
    std::string line; // 4-digit line 
-   bool areDigits(const std::string &s);
-   bool isValidAreaExchangeCode(const std::string &s);
-   bool isLengthCorrect(const std::string &s, const int expectLength);
-   bool isValidOldAreaCode(const std::string &s);
+   bool areDigits(const std::string &s) const;
+   bool isValidAreaExchangeCode(const std::string &s) const;
+   bool isLengthCorrect(const std::string &s, const int expectLength) const;
+   bool isValidOldAreaCode(const std::string &s) const;
 }; // end class PhoneNumber
 
 #endif

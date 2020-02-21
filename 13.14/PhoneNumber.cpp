@@ -69,7 +69,7 @@ istream &operator>>( istream &input, PhoneNumber &number )
  * furnishing, performance, or use of these programs.                     *
  **************************************************************************/
 
-bool PhoneNumber::areDigits(const std::string & s)
+bool PhoneNumber::areDigits(const std::string & s) const
 {
 	for (size_t i = 0; i < s.size(); ++i)
 	{
@@ -81,7 +81,7 @@ bool PhoneNumber::areDigits(const std::string & s)
 	return true;
 }
 
-bool PhoneNumber::isValidAreaExchangeCode(const std::string & s)
+bool PhoneNumber::isValidAreaExchangeCode(const std::string & s) const
 {
 	if (s.empty())
 	{
@@ -90,12 +90,12 @@ bool PhoneNumber::isValidAreaExchangeCode(const std::string & s)
 	return s.at(0) != '0' && s.at(0) != '1';
 }
 
-bool PhoneNumber::isLengthCorrect(const std::string & s, const int expectLength)
+bool PhoneNumber::isLengthCorrect(const std::string & s, const int expectLength) const
 {
 	return s.length() == expectLength;
 }
 
-bool PhoneNumber::isValidOldAreaCode(const std::string & s)
+bool PhoneNumber::isValidOldAreaCode(const std::string & s) const
 {
 	return isLengthCorrect(s, 3) && (s.at(1) == '0' || s.at(1) == '1');
 }
