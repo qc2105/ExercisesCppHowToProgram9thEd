@@ -35,7 +35,8 @@ protected:
 			"+3q",
 			"-3t",
 			"+-",
-			"--"
+			"--",
+			"5+"
 		};
 
 		for (size_t i = 0; i < sizeof(validInputsArray) / sizeof(char *); ++i)
@@ -290,6 +291,14 @@ TEST_F(TestComplex, TestInvalid5)
 TEST_F(TestComplex, TestInvalid6)
 {
 	EXPECT_FALSE(invalidInputs.at(6) >> complex);
+	std::stringstream output;
+	EXPECT_FALSE(output << complex);
+	EXPECT_TRUE(output.str().empty());
+}
+
+TEST_F(TestComplex, TestInvalid7)
+{
+	EXPECT_FALSE(invalidInputs.at(7) >> complex);
 	std::stringstream output;
 	EXPECT_FALSE(output << complex);
 	EXPECT_TRUE(output.str().empty());

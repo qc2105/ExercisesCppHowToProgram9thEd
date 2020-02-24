@@ -31,49 +31,7 @@ void Complex::removeSpaces(std::string & s) const
 	s = stringWithNoSpace;
 }
 
-bool Complex::fectchReal(const std::string & s, size_t & index, int & integer) const
-{
-	if (s.empty())
-	{
-		return false;
-	}
-	bool isPositive = true;
-	if (s.at(index) == '+')
-	{
-		isPositive = true;
-		++index;
-	}
-	else if (s.at(index) == '-')
-	{
-		isPositive = false;
-		++index;
-	}
-	else if (::isdigit(s.at(index)))
-	{	
-		isPositive = true;
-	}
-	else
-	{
-		//invalid string
-		return false;
-	}
-
-	std::string digits;
-	for (; index < s.size() && ::isdigit(s.at(index)); ++index)
-	{
-		digits.push_back(s.at(index));
-	}
-
-	if (digits.empty())
-	{
-		return false;
-	}
-	isPositive ? integer = std::stoi(digits) : integer = -std::stoi(digits);
-
-	return true;
-}
-
-bool Complex::fectchImaginary(const std::string & s, size_t & index, int & integer) const
+bool Complex::fectchNextInteger(const std::string & s, size_t & index, int & integer) const
 {
 	if (s.empty())
 	{
@@ -100,7 +58,7 @@ bool Complex::fectchImaginary(const std::string & s, size_t & index, int & integ
 		return false;
 	}
 
-	if (s.at(index) == 'i' && index == s.size() - 1)
+	if (index == s.size() - 1 && s.at(index) == 'i')
 	{
 		isPositive ? integer = 1 : integer = -1;
 		return true;
@@ -189,7 +147,7 @@ std::istream & operator >> (std::istream &input, Complex & c)
 	}
 
 	size_t index = 0;
-	if (!c.fectchReal(inputStr, index, c.real))
+	if (!c.fectchNextInteger(inputStr, index, c.real))
 	{
 		input.clear(std::ios_base::failbit);
 		c.inGoodState = false;
@@ -210,7 +168,7 @@ std::istream & operator >> (std::istream &input, Complex & c)
 		return input;
 	}
 
-	if (!c.fectchImaginary(inputStr, index, c.imaginary))
+	if (!c.fectchNextInteger(inputStr, index, c.imaginary))
 	{
 		input.clear(std::ios_base::failbit);
 		c.inGoodState = false;

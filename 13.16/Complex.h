@@ -21,7 +21,6 @@ private:
 	int imaginary;
 	bool inGoodState;
 	void removeSpaces(std::string &s) const;
-	bool fectchReal(const std::string &s, size_t &index, int &integer) const;
-	bool fectchImaginary(const std::string &s, size_t &index, int &integer) const;
+	bool fectchNextInteger(const std::string &s, size_t &index, int &integer) const;
 };
 
