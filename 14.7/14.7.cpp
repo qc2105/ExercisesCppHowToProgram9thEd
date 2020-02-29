@@ -53,10 +53,15 @@ void createMaster(void)
 {
 	std::cout << "Type CTR + Z to exit\n";
 	std::ofstream outMaster("oldMaster.dat", std::ios::out);
-	int accountNumber; std::string Lastname, FirstName; double currentBalance;
-	while (std::cin >> accountNumber >> Lastname >> FirstName >> currentBalance)
+	if (!outMaster)
 	{
-		outMaster << accountNumber << ' ' << Lastname << ' ' << FirstName << ' ' << currentBalance << std::endl;
+		std::cout << "file creation error\n";
+		exit(EXIT_FAILURE);
+	}
+	int accountNumber; std::string Lastname, FirstName; double currentBalance;
+	while (std::cin >> accountNumber >> FirstName >> Lastname >> currentBalance)
+	{
+		outMaster << accountNumber << ' ' << FirstName << ' ' << Lastname << ' ' << currentBalance << std::endl;
 	}
 }
 
@@ -64,6 +69,11 @@ void createTransaction(void)
 {
 	std::cout << "Type CTR + Z to exit\n";
 	std::ofstream outTransaction("transaction.dat", std::ios::out);
+	if (!outTransaction)
+	{
+		std::cout << "file creation error\n";
+		exit(EXIT_FAILURE);
+	}
 	int accountNumber; double dollarAmount;
 	while (std::cin >> accountNumber >> dollarAmount)
 	{
