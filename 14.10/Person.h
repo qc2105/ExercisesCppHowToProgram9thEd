@@ -40,4 +40,4 @@ bool update(std::fstream &f, std::istream &input = std::cin);
 
 bool del(std::fstream &f, std::istream &input = std::cin);
 
-void print(std::fstream &f);
+void print(std::fstream &f, std::ostream &output = std::cout);

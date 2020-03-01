@@ -84,7 +84,7 @@ bool add(std::fstream & f, std::istream &input)
 {
 	int Id, Age; std::string FirstName, LastName;
 	
-	std::cout << "Please input the info: Id First Name Last Name Age\n";
+	std::cout << "Please input the info: Id FirstName LastName Age\n";
 	input >> Id >> FirstName >> LastName >> Age;
 	f.seekg((Id - 1) * sizeof(Person));
 	if (!f)
@@ -137,7 +137,7 @@ bool update(std::fstream & f, std::istream &input)
 {
 	int Id, Age; std::string FirstName, LastName;
 
-	std::cout << "Please input the info: Id First Name Last Name Age\n";
+	std::cout << "Please input the info: Id FirstName LastName Age\n";
 	input >> Id >> FirstName >> LastName >> Age;
 	f.seekg((Id - 1) * sizeof(Person));
 	if (!f)
@@ -249,7 +249,7 @@ bool del(std::fstream & f, std::istream &input)
 	return false;
 }
 
-void print(std::fstream & f)
+void print(std::fstream & f, std::ostream &output)
 {
 	f.seekg(0);
 	if (!f)
@@ -257,7 +257,7 @@ void print(std::fstream & f)
 		std::cerr << "Seek failed\n";
 		exit(EXIT_FAILURE);
 	}
-	std::cout << std::setw(4) << "Id" << std::setw(15) << "First Name" << std::setw(15)
+	output << std::setw(4) << "Id" << std::setw(15) << "First Name" << std::setw(15)
 		<< "Last Name" << std::setw(10) << "Age" << std::endl;
 	for (size_t i = 0; i < SIZELIMIT; ++i)
 	{
@@ -270,7 +270,7 @@ void print(std::fstream & f)
 		}
 		if (temp.getId() != 0)
 		{
-			std::cout << std::setw(4) << temp.getId() << std::setw(15) << temp.getFirstName() 
+			output << std::setw(4) << temp.getId() << std::setw(15) << temp.getFirstName()
 				<< std::setw(15) << temp.getLastName() 
 				<< std::setw(10) << temp.getAge() << std::endl;
 		}

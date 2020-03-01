@@ -9,7 +9,7 @@ int main()
 {
     std::cout << "Hello World!\n";
 
-	enum OP {INIT = 1, NEW = 2, UPDATE = 3, DEL = 4, PRINT = 5, QUIT = 6};
+	enum OP {INIT = '1', NEW = '2', UPDATE = '3', DEL = '4', PRINT = '5', QUIT = '6'};
 
 	std::fstream ioPerson;
 
@@ -23,8 +23,12 @@ int main()
 			<< "5. Print records\n"
 			<< "6. Quit the app\n";
 
-		int choice;
+		char choice;
 		std::cin >> choice;
+		if (!::isdigit(choice))
+		{
+			continue;
+		}
 
 		if (choice == INIT)
 		{
