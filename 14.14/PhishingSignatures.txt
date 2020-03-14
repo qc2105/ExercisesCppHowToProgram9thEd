@@ -1,0 +1,111 @@
+#1;1
+$$$;1
+100%;1
+Act now;1
+Action;1
+Additional income;1
+Affordable;1
+All natural;1
+All new;1
+Amazed;1
+Apply now;1
+Avoid;1
+Be amazed;1
+Be your own boss;1
+Beneficiary;1
+Billing;1
+Billion;1
+Bonus;1
+Boss;1
+Buy;1
+Call free;1
+Call now;1
+Cancel;1
+Cash;1
+Casino;1
+Certified;1
+Cheap;1
+Click here;1
+Clearance;1
+Collect;1
+Compare rates;1
+Congratulations;1
+Credit card;1
+Credit check;1
+Credit offers;1
+Cures;1
+Deal;1
+Dear friend;1
+Dear somebody;1
+Debt;1
+Discount;1
+Direct email;1
+Don't delete;1
+Don't hesitate;1
+Double your income;1
+Double cash;1
+Earn;1
+Extra;1
+Expire;1
+Fantastic;1
+Free access;1
+Free money;1
+Free gift;1
+Freedom;1
+Friend;1
+Get it now;1
+Get started;1
+Get paid;1
+Great;1
+Guarantee;1
+Hello;1
+Income;1
+Increase sales;1
+Increase traffic;1
+Instant;1
+Investment;1
+Junk;1
+Limited;1
+Lose;1
+Lowest price;1
+Luxury;1
+Make $;1
+Make money;1
+Medicine;1
+Money;1
+Name;1
+No credit check;1
+No experience;1
+Obligation;1
+Offer;1
+Open;1
+Order now;1
+Please;1
+Presently;1
+Problem;1
+Promise;1
+Purchase;1
+Quote;1
+Rates;1
+Refinance;1
+Refund;1
+Remove;1
+Risk-free;1
+Sales;1
+Satisfaction;1
+Save;1
+Score;1
+Serious;1
+Spam;1
+Success;1
+Supplies;1
+Take action;1
+Terms;1
+Traffic;1
+Trial;1
+Unlimited;2
+Urgent;1
+Weight;1
+While supplies last;1
+Win;1
+Winner;1

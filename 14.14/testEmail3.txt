@@ -1,0 +1,70 @@
+Codewars now supports 7 new languages!
+
+Hi ,
+
+This week we're forgoing kata to let you know that Codewars now *officially* supports seven new languages! We're really excited to role these out to our community—particularly ColdFusion/CFML which has been highly demanded. Here's a brief overview of each of the new languages Codewars supports.
+ 
+ColdFusion/CFML
+https://lucee.org/
+A scripting language for web development originally developed by Adobe. This request got 94 upvotes from the CFML community (the most ever by far). 19 kata are currently available. https://github.com/Codewars/codewars-runner-cli/issues/782
+
+
+We collaborated with Brad Wood (@bdw429s), the lead developer of CommandBox CLI which we use to run the tests. https://github.com/Codewars/testbox-codewars
+
+
+
+Racket
+
+https://racket-lang.org/
+
+A general-purpose, multi-paradigm programming language based on the Scheme dialect of Lisp. 234 kata are currently available.
+
+Thanks @yfzhe for contributing RackUnit wrapper. https://github.com/Codewars/codewars-rackunit
+
+
+
+Coq
+https://coq.inria.fr/
+
+Coq is a formal proof management system. It provides a formal language to write mathematical definitions, executable algorithms and theorems together with an environment for semi-interactive development of machine-checked proofs.
+
+This is an Important addition to Codewars' theorem proving challenges. Codewars is the only online code challenge platform that supports theorem proving challenges and we have some theorem proving enthusiasts. 234 kata are currently available.
+
+Thanks @monadius for contributing the Coq plugin. https://github.com/Codewars/coq_codewars
+
+
+Visual Basic (.NET)
+https://docs.microsoft.com/en-us/dotnet/visual-basic/
+
+Multi-paradigm, object-oriented programming language implemented on the .NET framework. 46 kata are currently available.
+
+
+
+Forth
+
+https://www.gnu.org/software/gforth/
+The first stack-based, concatenative programming language. 53 kata are currently available.
+
+Thanks @nomennescio for contributing the test framework extension. https://github.com/Codewars/ttester-codewars
+
+
+
+Factor
+
+https://factorcode.org/
+A dynamically typed, functional and object-oriented programming language. Think of Factor as modern Forth. 56 kata are currently available.
+Thanks @nomennescio for contributing the test framework for Codewars. https://github.com/Codewars/testest
+
+
+
+Prolog
+https://www.swi-prolog.org/
+
+Prolog is another new kind of language that utilizes a declarative logic programming paradigm. 89 kata are currently available.
+
+
+We're thrilled to be supporting these languages—are you excited to? Help us get the word out by sharing this update within these communities!
+Help us get the word out on Twitter!
+Happy coding!
+
+-The Codewars Team
