@@ -12,6 +12,7 @@
 #include "../11.9/Package.h"
 #include "../11.9/TwoDayPackage.h"
 #include "../11.9/OvernightPackage.h"
+#include "../15.24/prime.h"
 
 class Test11_9 : public ::testing::Test
 {
@@ -717,4 +718,55 @@ TEST(TestInputProcessor, TestGetInts)
     ip.getInts(realInts);
 
     EXPECT_EQ(expectedInts, realInts);
+}
+
+TEST(Test15_25, TestGetPrimes)
+{
+	std::bitset<10000> bset;
+	std::vector<size_t> primes;
+
+	EXPECT_TRUE(getPrimes(666, bset));
+	EXPECT_TRUE(getPrimes(666, primes));
+
+	for (int i = 0; i < primes.size(); ++i)
+	{
+		EXPECT_TRUE(bset[primes.at(i)]);
+	}
+	size_t count = 0;
+	for (int i = 0; i < 666; ++i)
+	{
+		if (bset[i])
+		{
+			++count;
+		}
+	}
+	EXPECT_EQ(count, primes.size());
+	
+	std::bitset<10000> bset2;
+	std::vector<size_t> primes2;
+	EXPECT_TRUE(getPrimes(666, bset2, primes2));
+	EXPECT_EQ(bset, bset2);
+	EXPECT_EQ(primes, primes2);
+}
+
+TEST(Test15_26, TestGetUniquePrimesFactors)
+{
+	int inputNumber = 54;
+	std::vector<size_t> expectFactors = { 2, 3, 3, 3 };
+	std::vector<size_t> realFactors;
+	
+	EXPECT_TRUE(getUniquePrimesFactors(inputNumber, realFactors));
+
+	EXPECT_EQ(expectFactors, realFactors);
+}
+
+TEST(Test15_25, TestGetPrimesFactors)
+{
+	int inputNumber = 54;
+	std::set<size_t> expectFactors = { 2, 3};
+	std::set<size_t> realFactors;
+
+	EXPECT_TRUE(getPrimesFactors(inputNumber, realFactors));
+
+	EXPECT_EQ(expectFactors, realFactors);
 }
