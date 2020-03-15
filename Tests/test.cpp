@@ -3,6 +3,448 @@
 #include "../9.27/InputProcessor.h"
 #include "../10.10/Rational.h"
 #include "../10.11/InputProcessor.h"
+#include "../10.8/Complex.h"
+#include <complex>
+#include "../10.9/Hugeint.h"
+#include "../11.10/Account.h"
+#include "../11.10/SavingsAccount.h"
+#include "../11.10/CheckingAccount.h"
+#include "../11.9/Package.h"
+#include "../11.9/TwoDayPackage.h"
+#include "../11.9/OvernightPackage.h"
+
+class Test11_9 : public ::testing::Test
+{
+public:
+	//Need to be modified!
+	Test11_9()
+		:sender("G", "Honey Road No.1", "HG", "HB", "242424"),
+		recipient("C", "Scientist Roat No.1", "WH", "HB", "666666"),
+		weight(100),
+		costPerOunce(100),
+		flatFee(99),
+		feePerOunce(100),
+		pack(sender, recipient, weight, costPerOunce),
+		twoDayPack(sender, recipient, weight, costPerOunce, flatFee),
+		overnightPackage(sender, recipient, weight, costPerOunce, feePerOunce)
+	{
+	};
+
+	double weight;
+	double costPerOunce;
+	double flatFee;
+	double feePerOunce;
+	Person sender;
+	Person recipient;
+	Package pack;
+	TwoDayPackage twoDayPack;
+	OvernightPackage overnightPackage;
+
+	void SetUp() override
+	{
+
+	}
+
+	void TearDown() override
+	{
+
+	}
+};
+
+TEST_F(Test11_9, TestPackage)
+{
+	double cost = 10000;
+	EXPECT_EQ(cost, pack.calculateCost());
+}
+
+TEST_F(Test11_9, TestTwoDayPackGetFlatFee)
+{
+	double flatFee = 99;
+	EXPECT_EQ(flatFee, twoDayPack.getFlatFee());
+}
+
+TEST_F(Test11_9, TestTwoDayPackCalculateCost)
+{
+	double cost = 10099;
+	EXPECT_EQ(cost, twoDayPack.calculateCost());
+}
+
+TEST_F(Test11_9, TestOvernightPackCalculateCost)
+{
+	double cost = 20000;
+	EXPECT_EQ(cost, overnightPackage.calculateCost());
+}
+
+class Test11_10 : public ::testing::Test
+{
+public:
+	Test11_10()
+		:initBalance(100000),
+		account(initBalance),
+		interestRate(0.01),
+		savingsAccount(initBalance, interestRate),
+		feePerTransaction(10),
+		checkingAccount(initBalance, feePerTransaction)
+	{
+
+	}
+
+	double initBalance;
+	Account account;
+	double interestRate;
+	SavingsAccount savingsAccount;
+	double feePerTransaction;
+	CheckingAccount checkingAccount;
+};
+
+TEST_F(Test11_10, TestAccountContor)
+{
+	EXPECT_EQ(initBalance, account.getBalance());
+}
+
+TEST_F(Test11_10, TestAccountSetBalance)
+{
+	double invalidBalance = -100;
+	bool ret = account.setBalance(invalidBalance);
+	EXPECT_EQ(0, account.getBalance());
+	EXPECT_EQ(false, ret);
+
+	double validBalance = 100;
+	ret = account.setBalance(validBalance);
+	EXPECT_EQ(true, ret);
+	EXPECT_EQ(validBalance, account.getBalance());
+}
+
+TEST_F(Test11_10, TestAccountCredit)
+{
+	double invalidValue1 = 0, invalidValue2 = -1;
+	double validValue = 100;
+	std::string exceptionStr = "Credit value should be positive.\n";
+
+	try
+	{
+		account.credit(invalidValue1);
+	}
+	catch (const std::exception & e)
+	{
+		std::string realExcept = e.what();
+		EXPECT_EQ(exceptionStr, realExcept);
+
+		try
+		{
+			account.credit(invalidValue2);
+		}
+		catch (const std::exception & e)
+		{
+			std::string realExcept = e.what();
+			EXPECT_EQ(exceptionStr, realExcept);
+
+			account.credit(validValue);
+			EXPECT_EQ(initBalance + validValue, account.getBalance());
+			return;
+		}
+	}
+
+	//shouldn't reach here.
+	EXPECT_FALSE(true);
+}
+
+TEST_F(Test11_10, TestAccountDebit)
+{
+	double invalidValue = 100001;
+	double validValue = 100;
+	std::string exceptionStr = "Debit amount exceeded account balance\n";
+
+	try
+	{
+		account.debit(invalidValue);
+	}
+	catch (const std::exception & e)
+	{
+		std::string realExcept = e.what();
+		EXPECT_EQ(exceptionStr, realExcept);
+
+		account.debit(validValue);
+		EXPECT_EQ(initBalance - validValue, account.getBalance());
+		return;
+	}
+
+	//shouldn't reach here.
+	EXPECT_FALSE(true);
+}
+
+TEST_F(Test11_10, TestSavingsAccountContor)
+{
+	EXPECT_EQ(initBalance, savingsAccount.getBalance());
+	EXPECT_EQ(interestRate, savingsAccount.getInterestRate());
+}
+
+TEST_F(Test11_10, TestSavingsAccountSetInterestRate)
+{
+	double invalidInterstRate = -0.1, validInterestRate = 0.02;
+	std::string expectExceptionStr = "Interest rate must be positive.\n";
+
+	try
+	{
+		savingsAccount.setInterestRate(invalidInterstRate);
+	}
+	catch (const std::exception & e)
+	{
+		std::string realExcept = e.what();
+		EXPECT_EQ(expectExceptionStr, realExcept);
+
+		savingsAccount.setInterestRate(validInterestRate);
+		EXPECT_EQ(validInterestRate, savingsAccount.getInterestRate());
+		return;
+	}
+
+	//shouldn't reach here
+	EXPECT_FALSE(true);
+}
+
+TEST_F(Test11_10, TestSavingsAccountCalculateInterest)
+{
+	double expectedInterest = savingsAccount.getBalance() * savingsAccount.getInterestRate();
+	EXPECT_EQ(expectedInterest, savingsAccount.calculateInterest());
+}
+
+TEST_F(Test11_10, TestCheckingAccountContor)
+{
+	EXPECT_EQ(initBalance, checkingAccount.getBalance());
+	EXPECT_EQ(feePerTransaction, checkingAccount.getFeePerTransaction());
+}
+
+TEST_F(Test11_10, TestCheckingAccountSetFeePerTransaction)
+{
+	double invalidFee1 = 0, invalidFee2 = -10, validFee = 99;
+	std::string expectedExceptStr = "Fee must be positive\n";
+
+	try
+	{
+		checkingAccount.setFeePerTransaction(invalidFee1);
+	}
+	catch (std::exception & e)
+	{
+		std::string realExcept = e.what();
+		EXPECT_EQ(expectedExceptStr, realExcept);
+
+		try
+		{
+
+			checkingAccount.setFeePerTransaction(invalidFee2);
+		}
+
+		catch (std::exception & e)
+		{
+			std::string realExcept = e.what();
+			EXPECT_EQ(expectedExceptStr, realExcept);
+
+			checkingAccount.setFeePerTransaction(validFee);
+			EXPECT_EQ(validFee, checkingAccount.getFeePerTransaction());
+			return;
+		}
+	}
+
+	//shouldn't reach here
+	EXPECT_FALSE(true);
+}
+
+TEST_F(Test11_10, TestCheckingAccountCredit)
+{
+	double invalidValue1 = 0, invalidValue2 = -1;
+	std::string expectedStr = "Credit value should be positive.\n";
+
+	try
+	{
+		checkingAccount.credit(invalidValue1);
+	}
+	catch (const std::exception & e)
+	{
+		std::string realExcept = e.what();
+		EXPECT_EQ(expectedStr, realExcept);
+
+		try
+		{
+			checkingAccount.credit(invalidValue2);
+		}
+		catch (const std::exception & e)
+		{
+			std::string realExcept = e.what();
+			EXPECT_EQ(expectedStr, realExcept);
+
+			double newBalance = 0, invalidValue3 = feePerTransaction - 1;
+			checkingAccount.setBalance(0);
+			expectedStr = "Not enough balance to pay the transaction fee\n";
+			try
+			{
+				checkingAccount.credit(invalidValue3);
+			}
+			catch (const std::exception & e)
+			{
+				std::string realExcept = e.what();
+				EXPECT_EQ(expectedStr, realExcept);
+
+				double validValue = feePerTransaction, expectBalance = 0;
+				checkingAccount.credit(validValue);
+				EXPECT_EQ(expectBalance, checkingAccount.getBalance());
+				return;
+			}
+		}
+	}
+
+	//shouldn't reach here
+	FAIL();
+}
+
+TEST_F(Test11_10, TestCheckingAccountDebit)
+{
+	double invalidValue1 = 0, invalidValue2 = -1;
+	double invalidValue3 = checkingAccount.getBalance() - checkingAccount.getFeePerTransaction() + 1;
+	std::string expectStr = "Debit amount must be positive\n";
+
+	try
+	{
+		checkingAccount.debit(invalidValue1);
+	}
+	catch (const std::exception & e)
+	{
+		std::string realExcept = e.what();
+		EXPECT_EQ(expectStr, realExcept);
+
+		try
+		{
+			checkingAccount.debit(invalidValue2);
+		}
+		catch (const std::exception & e)
+		{
+			std::string realExcept = e.what();
+			EXPECT_EQ(expectStr, realExcept);
+
+			try
+			{
+				checkingAccount.debit(invalidValue3);
+			}
+			catch (const std::exception & e)
+			{
+				std::string realExcept = e.what();
+				expectStr = "Not enough banlance to debit\n";
+				EXPECT_EQ(expectStr, realExcept);
+
+				double validValue = 520;
+				checkingAccount.debit(validValue);
+				EXPECT_EQ(initBalance - validValue - feePerTransaction, checkingAccount.getBalance());
+				return;
+			}
+		}
+	}
+
+	//should'nt reach here
+	FAIL();
+}
+TEST(Test10_9, TestBigger)
+{
+	int bigger = 8, smaller = 6;
+	HugeInt bigInt(bigger), smallInt(smaller);
+	EXPECT_TRUE(bigInt > smallInt);
+	EXPECT_FALSE(smallInt > bigInt);
+}
+
+TEST(Test10_9, TestMultiply)
+{
+	int num1 = 12, num2 = 13;
+	std::string numStr3("111111111111"), numStr4("2");
+
+	HugeInt num3 = HugeInt(num1) * HugeInt(num2);
+	EXPECT_EQ(num3, HugeInt(12 * 13));
+
+	HugeInt num4 = HugeInt(numStr3) * HugeInt(numStr4);
+	EXPECT_EQ(num4, HugeInt(std::string("222222222222")));
+
+	EXPECT_EQ(HugeInt(num1) * num2, HugeInt(num1) * HugeInt(num2));
+	EXPECT_EQ(HugeInt(numStr3) * HugeInt(numStr4), HugeInt(numStr3) * numStr4);
+}
+
+TEST(Test10_9, TestEqual)
+{
+	int num1 = 33, num2 = 44;
+	EXPECT_TRUE(HugeInt(num1) == HugeInt(num1));
+	EXPECT_FALSE(HugeInt(num1) == HugeInt(num2));
+	EXPECT_FALSE(HugeInt(num1) != HugeInt(num1));
+	EXPECT_TRUE(HugeInt(num1) != HugeInt(num2));
+}
+
+TEST(Test10_9, TestLess)
+{
+	int num1 = 33, num2 = 44;
+	HugeInt int1(num1), int2(num2);
+
+	EXPECT_TRUE(int1 < int2);
+	EXPECT_FALSE(int1 >= int2);
+}
+
+TEST(Test10_9, TestDivide)
+{
+	int num1 = 11, num2 = 22, num3 = 55;
+	HugeInt int1(num1), int2(num2), int3(num3);
+
+	EXPECT_EQ(int3 / int1, num3 / num1);
+	EXPECT_EQ(int3 / int2, num3 / num2);
+	EXPECT_EQ(int1 / int2, num1 / num2);
+	EXPECT_EQ(int1 / int1, num1 / num1);
+	EXPECT_EQ(int3 / num1, num3 / num1);
+
+	std::string numStr1("2");
+	HugeInt int4(numStr1);
+	EXPECT_EQ(int2 / int4, int2 / numStr1);
+}
+TEST(Test10_8, TestContor)
+{
+	double real = 1.0;
+	double imaginary = 2.3;
+	Complex num(real, imaginary);
+
+	EXPECT_EQ(num.getReal(), real);
+	EXPECT_EQ(num.getImaginary(), imaginary);
+}
+
+TEST(Test10_8, TestSetter)
+{
+	double real = 1.1;
+	double imaginary = 2.2;
+	Complex num;
+	num.setReal(real);
+	num.setImaginary(imaginary);
+
+	EXPECT_EQ(num.getReal(), real);
+	EXPECT_EQ(num.getImaginary(), imaginary);
+}
+
+TEST(Test10_8, TestMultiply)
+{
+	double a = 3.2, b = 5.2, c = 2.6, d = 8.9;
+	std::complex<double> stdCom(a, b), stdCom2(c, d);
+	Complex com(a, b), com2(c, d);
+
+	std::complex<double> expectedResult = stdCom * stdCom2;
+	Complex realResult = com * com2;
+
+	EXPECT_EQ(expectedResult.real(), realResult.getReal());
+	EXPECT_EQ(expectedResult.imag(), realResult.getImaginary());
+}
+
+TEST(Test10_8, TestRelation)
+{
+	double real = 1.0, imaginary = 2.3;
+	Complex num1(real, imaginary), num2(real, imaginary);
+
+	EXPECT_TRUE(num1 == num2);
+	EXPECT_FALSE(num1 != num2);
+
+	double real2 = 1.1, imaginary2 = 2.4;
+	Complex num3(real2, imaginary2);
+	EXPECT_FALSE(num1 == num3);
+	EXPECT_TRUE(num3 != num2);
+}
 
 TEST(Test10_11, TestInputProcessor)
 {

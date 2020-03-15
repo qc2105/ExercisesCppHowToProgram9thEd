@@ -39,6 +39,14 @@
     <ClCompile Include="..\10.10\Rational.cpp" />
     <ClCompile Include="..\10.11\InputProcessor10_11.cpp" />
     <ClCompile Include="..\10.11\Polynomial.cpp" />
+    <ClCompile Include="..\10.8\Complex.cpp" />
+    <ClCompile Include="..\10.9\Hugeint.cpp" />
+    <ClCompile Include="..\11.10\Account.cpp" />
+    <ClCompile Include="..\11.10\CheckingAccount.cpp" />
+    <ClCompile Include="..\11.10\SavingsAccount.cpp" />
+    <ClCompile Include="..\11.9\OvernightPackage.cpp" />
+    <ClCompile Include="..\11.9\Package.cpp" />
+    <ClCompile Include="..\11.9\TwoDayPackage.cpp" />
     <ClCompile Include="..\9.27\InputProcessor9_27.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">
