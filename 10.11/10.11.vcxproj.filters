@@ -21,7 +21,7 @@
     <ClCompile Include="Polynomial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InputProcessor.cpp">
+    <ClCompile Include="InputProcessor10_11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

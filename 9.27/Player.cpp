@@ -66,7 +66,7 @@ void Player::replace(std::vector<Card>* cards)
 	std::cout << std::endl;
 	std::cout << "------------------------" << std::endl;
 
-	InputProcessor ip;
+	name9_27::InputProcessor ip;
 
 	std::vector<std::vector<size_t>> actions;
 	ip.getInts(actions);

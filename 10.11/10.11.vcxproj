@@ -152,7 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="10.11.cpp" />
-    <ClCompile Include="InputProcessor.cpp" />
+    <ClCompile Include="InputProcessor10_11.cpp" />
     <ClCompile Include="Polynomial.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -155,7 +155,7 @@
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Dealer.cpp" />
     <ClCompile Include="DeckOfCards.cpp" />
-    <ClCompile Include="InputProcessor.cpp" />
+    <ClCompile Include="InputProcessor9_27.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PokerHand.cpp" />
     <ClCompile Include="utils.cpp" />

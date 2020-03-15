@@ -3,24 +3,27 @@
 #include <vector>
 #include "Polynomial.h"
 
-class InputProcessor
-{
-public:
-	explicit InputProcessor(const std::string &inputString, char _wordDelimiter = ',', char _sentenceDelimiter = ';');
-	InputProcessor(char _wordDelimiter = ',', char _sentenceDelimiter = ';');
+namespace name10_11 {
 
-	void getTerms(std::vector<Term> &outputTerms) const; // one word is corresponding to one term.
+	class InputProcessor
+	{
+	public:
+		explicit InputProcessor(const std::string& inputString, char _wordDelimiter = ',', char _sentenceDelimiter = ';');
+		InputProcessor(char _wordDelimiter = ',', char _sentenceDelimiter = ';');
 
-private:
-	void fetchUserInput(void);
+		void getTerms(std::vector<Term>& outputTerms) const; // one word is corresponding to one term.
 
-	void getSentences(std::vector<std::string> &outputSentences) const; // from an input string, there're many sentences.
-	void getWords(const std::string &inputSentence, std::vector<std::string> &outputWords) const; // from one sentence, there're many words. (two for now)
+	private:
+		void fetchUserInput(void);
 
-	std::vector<std::string> getStringTokens(const std::string &stringToBeProcessed, const char delimiter) const;
+		void getSentences(std::vector<std::string>& outputSentences) const; // from an input string, there're many sentences.
+		void getWords(const std::string& inputSentence, std::vector<std::string>& outputWords) const; // from one sentence, there're many words. (two for now)
 
-	std::string userInputString;
-	char wordDelimiter;
-	char sentenceDelimiter;
+		std::vector<std::string> getStringTokens(const std::string& stringToBeProcessed, const char delimiter) const;
+
+		std::string userInputString;
+		char wordDelimiter;
+		char sentenceDelimiter;
+	};
+
 };
-

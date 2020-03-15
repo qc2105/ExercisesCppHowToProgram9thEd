@@ -1,21 +1,21 @@
 #include "InputProcessor.h"
 #include <iostream>
 
-InputProcessor::InputProcessor(const std::string & _inputString, char _wordDelimiter, char _sentenceDelimiter)
+name9_27::InputProcessor::InputProcessor(const std::string & _inputString, char _wordDelimiter, char _sentenceDelimiter)
 	:userInputString(_inputString),
 	wordDelimiter(_wordDelimiter),
 	sentenceDelimiter(_sentenceDelimiter)
 {
 }
 
-InputProcessor::InputProcessor(char _wordDelimiter, char _sentenceDelimiter)
+name9_27::InputProcessor::InputProcessor(char _wordDelimiter, char _sentenceDelimiter)
 	:wordDelimiter(_wordDelimiter),
 	sentenceDelimiter(_sentenceDelimiter)
 {
 	fetchUserInput();
 }
 
-void InputProcessor::getInts(std::vector<std::vector<size_t> > &outputInts) const
+void name9_27::InputProcessor::getInts(std::vector<std::vector<size_t> > &outputInts) const
 {
 	std::vector<std::string> sentences, words;
 	getSentences(sentences);
@@ -33,23 +33,23 @@ void InputProcessor::getInts(std::vector<std::vector<size_t> > &outputInts) cons
 	}
 }
 
-void InputProcessor::fetchUserInput(void)
+void name9_27::InputProcessor::fetchUserInput(void)
 {
 	std::cout << "Please input the replacement commands like: 1,2;2,3;5,1;" << std::endl;
 	std::cin >> userInputString;
 }
 
-void InputProcessor::getSentences(std::vector<std::string> &outputSentences) const
+void name9_27::InputProcessor::getSentences(std::vector<std::string> &outputSentences) const
 {
 	outputSentences = getStringTokens(userInputString, sentenceDelimiter);
 }
 
-void InputProcessor::getWords(const std::string & inputSentence, std::vector<std::string>& outputWords) const
+void name9_27::InputProcessor::getWords(const std::string & inputSentence, std::vector<std::string>& outputWords) const
 {
 	outputWords = getStringTokens(inputSentence, wordDelimiter);
 }
 
-std::vector<std::string> InputProcessor::getStringTokens(const std::string &stringToBeProcessed, const char delimiter) const
+std::vector<std::string> name9_27::InputProcessor::getStringTokens(const std::string &stringToBeProcessed, const char delimiter) const
 {
 	std::string sentence, nextStringToProcess;
 	std::vector<std::string> sentences;

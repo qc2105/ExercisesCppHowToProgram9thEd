@@ -209,7 +209,7 @@ std::istream & operator>>(std::istream & in, Polynomial & poly)
 {
 	std::string inputString;
 	in >> inputString;
-	InputProcessor inp(inputString);
+	name10_11::InputProcessor inp(inputString);
 	std::vector<Term> inputTerms;
 	inp.getTerms(inputTerms);
 
