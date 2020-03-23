@@ -2,42 +2,44 @@
 #include <string>
 #include <iostream>
 
-class Person
-{
-public:
-	
-	Person(void);
-	Person(const int Id, const std::string & FirstName, const std::string &LastName, int Age);
+namespace name14_10 {
+	class Person
+	{
+	public:
 
-	void setId(int Id);
-	int getId() const;
-	
-	void setLastName(const std::string & LastName);
-	std::string getLastName() const;
-	
-	void setFirstName(const std::string & FirstName);
-	std::string getFirstName() const;
+		Person(void);
+		Person(const int Id, const std::string& FirstName, const std::string& LastName, int Age);
 
-	void setAge(int Age);
-	int getAge() const;
+		void setId(int Id);
+		int getId() const;
 
-private:
+		void setLastName(const std::string& LastName);
+		std::string getLastName() const;
 
-	char lastName[15];
-	char firstName[10];
-	int age;
-	int id;
-};
+		void setFirstName(const std::string& FirstName);
+		std::string getFirstName() const;
 
-const int SIZELIMIT = 100;
+		void setAge(int Age);
+		int getAge() const;
 
-//Initialize the of with SIZELIMIT zero Person records;
-void initialize(std::fstream &of);
+	private:
 
-bool add(std::fstream &f, std::istream &input = std::cin);
+		char lastName[15];
+		char firstName[10];
+		int age;
+		int id;
+	};
 
-bool update(std::fstream &f, std::istream &input = std::cin);
+	const int SIZELIMIT = 100;
 
-bool del(std::fstream &f, std::istream &input = std::cin);
+	//Initialize the of with SIZELIMIT zero Person records;
+	void initialize(std::fstream& of);
 
-void print(std::fstream &f, std::ostream &output = std::cout);
+	bool add(std::fstream& f, std::istream& input = std::cin);
+
+	bool update(std::fstream& f, std::istream& input = std::cin);
+
+	bool del(std::fstream& f, std::istream& input = std::cin);
+
+	void print(std::fstream& f, std::ostream& output = std::cout);
+}

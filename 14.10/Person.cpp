@@ -4,7 +4,7 @@
 #include <iostream>
 #include <iomanip>
 
-Person::Person(void)
+name14_10::Person::Person(void)
 	:id(0),
 	age(0),
 	firstName(""),
@@ -12,7 +12,7 @@ Person::Person(void)
 {
 }
 
-Person::Person(const int Id, const std::string & FirstName, const std::string & LastName, int Age)
+name14_10::Person::Person(const int Id, const std::string & FirstName, const std::string & LastName, int Age)
 	:id(Id),
 	age(Age)
 {
@@ -20,17 +20,17 @@ Person::Person(const int Id, const std::string & FirstName, const std::string & 
 	setLastName(LastName);
 }
 
-void Person::setId(int Id)
+void name14_10::Person::setId(int Id)
 {
 	id = Id;
 }
 
-int Person::getId() const
+int name14_10::Person::getId() const
 {
 	return id;
 }
 
-void Person::setLastName(const std::string & LastName)
+void name14_10::Person::setLastName(const std::string & LastName)
 {
 	size_t length;
 	LastName.length() < 15 ? length = LastName.length() : length = 14;
@@ -38,12 +38,12 @@ void Person::setLastName(const std::string & LastName)
 	lastName[length] = '\0';
 }
 
-std::string Person::getLastName() const
+std::string name14_10::Person::getLastName() const
 {
 	return std::string(lastName);
 }
 
-void Person::setFirstName(const std::string & FirstName)
+void name14_10::Person::setFirstName(const std::string & FirstName)
 {
 	size_t length;
 	FirstName.length() < 10 ? length = FirstName.length() : length = 9;
@@ -51,50 +51,50 @@ void Person::setFirstName(const std::string & FirstName)
 	firstName[length] = '\0';
 }
 
-std::string Person::getFirstName() const
+std::string name14_10::Person::getFirstName() const
 {
 	return std::string(firstName);
 }
 
-void Person::setAge(int Age)
+void name14_10::Person::setAge(int Age)
 {
 	age = Age;
 }
 
-int Person::getAge() const
+int name14_10::Person::getAge() const
 {
 	return age;
 }
 
-void initialize(std::fstream & of)
+void name14_10::initialize(std::fstream & of)
 {
-	Person person;
+	name14_10::Person person;
 
 	of.seekp(0);
 
 	for (size_t i = 0; i < SIZELIMIT; ++i)
 	{
-		of.write(reinterpret_cast<const char*>(&person), sizeof(Person));
+		of.write(reinterpret_cast<const char*>(&person), sizeof(name14_10::Person));
 	}
 
 	of.close();
 }
 
-bool add(std::fstream & f, std::istream &input)
+bool name14_10::add(std::fstream & f, std::istream &input)
 {
 	int Id, Age; std::string FirstName, LastName;
 	
 	std::cout << "Please input the info: Id FirstName LastName Age\n";
 	input >> Id >> FirstName >> LastName >> Age;
-	f.seekg((Id - 1) * sizeof(Person));
+	f.seekg((Id - 1) * sizeof(name14_10::Person));
 	if (!f)
 	{
 		std::cerr << "Seek faild\n";
 		return false;
 	}
 	
-	Person temp;
-	f.read(reinterpret_cast<char *>(&temp), sizeof(Person));
+	name14_10::Person temp;
+	f.read(reinterpret_cast<char *>(&temp), sizeof(name14_10::Person));
 	if (!f)
 	{
 		std::cerr << "Read failed\n";
@@ -108,14 +108,14 @@ bool add(std::fstream & f, std::istream &input)
 	}
 	if (Id < 100 && Id > 0)
 	{
-		Person person(Id, FirstName, LastName, Age);
-		f.seekp((Id - 1) * sizeof(Person));
+		name14_10::Person person(Id, FirstName, LastName, Age);
+		f.seekp((Id - 1) * sizeof(name14_10::Person));
 		if (!f)
 		{
 			std::cerr << "Seek for writing faild\n";
 			return false;
 		}
-		f.write(reinterpret_cast<const char*>(&person), sizeof(Person));
+		f.write(reinterpret_cast<const char*>(&person), sizeof(name14_10::Person));
 		if (!f)
 		{
 			std::cerr << "writing faild\n";
@@ -133,21 +133,21 @@ bool add(std::fstream & f, std::istream &input)
 	return false;	
 }
 
-bool update(std::fstream & f, std::istream &input)
+bool name14_10::update(std::fstream & f, std::istream &input)
 {
 	int Id, Age; std::string FirstName, LastName;
 
 	std::cout << "Please input the info: Id FirstName LastName Age\n";
 	input >> Id >> FirstName >> LastName >> Age;
-	f.seekg((Id - 1) * sizeof(Person));
+	f.seekg((Id - 1) * sizeof(name14_10::Person));
 	if (!f)
 	{
 		std::cerr << "Seek faild\n";
 		return false;
 	}
 
-	Person temp;
-	f.read(reinterpret_cast<char *>(&temp), sizeof(Person));
+	name14_10::Person temp;
+	f.read(reinterpret_cast<char *>(&temp), sizeof(name14_10::Person));
 	if (!f)
 	{
 		std::cerr << "Read failed\n";
@@ -166,14 +166,14 @@ bool update(std::fstream & f, std::istream &input)
 	}
 	if (Id < SIZELIMIT && Id > 0)
 	{
-		Person person(Id, FirstName, LastName, Age);
-		f.seekp((Id - 1) * sizeof(Person));
+		name14_10::Person person(Id, FirstName, LastName, Age);
+		f.seekp((Id - 1) * sizeof(name14_10::Person));
 		if (!f)
 		{
 			std::cerr << "Seek for writing faild\n";
 			return false;
 		}
-		f.write(reinterpret_cast<const char*>(&person), sizeof(Person));
+		f.write(reinterpret_cast<const char*>(&person), sizeof(name14_10::Person));
 		if (!f)
 		{
 			std::cerr << "writing faild\n";
@@ -191,21 +191,21 @@ bool update(std::fstream & f, std::istream &input)
 	return false;
 }
 
-bool del(std::fstream & f, std::istream &input)
+bool name14_10::del(std::fstream & f, std::istream &input)
 {
 	int Id;
 	std::cout << "Please inupt the id of the record to be deleted: \n";
 	input >> Id;
 
-	f.seekg((Id - 1) * sizeof(Person));
+	f.seekg((Id - 1) * sizeof(name14_10::Person));
 	if (!f)
 	{
 		std::cerr << "Seek faild\n";
 		return false;
 	}
 
-	Person temp;
-	f.read(reinterpret_cast<char *>(&temp), sizeof(Person));
+	name14_10::Person temp;
+	f.read(reinterpret_cast<char *>(&temp), sizeof(name14_10::Person));
 	if (!f)
 	{
 		std::cerr << "Read failed\n";
@@ -225,14 +225,14 @@ bool del(std::fstream & f, std::istream &input)
 
 	if (Id < SIZELIMIT && Id > 0)
 	{
-		Person person;
-		f.seekp((Id - 1) * sizeof(Person));
+		name14_10::Person person;
+		f.seekp((Id - 1) * sizeof(name14_10::Person));
 		if (!f)
 		{
 			std::cerr << "Seek for writing faild\n";
 			return false;
 		}
-		f.write(reinterpret_cast<const char*>(&person), sizeof(Person));
+		f.write(reinterpret_cast<const char*>(&person), sizeof(name14_10::Person));
 		if (!f)
 		{
 			std::cerr << "writing faild\n";
@@ -249,7 +249,7 @@ bool del(std::fstream & f, std::istream &input)
 	return false;
 }
 
-void print(std::fstream & f, std::ostream &output)
+void name14_10::print(std::fstream & f, std::ostream &output)
 {
 	f.seekg(0);
 	if (!f)
@@ -261,8 +261,8 @@ void print(std::fstream & f, std::ostream &output)
 		<< "Last Name" << std::setw(10) << "Age" << std::endl;
 	for (size_t i = 0; i < SIZELIMIT; ++i)
 	{
-		Person temp;
-		f.read(reinterpret_cast<char *>(&temp), sizeof(Person));
+		name14_10::Person temp;
+		f.read(reinterpret_cast<char *>(&temp), sizeof(name14_10::Person));
 		if (!f)
 		{
 			std::cerr << "Read failed\n";

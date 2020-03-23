@@ -52,19 +52,19 @@ int main()
 		switch (choice)
 		{
 		case INIT:
-			initialize(ioPerson);
+			name14_10::initialize(ioPerson);
 			break;
 		case NEW:
-			add(ioPerson);
+			name14_10::add(ioPerson);
 			break;
 		case UPDATE:
-			update(ioPerson);
+			name14_10::update(ioPerson);
 			break;
 		case DEL:
-			del(ioPerson);
+			name14_10::del(ioPerson);
 			break;
 		case PRINT:
-			print(ioPerson);
+			name14_10::print(ioPerson);
 			break;
 		case QUIT:
 			ioPerson.close();
