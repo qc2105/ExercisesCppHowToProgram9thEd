@@ -53,6 +53,7 @@
     <ClCompile Include="..\12.15\HourlyWorker.cpp" />
     <ClCompile Include="..\12.15\PieceWorker.cpp" />
     <ClCompile Include="..\12.15\SalariedEmployee.cpp" />
+    <ClCompile Include="..\13.15\Point.cpp" />
     <ClCompile Include="..\13.16\Complex13_16.cpp" />
     <ClCompile Include="..\14.10\Person.cpp" />
     <ClCompile Include="..\9.27\InputProcessor9_27.cpp" />
