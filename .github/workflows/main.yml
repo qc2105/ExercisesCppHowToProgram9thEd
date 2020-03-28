@@ -11,14 +11,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
+    - name: Nuget restore
+    - uses: nuget/setup-nuget@v1
+      run: nuget restore cppHowToProgram.sln
+
     - name: Enable Developer Command Prompt
       uses: microsoft/setup-msbuild@v1.0.0
 
-    - name: Nuget restore
-      run: MSBuild.exe -t:Restore cppHowToProgram.sln
-
     - name: Build
-      run: MSBuild.exe -t:Build /m -p:Configuration=Debug -p:Platform=x64 cppHowToProgram.sln
+      run: MSBuild.exe -t:Build -m -p:Configuration=Debug -p:Platform=x64 cppHowToProgram.sln
 
     - name: Test
       run: x64\Debug\Tests.exe
