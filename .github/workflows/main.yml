@@ -18,4 +18,7 @@ jobs:
       run: MSBuild.exe -t:Restore cppHowToProgram.sln
 
     - name: Build
-      run: MSBuild.exe -t:Build -p:Configuration=Debug -p:Platform=x64 cppHowToProgram.sln
+      run: MSBuild.exe -t:Build /m -p:Configuration=Debug -p:Platform=x64 cppHowToProgram.sln
+
+    - name: Test
+      run: x64\Debug\Tests.exe
