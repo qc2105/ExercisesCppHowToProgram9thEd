@@ -1,29 +1,25 @@
-// 16.8.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// 16.10.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include <iostream>
-#include <array>
-#include <algorithm>
 #include <iterator>
-
-const int SIZE = 20;
+#include <fstream>
+#include <algorithm>
 
 int main()
 {
-    std::cout << "Input 20 integers that there're duplicate ones in them:\n";
-
-    std::array<int, SIZE> integers;
-
-    for (int i = 0; i < 20; i++)
+    std::ifstream inf("data.txt", std::ios::in);
+    if (!inf)
     {
-        std::cin >> integers[i];
+        std::cerr << "Can't open file data.txt\n";
+        exit(EXIT_FAILURE);
     }
 
-    auto result = std::unique(integers.begin(), integers.end());
+    std::istream_iterator<int> inIter(inf);
 
-    std::ostream_iterator<int> out(std::cout, " ");
+    std::ostream_iterator<int> outIter(std::cout, " ");
 
-    std::copy(integers.begin(), result, out);
+    std::copy(inIter, std::istream_iterator<int>(), outIter);
 
     return 0;
 }
