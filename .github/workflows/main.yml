@@ -10,11 +10,17 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
+    
+    - name: Setup NuGet.exe
       uses: nuget/setup-nuget@v1
+    
+    - name: Restore nuget packages
       run: nuget restore cppHowToProgram.sln
-      
-    - name: Build
+
+    - name: Setup Msbuild
       uses: microsoft/setup-msbuild@v1.0.0
+    
+    - name: Build
       run: MSBuild.exe -t:Build -m -p:Configuration=Debug -p:Platform=x64 cppHowToProgram.sln
 
     - name: Test
