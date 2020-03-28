@@ -10,5 +10,4 @@ jobs:
     steps:
     - uses: ilammy/msvc-dev-cmd@v1.0.0
     - name:  Enable Developer Command Prompt
-      run: nuget.exe restore cppHowToProgram.sln
-           MSBuild.exe /p:Configuration=Debug cppHowToProgram.sln 
+      run: MSBuild.exe -t:Build -p:Configuration=Debug -p:Platform=x64 cppHowToProgram.sln
