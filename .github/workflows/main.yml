@@ -12,7 +12,7 @@ jobs:
       uses: actions/checkout@v1
 
     - name: Nuget restore
-    - uses: nuget/setup-nuget@v1
+      uses: nuget/setup-nuget@v1
       run: nuget restore cppHowToProgram.sln
 
     - name: Enable Developer Command Prompt
