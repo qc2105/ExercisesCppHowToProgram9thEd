@@ -14,7 +14,7 @@ int main()
 {
     std::cout << "Hello World!\n";
 
-	std::vector<Employee *> employeePtrs(3, nullptr);
+	std::vector<name12_12::Employee *> employeePtrs(3, nullptr);
 	std::vector<std::string> firstNames{ "Chuan", "Jia", "Rong" };
 	std::vector<std::string> lastNames{ "Qin", "Qin", "Qin" };
 	std::vector<std::string> socialSecurityNumbers{ "111-1111-1111", "222-2222-2222", "333-3333-3333" };
@@ -24,17 +24,17 @@ int main()
 	double baseSalary = 2000;
 	int currentMonth = 5;
 
-	BasePlusCommissionEmployee *basePlusPtr = new BasePlusCommissionEmployee(firstNames[2], lastNames[2], socialSecurityNumbers[2],
+	name12_12::BasePlusCommissionEmployee *basePlusPtr = new name12_12::BasePlusCommissionEmployee(firstNames[2], lastNames[2], socialSecurityNumbers[2],
 		sales, rate * 3, salary * 2);
 	basePlusPtr->setBirthDate(5, 4, 2022);
-	CommissionEmployee *comPtr = new CommissionEmployee(firstNames[1], lastNames[1], socialSecurityNumbers[1], sales * 10, rate);
-	SalariedEmployee *salariedPtr = new SalariedEmployee(firstNames[0], lastNames[0], socialSecurityNumbers[0], salary * 2);
+	name12_12::CommissionEmployee *comPtr = new name12_12::CommissionEmployee(firstNames[1], lastNames[1], socialSecurityNumbers[1], sales * 10, rate);
+	name12_12::SalariedEmployee *salariedPtr = new name12_12::SalariedEmployee(firstNames[0], lastNames[0], socialSecurityNumbers[0], salary * 2);
 
 	employeePtrs[0] = basePlusPtr;
 	employeePtrs[1] = comPtr;
 	employeePtrs[2] = salariedPtr;
 
-	for (Employee *ePtr : employeePtrs)
+	for (name12_12::Employee *ePtr : employeePtrs)
 	{
 		double bonus = 0;
 		if (ePtr->getBirthDate().getMonth() == currentMonth)

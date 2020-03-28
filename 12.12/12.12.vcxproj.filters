@@ -18,19 +18,19 @@
     <ClCompile Include="12.12.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BasePlusCommissionEmployee.cpp">
+    <ClCompile Include="BasePlusCommissionEmployee12_12.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CommissionEmployee.cpp">
+    <ClCompile Include="CommissionEmployee12_12.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Date.cpp">
+    <ClCompile Include="Employee12_12.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Employee.cpp">
+    <ClCompile Include="SalariedEmployee12_12.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SalariedEmployee.cpp">
+    <ClCompile Include="Date12_12.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -18,13 +18,13 @@
     <ClCompile Include="12.14.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Account.cpp">
+    <ClCompile Include="Account12_14.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CheckingAccount.cpp">
+    <ClCompile Include="SavingsAccount12_14.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SavingsAccount.cpp">
+    <ClCompile Include="CheckingAccount12_14.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

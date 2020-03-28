@@ -1,41 +1,42 @@
 // Fig. 12.9: Employee.h
 // Employee abstract base class.
-#ifndef EMPLOYEE_H
-#define EMPLOYEE_H
+#pragma once
 
 #include <string> // C++ standard string class
 #include "Date.h"
 
-class Employee 
-{
-public:
-   Employee( const std::string &, const std::string &, 
-      const std::string & );
-   virtual ~Employee() { } // virtual destructor
+namespace name12_12 {
 
-   void setFirstName( const std::string & ); // set first name
-   std::string getFirstName() const; // return first name
+    class Employee
+    {
+    public:
+        Employee(const std::string&, const std::string&,
+            const std::string&);
+        virtual ~Employee() { } // virtual destructor
 
-   void setLastName( const std::string & ); // set last name
-   std::string getLastName() const; // return last name
+        void setFirstName(const std::string&); // set first name
+        std::string getFirstName() const; // return first name
 
-   void setSocialSecurityNumber( const std::string & ); // set SSN
-   std::string getSocialSecurityNumber() const; // return SSN
+        void setLastName(const std::string&); // set last name
+        std::string getLastName() const; // return last name
 
-   void setBirthDate(int mm, int dd, int yy);
-   Date getBirthDate(void) const;
+        void setSocialSecurityNumber(const std::string&); // set SSN
+        std::string getSocialSecurityNumber() const; // return SSN
 
-   // pure virtual function makes Employee abstract base class
-   virtual double earnings() const = 0; // pure virtual
-   virtual void print() const; // virtual
-private:
-   std::string firstName;
-   std::string lastName;
-   std::string socialSecurityNumber;
-   Date birthDate;
-}; // end class Employee
+        void setBirthDate(int mm, int dd, int yy);
+        Date getBirthDate(void) const;
 
-#endif // EMPLOYEE_H
+        // pure virtual function makes Employee abstract base class
+        virtual double earnings() const = 0; // pure virtual
+        virtual void print() const; // virtual
+    private:
+        std::string firstName;
+        std::string lastName;
+        std::string socialSecurityNumber;
+        Date birthDate;
+    }; // end class Employee
+
+}
 
 /**************************************************************************
  * (C) Copyright 1992-2014 by Deitel & Associates, Inc. and               *

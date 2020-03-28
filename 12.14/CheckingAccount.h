@@ -1,22 +1,26 @@
 #pragma once
 #include "Account.h"
-class CheckingAccount :
-	public Account
-{
-public:
-	CheckingAccount(const double InitBalance, const double FeePerTransAction);
-	virtual ~CheckingAccount() {};
 
-	virtual void credit(const double value);
-	virtual void debit(const double value);
+namespace name12_14 {
 
-	void setFeePerTransaction(const double fee);
-	double getFeePerTransaction(void) const
+	class CheckingAccount :
+		public Account
 	{
-		return feePerTransaction;
-	}
+	public:
+		CheckingAccount(const double InitBalance, const double FeePerTransAction);
+		virtual ~CheckingAccount() {};
 
-private:
-	double feePerTransaction;
-};
+		virtual void credit(const double value);
+		virtual void debit(const double value);
 
+		void setFeePerTransaction(const double fee);
+		double getFeePerTransaction(void) const
+		{
+			return feePerTransaction;
+		}
+
+	private:
+		double feePerTransaction;
+	};
+
+}

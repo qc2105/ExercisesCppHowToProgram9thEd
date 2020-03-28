@@ -47,6 +47,17 @@
     <ClCompile Include="..\11.9\OvernightPackage.cpp" />
     <ClCompile Include="..\11.9\Package.cpp" />
     <ClCompile Include="..\11.9\TwoDayPackage.cpp" />
+    <ClCompile Include="..\12.12\BasePlusCommissionEmployee12_12.cpp" />
+    <ClCompile Include="..\12.12\CommissionEmployee12_12.cpp" />
+    <ClCompile Include="..\12.12\Date12_12.cpp" />
+    <ClCompile Include="..\12.12\Employee12_12.cpp" />
+    <ClCompile Include="..\12.12\SalariedEmployee12_12.cpp" />
+    <ClCompile Include="..\12.13\OvernightPackage12_13.cpp" />
+    <ClCompile Include="..\12.13\Package12_13.cpp" />
+    <ClCompile Include="..\12.13\TwoDayPackage12_13.cpp" />
+    <ClCompile Include="..\12.14\Account12_14.cpp" />
+    <ClCompile Include="..\12.14\CheckingAccount12_14.cpp" />
+    <ClCompile Include="..\12.14\SavingsAccount12_14.cpp" />
     <ClCompile Include="..\12.15\BasePlusCommissionEmployee.cpp" />
     <ClCompile Include="..\12.15\CommissionEmployee.cpp" />
     <ClCompile Include="..\12.15\Employee.cpp" />

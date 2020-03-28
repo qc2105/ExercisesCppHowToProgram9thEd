@@ -1,20 +1,24 @@
 #pragma once
 #include "Account.h"
-class SavingsAccount :
-	public Account
-{
-public:
-	SavingsAccount(const double initBalance, const double InterestRate);
-	virtual ~SavingsAccount() {};
 
-	double getInterestRate(void) const
+namespace name12_14 {
+
+	class SavingsAccount :
+		public Account
 	{
-		return interestRate;
-	}
-	void setInterestRate(const double rate);
+	public:
+		SavingsAccount(const double initBalance, const double InterestRate);
+		virtual ~SavingsAccount() {};
 
-	double calculateInterest(void) const;
-private:
-	double interestRate;
-};
+		double getInterestRate(void) const
+		{
+			return interestRate;
+		}
+		void setInterestRate(const double rate);
 
+		double calculateInterest(void) const;
+	private:
+		double interestRate;
+	};
+
+}

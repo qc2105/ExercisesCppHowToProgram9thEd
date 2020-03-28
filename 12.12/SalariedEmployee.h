@@ -1,29 +1,30 @@
 // Fig. 12.11: SalariedEmployee.h
 // SalariedEmployee class derived from Employee.
-#ifndef SALARIED_H
-#define SALARIED_H
+#pragma once
 
 #include <string> // C++ standard string class
 #include "Employee.h" // Employee class definition
 
-class SalariedEmployee : public Employee 
-{
-public:
-   SalariedEmployee( const std::string &, const std::string &, 
-      const std::string &, double = 0.0 );
-   virtual ~SalariedEmployee() { } // virtual destructor
+namespace name12_12 {
 
-   void setWeeklySalary( double ); // set weekly salary
-   double getWeeklySalary() const; // return weekly salary
+    class SalariedEmployee : public Employee
+    {
+    public:
+        SalariedEmployee(const std::string&, const std::string&,
+            const std::string&, double = 0.0);
+        virtual ~SalariedEmployee() { } // virtual destructor
 
-   // keyword virtual signals intent to override
-   virtual double earnings() const override; // calculate earnings
-   virtual void print() const override; // print object
-private:
-   double weeklySalary; // salary per week
-}; // end class SalariedEmployee
+        void setWeeklySalary(double); // set weekly salary
+        double getWeeklySalary() const; // return weekly salary
 
-#endif // SALARIED_H
+        // keyword virtual signals intent to override
+        virtual double earnings() const override; // calculate earnings
+        virtual void print() const override; // print object
+    private:
+        double weeklySalary; // salary per week
+    }; // end class SalariedEmployee
+
+}
 
 /**************************************************************************
  * (C) Copyright 1992-2014 by Deitel & Associates, Inc. and               *

@@ -10,15 +10,15 @@
 int main()
 {
     std::cout << "Hello World!\n";
-	std::vector<Account * > pAccounts(2, nullptr);
+	std::vector<name12_14::Account * > pAccounts(2, nullptr);
 
 	double initBalance(10000),
 		interestRate(.02),
 		feePerTrans(10),
 		valueCredit(100),
 		valueDebit(80);
-	CheckingAccount cant(initBalance, feePerTrans);
-	SavingsAccount sant(initBalance, interestRate);
+	name12_14::CheckingAccount cant(initBalance, feePerTrans);
+	name12_14::SavingsAccount sant(initBalance, interestRate);
 
 	pAccounts.at(0) = &cant;
 	pAccounts.at(1) = &sant;
@@ -33,8 +33,8 @@ int main()
 		pAccounts.at(i)->debit(valueDebit);
 		pAccounts.at(i)->credit(valueCredit);
 
-		SavingsAccount *pSavingsAccount = nullptr;
-		pSavingsAccount = dynamic_cast<SavingsAccount *>(pAccounts.at(i));
+		name12_14::SavingsAccount *pSavingsAccount = nullptr;
+		pSavingsAccount = dynamic_cast<name12_14::SavingsAccount *>(pAccounts.at(i));
 		if (pSavingsAccount)
 		{
 			pAccounts.at(i)->credit(pSavingsAccount->calculateInterest());

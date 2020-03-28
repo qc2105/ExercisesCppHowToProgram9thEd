@@ -30,6 +30,148 @@
 #include "../13.15/Point.h"
 #include "../13.14/PhoneNumber.h"
 #include <sstream>
+#include "../12.14/CheckingAccount.h"
+#include "../12.14/SavingsAccount.h"
+#include "../12.13/TwoDayPackage.h"
+#include "../12.13/OvernightPackage.h"
+#include "../12.12/SalariedEmployee.h"
+
+class TestEmployee : public ::testing::Test
+{
+protected:
+	TestEmployee()
+		:firstName("Chuan"),
+		lastName("Qin"),
+		socialSecurityNumber("111-1111-1111"),
+		birthDate(1, 1, 1900),
+		salary(8000),
+		semp(firstName, lastName, socialSecurityNumber, salary)
+	{
+
+	};
+
+	virtual ~TestEmployee()
+	{};
+
+	std::string firstName;
+	std::string lastName;
+	std::string socialSecurityNumber;
+	name12_12::Date birthDate;
+	double salary;
+	name12_12::SalariedEmployee semp;
+};
+
+TEST_F(TestEmployee, TestDefaultBirthdate)
+{
+	name12_12::Date BirthDate = name12_12::Date(1, 1, 1900);
+	name12_12::Date realDate = semp.getBirthDate();
+
+	EXPECT_EQ(BirthDate, realDate);
+}
+
+TEST_F(TestEmployee, TestSetBirthDate)
+{
+	name12_12::Date expectDate(1, 1, 1990);
+	semp.setBirthDate(1, 1, 1990);
+
+	EXPECT_EQ(expectDate, semp.getBirthDate());
+}
+
+
+class Test12_13 : public ::testing::Test
+{
+protected:
+	Test12_13()
+		:Sender("Chuan Qin", "Some Place No.1", "San Diego", "CA", "92121"),
+		Recipient("Chuan Qin", "Some Place No.2", "Wuhan", "Hubei", "439000"),
+		Weight(100),
+		CostPerOunce(100),
+		FlatFee(100),
+		tdp(Sender, Recipient, Weight, CostPerOunce, FlatFee),
+		onp(Sender, Recipient, Weight, CostPerOunce, CostPerOunce * 2)
+	{
+	};
+
+	virtual ~Test12_13()
+	{
+	};
+
+	name12_13::Person Sender;
+	name12_13::Person Recipient;
+	double Weight;
+	double CostPerOunce;
+	double FlatFee;
+	name12_13::TwoDayPackage tdp;
+	name12_13::OvernightPackage onp;
+};
+
+
+TEST_F(Test12_13, TestTwoDayPackCalculateCost)
+{
+	double costExp = 10100;
+	name12_13::Package* pPackage = nullptr;
+	pPackage = &tdp;
+	EXPECT_EQ(costExp, pPackage->calculateCost());
+}
+
+TEST_F(Test12_13, TestOvernightPackCalculateCost)
+{
+	double cosetExp = 30000;
+	name12_13::Package* pPackage = nullptr;
+	pPackage = &onp;
+	EXPECT_EQ(cosetExp, pPackage->calculateCost());
+}
+
+
+class TestPolymorphism : public ::testing::Test
+{
+protected:
+	TestPolymorphism()
+		:initBalance(10000),
+		interestRate(.02),
+		feePerTrans(10),
+		valueCredit(100),
+		valueDebit(80),
+		cant(initBalance, feePerTrans),
+		sant(initBalance, interestRate),
+		pAccount(nullptr)
+	{
+	};
+
+	virtual ~TestPolymorphism() {};
+
+	double initBalance;
+	double interestRate;
+	double feePerTrans;
+	double valueCredit;
+	double valueDebit;
+	name12_14::CheckingAccount cant;
+	name12_14::SavingsAccount sant;
+	name12_14::Account* pAccount;
+};
+
+TEST_F(TestPolymorphism, TestCheckingAccount)
+{
+	pAccount = &cant;
+	pAccount->credit(valueCredit);
+	double expBalance(initBalance + valueCredit - feePerTrans);
+	EXPECT_EQ(expBalance, pAccount->getBalance());
+
+	pAccount->debit(valueDebit);
+	EXPECT_EQ(expBalance - valueDebit - feePerTrans, pAccount->getBalance());
+}
+
+TEST_F(TestPolymorphism, TestSavingsAccount)
+{
+	pAccount = &sant;
+	pAccount->credit(valueCredit);
+	double expBalance(initBalance + valueCredit);
+	EXPECT_EQ(expBalance, pAccount->getBalance());
+
+	pAccount->debit(valueDebit);
+	EXPECT_EQ(expBalance - valueDebit, pAccount->getBalance());
+}
+
 
 class PhoneNumberInputTest : public ::testing::Test
 {

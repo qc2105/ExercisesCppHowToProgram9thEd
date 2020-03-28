@@ -152,9 +152,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="12.13.cpp" />
-    <ClCompile Include="OvernightPackage.cpp" />
-    <ClCompile Include="Package.cpp" />
-    <ClCompile Include="TwoDayPackage.cpp" />
+    <ClCompile Include="OvernightPackage12_13.cpp" />
+    <ClCompile Include="Package12_13.cpp" />
+    <ClCompile Include="TwoDayPackage12_13.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OvernightPackage.h" />

@@ -1,6 +1,8 @@
 #include "Account.h"
 #include <iostream>
 
+namespace name12_14{
+
 Account::Account(const double Balance)
 {
 	if (!setBalance(Balance))
@@ -47,4 +49,6 @@ void Account::debit(const double value)
 double Account::getBalance(void) const
 {
 	return balance;
+}
+
 }

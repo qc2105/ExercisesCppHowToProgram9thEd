@@ -11,16 +11,16 @@ int main()
     std::cout << "Hello World!\n";
 	double totalCost = 0;
 
-	std::vector<Package*> pPacks(3, nullptr);
+	std::vector<name12_13::Package*> pPacks(3, nullptr);
 
-	Person Sender("Chuan Qin", "Some Place No.1", "San Diego", "CA", "92121");
-	Person Recipient("Chuan Qin", "Some Place No.2", "Wuhan", "Hubei", "439000");
+	name12_13::Person Sender("Chuan Qin", "Some Place No.1", "San Diego", "CA", "92121");
+	name12_13::Person Recipient("Chuan Qin", "Some Place No.2", "Wuhan", "Hubei", "439000");
 	double Weight(100);
 	double CostPerOunce(100);
 	double FlatFee(100);
-	TwoDayPackage tdp(Sender, Recipient, Weight, CostPerOunce, FlatFee);
-	OvernightPackage onp(Sender, Recipient, Weight, CostPerOunce, CostPerOunce * 2);
-	Package pak(Sender, Recipient, Weight, CostPerOunce);
+	name12_13::TwoDayPackage tdp(Sender, Recipient, Weight, CostPerOunce, FlatFee);
+	name12_13::OvernightPackage onp(Sender, Recipient, Weight, CostPerOunce, CostPerOunce * 2);
+	name12_13::Package pak(Sender, Recipient, Weight, CostPerOunce);
 
 	pPacks.at(0) = &pak;
 	pPacks.at(1) = &onp;

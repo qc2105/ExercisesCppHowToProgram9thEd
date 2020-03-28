@@ -152,11 +152,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="12.12.cpp" />
-    <ClCompile Include="BasePlusCommissionEmployee.cpp" />
-    <ClCompile Include="CommissionEmployee.cpp" />
-    <ClCompile Include="Date.cpp" />
-    <ClCompile Include="Employee.cpp" />
-    <ClCompile Include="SalariedEmployee.cpp" />
+    <ClCompile Include="BasePlusCommissionEmployee12_12.cpp" />
+    <ClCompile Include="CommissionEmployee12_12.cpp" />
+    <ClCompile Include="Date12_12.cpp" />
+    <ClCompile Include="Employee12_12.cpp" />
+    <ClCompile Include="SalariedEmployee12_12.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasePlusCommissionEmployee.h" />

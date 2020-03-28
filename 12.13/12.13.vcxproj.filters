@@ -18,13 +18,13 @@
     <ClCompile Include="12.13.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OvernightPackage.cpp">
+    <ClCompile Include="OvernightPackage12_13.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Package.cpp">
+    <ClCompile Include="Package12_13.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TwoDayPackage.cpp">
+    <ClCompile Include="TwoDayPackage12_13.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

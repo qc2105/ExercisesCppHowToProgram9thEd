@@ -1,22 +1,26 @@
 #pragma once
 #include "Package.h"
-class TwoDayPackage : public Package
-{
-public:
-	explicit TwoDayPackage(Person & Sender, Person & Recipient, double Weight, 
-		double CostPerOunce, double FlatFee);
-	virtual ~TwoDayPackage() {};
 
-	virtual double calculateCost(void) const override;
+namespace name12_13 {
 
-	double getFlatFee(void) const
+	class TwoDayPackage : public Package
 	{
-		return flatFee;
-	}
+	public:
+		explicit TwoDayPackage(Person& Sender, Person& Recipient, double Weight,
+			double CostPerOunce, double FlatFee);
+		virtual ~TwoDayPackage() {};
 
-	void setFlatFee(double FlatFee);
+		virtual double calculateCost(void) const override;
 
-private:
-	double flatFee;
-};
+		double getFlatFee(void) const
+		{
+			return flatFee;
+		}
 
+		void setFlatFee(double FlatFee);
+
+	private:
+		double flatFee;
+	};
+
+}

@@ -152,9 +152,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="12.14.cpp" />
-    <ClCompile Include="Account.cpp" />
-    <ClCompile Include="CheckingAccount.cpp" />
-    <ClCompile Include="SavingsAccount.cpp" />
+    <ClCompile Include="Account12_14.cpp" />
+    <ClCompile Include="CheckingAccount12_14.cpp" />
+    <ClCompile Include="SavingsAccount12_14.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />

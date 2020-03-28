@@ -1,40 +1,40 @@
 // Fig. 10.6: Date.h
 // Date class definition with overloaded increment operators.
-#ifndef DATE_H
-#define DATE_H
+#pragma once
 
 #include <array>
 #include <iostream>
 
-class Date
-{
-   friend std::ostream &operator<<( std::ostream &, const Date & );
-public:
-   explicit Date( int m = 1, int d = 1, int y = 1900 ); // default constructor
-   void setDate( int, int, int ); // set month, day, year
-   Date &operator++(); // prefix increment operator
-   Date operator++( int ); // postfix increment operator
-   Date &operator+=(int ); // add days, modify object
+namespace name12_12 {
 
-   bool operator==(const Date &b) const;
+    class Date
+    {
+        friend std::ostream& operator<<(std::ostream&, const Date&);
+    public:
+        explicit Date(int m = 1, int d = 1, int y = 1900); // default constructor
+        void setDate(int, int, int); // set month, day, year
+        Date& operator++(); // prefix increment operator
+        Date operator++(int); // postfix increment operator
+        Date& operator+=(int); // add days, modify object
 
-   static bool leapYear( int ); // is date in a leap year?
-   bool endOfMonth( int ) const; // is date at the end of month?
-   int getMonth(void) const
-   {
-	   return month;
-   }
+        bool operator==(const Date& b) const;
 
-private:
-   unsigned int month;
-   unsigned int day;
-   unsigned int year;
+        static bool leapYear(int); // is date in a leap year?
+        bool endOfMonth(int) const; // is date at the end of month?
+        int getMonth(void) const
+        {
+            return month;
+        }
 
-   static const std::array<int, 13 > days; // days per month
-   void helpIncrement(); // utility function for incrementing date
-}; // end class Date
+    private:
+        unsigned int month;
+        unsigned int day;
+        unsigned int year;
 
-#endif
+        static const std::array<int, 13 > days; // days per month
+        void helpIncrement(); // utility function for incrementing date
+    }; // end class Date
+}
 
 /**************************************************************************
  * (C) Copyright 1992-2014 by Deitel & Associates, Inc. and               *

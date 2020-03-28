@@ -1,10 +1,11 @@
 // Fig. 12.15: BasePlusCommissionEmployee.h
 // BasePlusCommissionEmployee class derived from CommissionEmployee.
-#ifndef BASEPLUS_H
-#define BASEPLUS_H
+#pragma once
 
 #include <string> // C++ standard string class
 #include "CommissionEmployee.h" // CommissionEmployee class definition
+
+namespace name12_12 {
 
 class BasePlusCommissionEmployee : public CommissionEmployee 
 {
@@ -23,7 +24,7 @@ private:
    double baseSalary; // base salary per week
 }; // end class BasePlusCommissionEmployee
 
-#endif // BASEPLUS_H
+}
 
 /**************************************************************************
  * (C) Copyright 1992-2014 by Deitel & Associates, Inc. and               *
