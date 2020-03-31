@@ -27,6 +27,7 @@ class Broker {
 public:
     Broker(int devno1, int devno2)
         try : dev1_(Device(devno1)),   // Create these in the initializer
+        data(devno1 == 0? throw std::invalid_argument("first argument can't be zero") : new char[100]()),
         dev2_(Device(devno2)),
         dev3_(Device(3)){} // list.
     catch (...) {
@@ -38,6 +39,7 @@ public:
 private:
     Broker();
     Device dev1_;
+    char* data;
     Device dev2_;
     Device dev3_;
 };
@@ -45,7 +47,8 @@ private:
 int main() {
 
     try {
-        Broker b(1, 2);
+        Broker b(0, 3);
+        std::cout << "we can't reach here?\n";
     }
     catch (exception& e) {
         cerr << "Exception: " << e.what() << endl;
