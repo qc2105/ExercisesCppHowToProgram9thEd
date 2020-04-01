@@ -35,6 +35,83 @@
 #include "../12.13/TwoDayPackage.h"
 #include "../12.13/OvernightPackage.h"
 #include "../12.12/SalariedEmployee.h"
+#include "../18.4/Array.h"
+
+class Test18_4 : public ::testing::Test
+{
+protected:
+	Test18_4() :
+		array2(Array<size_t>(5)),
+		array3(array1)
+	{
+		array4 = array2;
+	}
+
+	virtual ~Test18_4() {}
+
+	Array<size_t> array1;
+	Array<size_t> array2;
+	Array<size_t> array3;
+	Array<size_t> array4;
+};
+
+TEST_F(Test18_4, TestContor)
+{
+	ASSERT_EQ(10, array1.getSize());
+	for (size_t i = 0; i < 10; ++i)
+	{
+		ASSERT_EQ(0, array1[i]);
+	}
+
+	ASSERT_EQ(5, array2.getSize());
+	for (size_t i = 0; i < 5; ++i)
+	{
+		ASSERT_EQ(0, array2[i]);
+	}
+}
+
+TEST_F(Test18_4, TestCopyContor)
+{
+	ASSERT_EQ(10, array3.getSize());
+	for (size_t i = 0; i < 10; ++i)
+	{
+		ASSERT_EQ(0, array3[i]);
+	}
+}
+
+TEST_F(Test18_4, TestAssignment)
+{
+	ASSERT_EQ(5, array4.getSize());
+	for (size_t i = 0; i < 5; ++i)
+	{
+		ASSERT_EQ(0, array4[i]);
+	}
+}
+
+TEST_F(Test18_4, TestEqual)
+{
+	ASSERT_TRUE(array2 == array4);
+	ASSERT_FALSE(array1 == array2);
+}
+
+TEST_F(Test18_4, TestInEqual)
+{
+	ASSERT_TRUE(array1 != array4);
+	ASSERT_FALSE(array2 != array4);
+}
+
+TEST_F(Test18_4, TestLvalueSubscriptor)
+{
+	for (size_t i = 0; i < array1.getSize(); ++i)
+	{
+		array1[i] = i;
+	}
+
+	for (size_t i = 0; i < array1.getSize(); ++i)
+	{
+		ASSERT_TRUE(array1[i] == i);
+	}
+}
 
 class TestEmployee : public ::testing::Test
 {
