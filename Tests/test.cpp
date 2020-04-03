@@ -36,6 +36,91 @@
 #include "../12.13/OvernightPackage.h"
 #include "../12.12/SalariedEmployee.h"
 #include "../18.4/Array.h"
+#include "../19.6/Node.h"
+#include "../19.6/List.h"
+
+
+class Test19_6 : public ::testing::Test
+{
+protected:
+	Test19_6() :
+		node(Node<int>(5))
+	{
+
+	}
+
+	Node<int> node;
+	List<int> list;
+};
+
+TEST_F(Test19_6, TestNodeContor)
+{
+	ASSERT_EQ(node.getData(), 5);
+}
+
+TEST_F(Test19_6, TestListContor)
+{
+	ASSERT_EQ(list.size(), 0);
+	ASSERT_TRUE(list.isEmpty());
+}
+
+TEST_F(Test19_6, TestInsertAtFront)
+{
+	list.insertAtFront(2);
+	list.insertAtFront(1);
+	
+	ASSERT_EQ(2, list.size());
+	ASSERT_FALSE(list.isEmpty());
+
+	ASSERT_EQ(1, list[0]);
+	ASSERT_EQ(2, list[1]);
+}
+
+TEST_F(Test19_6, TestInsertAtBack)
+{
+	list.insertAtBack(1);
+	list.insertAtBack(2);
+
+	ASSERT_EQ(2, list.size());
+	ASSERT_FALSE(list.isEmpty());
+	
+	ASSERT_EQ(1, list[0]);
+	ASSERT_EQ(2, list[1]);
+}
+
+TEST_F(Test19_6, TestRemoveAtFront)
+{
+	list.insertAtBack(1);
+	list.insertAtBack(2);
+	list.insertAtFront(0);
+
+	int data = -1;
+	list.removeAtFront(data);
+
+	ASSERT_EQ(2, list.size());
+	ASSERT_FALSE(list.isEmpty());
+
+	ASSERT_EQ(1, list[0]);
+	ASSERT_EQ(2, list[1]);
+	ASSERT_EQ(0, data);
+}
+
+TEST_F(Test19_6, TestRemoveAtBack)
+{
+	list.insertAtBack(1);
+	list.insertAtBack(2);
+	list.insertAtFront(0);
+
+	int data = -1;
+	list.removeAtBack(data);
+
+	ASSERT_EQ(2, list.size());
+	ASSERT_FALSE(list.isEmpty());
+
+	ASSERT_EQ(0, list[0]);
+	ASSERT_EQ(1, list[1]);
+	ASSERT_EQ(2, data);
+}
 
 class Test18_4 : public ::testing::Test
 {
@@ -60,13 +145,13 @@ TEST_F(Test18_4, TestContor)
 	ASSERT_EQ(10, array1.getSize());
 	for (size_t i = 0; i < 10; ++i)
 	{
-		ASSERT_EQ(0, array1[i]);
+		ASSERT_EQ(0, array1[static_cast<int>(i)]);
 	}
 
 	ASSERT_EQ(5, array2.getSize());
 	for (size_t i = 0; i < 5; ++i)
 	{
-		ASSERT_EQ(0, array2[i]);
+		ASSERT_EQ(0, array2[static_cast<int>(i)]);
 	}
 }
 
@@ -75,7 +160,7 @@ TEST_F(Test18_4, TestCopyContor)
 	ASSERT_EQ(10, array3.getSize());
 	for (size_t i = 0; i < 10; ++i)
 	{
-		ASSERT_EQ(0, array3[i]);
+		ASSERT_EQ(0, array3[static_cast<int>(i)]);
 	}
 }
 
@@ -84,7 +169,7 @@ TEST_F(Test18_4, TestAssignment)
 	ASSERT_EQ(5, array4.getSize());
 	for (size_t i = 0; i < 5; ++i)
 	{
-		ASSERT_EQ(0, array4[i]);
+		ASSERT_EQ(0, array4[static_cast<int>(i)]);
 	}
 }
 
@@ -104,12 +189,12 @@ TEST_F(Test18_4, TestLvalueSubscriptor)
 {
 	for (size_t i = 0; i < array1.getSize(); ++i)
 	{
-		array1[i] = i;
+		array1[static_cast<int>(i)] = i;
 	}
 
 	for (size_t i = 0; i < array1.getSize(); ++i)
 	{
-		ASSERT_TRUE(array1[i] == i);
+		ASSERT_TRUE(array1[static_cast<int>(i)] == i);
 	}
 }
 
