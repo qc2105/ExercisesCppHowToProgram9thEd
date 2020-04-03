@@ -5,7 +5,7 @@
 #include <iostream>
 
 template <class T>
-bool concatenate(List<T>& a, const List<T>& b)
+bool concatenate(List<T>& a, List<T>& b)
 {
     for (size_t i = 0; i < b.size(); ++i)
     {

@@ -6,24 +6,15 @@
 template <class T>
 class List
 {
-	friend std::ostream& operator << (std::ostream& out, List& list)
-	{
-		out << "Size: " << list.size() << ",\t";
-		out << "Elements: ";
-
-		for (size_t i = 0; i < list.size(); ++i)
-		{
-			std::cout << list[i] << ' ';
-		}
-		out << std::endl;
-
-		return out;
-	}
-
+	template <class U>
+	friend std::ostream& operator << (std::ostream& out, List<U>& list);
+	
 public:
 	List(void) :
 		headPtr(nullptr),
 		tailPtr(nullptr),
+		accessPtr(nullptr),
+		currentPosition(0),
 		nSize(0)
 	{}
 
@@ -68,6 +59,8 @@ public:
 				headPtr = newNode;
 				tailPtr = newNode;
 			}
+			currentPosition = 0;
+			accessPtr = headPtr;
 			++nSize;
 
 			return true;
@@ -102,8 +95,9 @@ public:
 			headPtr = headPtr->nextPtr;
 			delete tempPtr;
 		}
-
 		--nSize;
+		currentPosition = 0;
+		accessPtr = headPtr;
 
 		return true;
 	}
@@ -124,6 +118,8 @@ public:
 				headPtr = newNode;
 				tailPtr = newNode;
 			}
+			currentPosition = nSize;
+			accessPtr = tailPtr;
 			++nSize;
 
 			return true;
@@ -165,25 +161,41 @@ public:
 			currentPtr->nextPtr = nullptr;
 			delete tempPtr;
 		}
-
 		--nSize;
+		currentPosition = nSize - 1;
+		accessPtr = tailPtr;
 
 		return true;
 	}
 
-	const T& operator[](const size_t i) const
+	const T& operator[](const size_t i)
 	{
 		if (i >= size())
 		{
 			throw std::out_of_range("subcript out of range\n");
 		}
 
-		Node<T>* currentPtr = headPtr;
-		for (size_t idx = 0; idx < i; ++idx)
-		{
-			currentPtr = currentPtr->nextPtr;
-		}
+		Node<T>* currentPtr = nullptr;
 
+		if (i >= currentPosition)
+		{
+			currentPtr = accessPtr;
+			for (size_t idx = 0; idx < i - currentPosition; ++idx)
+			{
+				currentPtr = currentPtr->nextPtr;
+			}
+		}
+		else
+		{
+			currentPtr = headPtr;
+			for (size_t idx = 0; idx < i; ++idx)
+			{
+				currentPtr = currentPtr->nextPtr;
+			}
+		}
+		
+		accessPtr = currentPtr;
+		currentPosition = i;
 		return currentPtr->getData();
 	}
 
@@ -205,6 +217,8 @@ public:
 private:
 	Node<T>* headPtr;
 	Node<T>* tailPtr;
+	Node<T>* accessPtr;
+	size_t currentPosition;
 	size_t nSize;
 	
 	Node<T>* createNode(const T& data)
@@ -214,3 +228,20 @@ private:
 		return newNode;
 	}
 };
+
+template <class T>
+std::ostream& operator << (std::ostream& out, List<T>& list)
+{
+	out << "Size: " << list.size() << ",\t";
+	out << "Elements: ";
+
+	Node<T>* currentPtr = list.headPtr;
+	while (currentPtr != nullptr)
+	{
+		out << currentPtr->data << ' ';
+		currentPtr = currentPtr->nextPtr;
+	}
+	out << std::endl;
+
+	return out;
+}
