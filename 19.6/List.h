@@ -13,7 +13,7 @@ public:
 	List(void) :
 		headPtr(nullptr),
 		tailPtr(nullptr),
-		accessPtr(nullptr),
+		accessedPtr(nullptr),
 		currentPosition(0),
 		nSize(0)
 	{}
@@ -30,7 +30,8 @@ public:
 			delete tempPtr;
 			--nSize;
 		}
-		headPtr = tailPtr = nullptr;
+		headPtr = tailPtr = accessedPtr = nullptr;
+		currentPosition = 0;
 	}
 
 	size_t size(void) const
@@ -60,7 +61,7 @@ public:
 				tailPtr = newNode;
 			}
 			currentPosition = 0;
-			accessPtr = headPtr;
+			accessedPtr = headPtr;
 			++nSize;
 
 			return true;
@@ -97,7 +98,7 @@ public:
 		}
 		--nSize;
 		currentPosition = 0;
-		accessPtr = headPtr;
+		accessedPtr = headPtr;
 
 		return true;
 	}
@@ -119,7 +120,7 @@ public:
 				tailPtr = newNode;
 			}
 			currentPosition = nSize;
-			accessPtr = tailPtr;
+			accessedPtr = tailPtr;
 			++nSize;
 
 			return true;
@@ -163,7 +164,7 @@ public:
 		}
 		--nSize;
 		currentPosition = nSize - 1;
-		accessPtr = tailPtr;
+		accessedPtr = tailPtr;
 
 		return true;
 	}
@@ -179,7 +180,7 @@ public:
 
 		if (i >= currentPosition)
 		{
-			currentPtr = accessPtr;
+			currentPtr = accessedPtr;
 			for (size_t idx = 0; idx < i - currentPosition; ++idx)
 			{
 				currentPtr = currentPtr->nextPtr;
@@ -194,7 +195,7 @@ public:
 			}
 		}
 		
-		accessPtr = currentPtr;
+		accessedPtr = currentPtr;
 		currentPosition = i;
 		return currentPtr->getData();
 	}
@@ -217,7 +218,7 @@ public:
 private:
 	Node<T>* headPtr;
 	Node<T>* tailPtr;
-	Node<T>* accessPtr;
+	Node<T>* accessedPtr;
 	size_t currentPosition;
 	size_t nSize;
 	

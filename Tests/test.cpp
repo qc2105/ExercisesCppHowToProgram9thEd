@@ -39,6 +39,7 @@
 #include "../19.6/Node.h"
 #include "../19.6/List.h"
 
+#include "../19.7/List.h"
 
 class Test19_6 : public ::testing::Test
 {
@@ -120,6 +121,34 @@ TEST_F(Test19_6, TestRemoveAtBack)
 	ASSERT_EQ(0, list[0]);
 	ASSERT_EQ(1, list[1]);
 	ASSERT_EQ(2, data);
+}
+
+class Test19_7 : public ::testing::Test
+{
+protected:
+	Test19_7() :
+		node(name19_7::Node<int>(5))
+	{
+
+	}
+
+	name19_7::Node<int> node;
+	name19_7::List<int> list;
+};
+
+TEST_F(Test19_7, TestSort)
+{
+	for (int i = 99; i >= 0; --i)
+	{
+		list.insertAtBack(i);
+	}
+
+	list.sort();
+
+	for (int i = 0; i <= 99; ++i)
+	{
+		ASSERT_EQ(i, list[i]);
+	}
 }
 
 class Test18_4 : public ::testing::Test
