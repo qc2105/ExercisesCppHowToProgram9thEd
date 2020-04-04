@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <iostream>
 
-namespace name19_7 {
+namespace name19_8 {
 
 	template <class T>
 	class List
