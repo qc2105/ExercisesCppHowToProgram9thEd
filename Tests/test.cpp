@@ -49,6 +49,7 @@ protected:
 	{
 
 	}
+	virtual ~Test19_6() {}
 
 	Node<int> node;
 	List<int> list;
@@ -131,6 +132,7 @@ protected:
 	{
 
 	}
+	virtual ~Test19_7() {}
 
 	name19_7::Node<int> node;
 	name19_7::List<int> list;
@@ -148,6 +150,32 @@ TEST_F(Test19_7, TestSort)
 	for (int i = 0; i <= 99; ++i)
 	{
 		ASSERT_EQ(i, list[i]);
+	}
+}
+
+#include "../19.9/List.h"
+
+class Test19_9 : public ::testing::Test
+{
+protected:
+	Test19_9() 
+	{}
+	virtual ~Test19_9() {}
+
+	name19_9::List<char> list;
+};
+
+TEST_F(Test19_9, TestStreamExtraction)
+{
+	std::stringstream s("1 2 3");
+
+	s >> list;
+
+	ASSERT_EQ(3, list.size());
+
+	for (size_t i = 0; i < list.size(); ++i)
+	{
+		ASSERT_EQ(std::to_string(i+1).at(0), list[i]);
 	}
 }
 
