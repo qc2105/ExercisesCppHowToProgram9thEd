@@ -12,48 +12,7 @@ std::string convertToPostfix(std::string infixStr);
 int main()
 {
     std::string infixStr = "(6 + 2) * 5 - 8 / 4";
-   /* std::string operators = "-+%/*^";
-    List<char> postFixList;
-
-    Stack<char> stack;
-
-    stack.push('(');
-    infixStr.append(")");
-
-    for (size_t i = 0; !stack.isEmpty() && i < infixStr.size(); ++i)
-    {
-        if (::isdigit(infixStr[i]))
-        {
-            postFixList.insertAtBack(infixStr[i]);
-        }
-        else if (infixStr[i] == '(')
-        {
-            stack.push(infixStr[i]);
-        }
-        else if (operators.find(infixStr[i]) != std::string::npos)
-        {
-            if (operators.find(stack.top()) != std::string::npos && operators.find(infixStr[i]) <= operators.find(stack.top()))
-            {
-                char c = '\0';
-                stack.pop(c);
-                postFixList.insertAtBack(c);
-            }
-            stack.push(infixStr[i]);
-        }
-        else if (infixStr[i] == ')')
-        {
-            while (stack.top() != '(')
-            {
-                char c = '\0';
-                stack.pop(c);
-                postFixList.insertAtBack(c);
-            }
-            stack.pop();
-        }
-    }
-
-    std::cout << postFixList;*/
-
+  
     std::cout << convertToPostfix(infixStr);
 
     return 0;
