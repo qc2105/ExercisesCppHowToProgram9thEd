@@ -12,8 +12,8 @@ void move(int count, int start, int end, int temp)
 	{
 		move(count - 1, start, temp, end);
 		n++;
-		std::cout << n;
-		std::cout << "," << count << "," << start << "," << end << std::endl;
+		std::cout << "step: " << n;
+		std::cout << ": move one disk from peg " << start << " to " << end << std::endl;
 		move(count - 1, temp, end, start);
 	}
 }
@@ -23,7 +23,7 @@ int main()
 	while (true)
 	{
 		n = 0;
-		std::cout << "Input the parameters: count, start, end, temp, 0 of any of them to quit!\n";
+		std::cout << "Input the parameters: count of disks, start peg, end peg, temp peg, 0 of any of them to quit!\n";
 		int count, start, end, temp;
 		std::cin >> count >> start >> end >> temp;
 		if (0 == count || 0 == start || 0 == end || 0 == temp)
