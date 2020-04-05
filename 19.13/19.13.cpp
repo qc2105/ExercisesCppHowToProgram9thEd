@@ -37,7 +37,7 @@ double evaluatePostfixExpress(std::string postfixStr)
     {
         if (::isdigit(postfixStr.at(i)))
         {
-            stack.push(static_cast<int>(postfixStr.at(i)) - static_cast<int>('0'));
+            stack.push(static_cast<double>(postfixStr.at(i)) - static_cast<double>('0'));
         }
         else if (operators.find(postfixStr.at(i)) != std::string::npos)
         {
