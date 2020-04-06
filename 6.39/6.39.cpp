@@ -11,6 +11,7 @@
 #include <chrono>
 #include <iomanip>
 #include <iterator>
+#include <sstream>
 #include <string>
 #include "Clock.h"
 
@@ -36,7 +37,7 @@ int main()
         auto end = std::chrono::high_resolution_clock().now();
 
         auto duriation = std::chrono::duration_cast<std::chrono::duration<double>>(end - start);
-        std::cout << "It took me: " << duriation.count() << "seconds" << std::endl;
+        std::cout << "It took me: " << duriation.count() << " seconds" << std::endl;
     }
     
     return 0;
@@ -107,27 +108,22 @@ void move(size_t n)
     };
 
     // With some math we can get this formula from the recursive version: for n disks we need 2^n - 1 steps
-    
-    std::list<Clock> clocks; // All possible steps permutation
-    Clock clock(n);
-    for (size_t i = 0; i < ::pow(6, ::pow(2, n) - 1); ++i)
-    {
-        clocks.push_back(clock);
-        ++clock;
-    }
-
+    // We use a Clock object to store the steps. 
     std::array<std::vector<size_t>, 3> stacks;
-
-    // Verify each possibility, until we get one that works
-    for (auto it = clocks.begin(); it != clocks.end(); ++it) // ::pow(6, ::pow(2, n) - 1) times
+    Clock clock(n);
+    double nPermutations = ::pow(6, ::pow(2, n) - 1);
+    
+    std::string nPermutaionsStr = std::to_string(nPermutations);
+   
+    for (double i = 0; i < nPermutations; ++i)
     {
-        //std::cout << std::setw(std::to_string(clocks.size()).size()) << i << '/' << clocks.size() << '\r';
+        std::cout << std::to_string(i) << '/' << nPermutaionsStr << '\r';
         initializeStacks(n, stacks);
-        for (size_t j = 0; j < it->size(); ++j) // ::pow(2, n) - 1 times.
+        for (size_t j = 0; j < clock.size(); ++j) // ::pow(2, n) - 1 times.
         {
-            if (isValid(stepPermutations.at(it->at(j)), stacks))
+            if (isValid(stepPermutations.at(clock.at(j)), stacks))
             {
-                executeStep(stepPermutations.at(it->at(j)), stacks);
+                executeStep(stepPermutations.at(clock.at(j)), stacks);
             }
             else
             {
@@ -136,12 +132,13 @@ void move(size_t n)
         }
         if (stacks.at(2).size() == n && stacks.at(2).back() == 1)
         {
-            //std::cout << std::endl;
-            for (size_t j = 0; j < it->size(); ++j)
+            std::cout << std::endl;
+            for (size_t j = 0; j < clock.size(); ++j)
             {
-                std::cout << stepPermutations.at(it->at(j)).first << "->" << stepPermutations.at(it->at(j)).second << std::endl;
+                std::cout << stepPermutations.at(clock.at(j)).first << "->" << stepPermutations.at(clock.at(j)).second << std::endl;
             }
             break;
         }
+        ++clock;
     }
 }
