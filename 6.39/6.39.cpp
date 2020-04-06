@@ -59,11 +59,11 @@ bool isValid(std::pair<int, int> step, std::array<std::vector<size_t>, 3>& stack
     int fromPeg = step.first - 1;
     int toPeg = step.second - 1;
 
-    if (stacks.at(fromPeg).empty())
+    if (!stacks.at(toPeg).empty() && !stacks.at(fromPeg).empty() && stacks.at(fromPeg).back() > stacks.at(toPeg).back())
     {
         return false;
     }
-    if (!stacks.at(toPeg).empty() && stacks.at(fromPeg).back() > stacks.at(toPeg).back())
+    if (stacks.at(fromPeg).empty())
     {
         return false;
     }
@@ -119,9 +119,16 @@ void move(size_t n)
     {
         std::cout << std::to_string(i) << '/' << nPermutaionsStr << '\r';
         initializeStacks(n, stacks);
-        for (size_t j = 0; j < clock.size(); ++j) // ::pow(2, n) - 1 times.
+        
+        size_t j = 0;
+        for (; j < clock.size() - 1; ++j) // ::pow(2, n) - 1 times.
         {
-            if (isValid(stepPermutations.at(clock.at(j)), stacks))
+            if (stepPermutations.at(clock.at(j)).first == stepPermutations.at(clock.at(j + 1)).second &&
+                stepPermutations.at(clock.at(j)).second == stepPermutations.at(clock.at(j + 1)).first)
+            {
+                break;
+            }
+            else if (isValid(stepPermutations.at(clock.at(j)), stacks))
             {
                 executeStep(stepPermutations.at(clock.at(j)), stacks);
             }
@@ -129,6 +136,10 @@ void move(size_t n)
             {
                 break;
             }
+        }
+        if (isValid(stepPermutations.at(clock.at(j)), stacks))
+        {
+            executeStep(stepPermutations.at(clock.at(j)), stacks);
         }
         if (stacks.at(2).size() == n && stacks.at(2).back() == 1)
         {
