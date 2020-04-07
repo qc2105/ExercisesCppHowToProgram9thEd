@@ -2164,3 +2164,52 @@ TEST(Test15_25, TestGetPrimesFactors)
 
 	EXPECT_EQ(expectFactors, realFactors);
 }
+
+#include "../19.15/Queue.h"
+
+class Test19_15 : public ::testing::Test
+{
+protected:
+	Test19_15()
+	{
+	
+	}
+
+	virtual ~Test19_15() {}
+
+	name19_15::Queue<int> queue;
+};
+
+TEST_F(Test19_15, TestContor)
+{
+	ASSERT_EQ(0, queue.size());
+	ASSERT_TRUE(queue.isEmpty());
+}
+
+TEST_F(Test19_15, TestEnqueue)
+{
+	for (int i = 0; i < 10; ++i)
+	{
+		queue.enqueue(i);
+	}
+
+	ASSERT_EQ(10, queue.size());
+	ASSERT_EQ(9, queue.back());
+	ASSERT_EQ(0, queue.front());
+}
+
+TEST_F(Test19_15, TestDequeue)
+{
+	for (int i = 0; i < 10; ++i)
+	{
+		queue.enqueue(i);
+	}
+
+	for (int i = 0; i < 10; ++i)
+	{
+		int v = -1;
+		queue.dequeue(v);
+
+		ASSERT_EQ(i, v);
+	}
+}
