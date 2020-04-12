@@ -2213,3 +2213,94 @@ TEST_F(Test19_15, TestDequeue)
 		ASSERT_EQ(i, v);
 	}
 }
+
+
+#include "../19.19/Tree.h"
+
+class Test19_19 : public ::testing::Test
+{
+protected:
+	Test19_19()
+	{
+		tree.insertNode(1);
+		tree.insertNode(2);
+		tree.insertNode(4);
+		tree.insertNode(3);
+		tree.insertNode(5);
+	}
+
+	virtual ~Test19_19() {}
+
+	name19_19::Tree<int> tree;
+};
+
+TEST_F(Test19_19, TestInsertNode)
+{
+	std::stringstream out;
+	out << tree;
+	ASSERT_EQ("1 2 4 3 5 ", out.str());
+}
+
+TEST_F(Test19_19, TestFather)
+{
+	name19_19::TreeNode<int>* father = nullptr;
+
+	tree.father(2, father);
+	ASSERT_EQ(1, father->data);
+	father = nullptr;
+	tree.father(1, father);
+	ASSERT_EQ(nullptr, father);
+	tree.father(4, father);
+	ASSERT_EQ(2, father->data);
+	father = nullptr;
+	tree.father(3, father);
+	ASSERT_EQ(4, father->data);
+	father = nullptr;
+	tree.father(5, father);
+	ASSERT_EQ(4, father->data);
+	father = nullptr;
+	tree.father(-1, father);
+	ASSERT_EQ(nullptr, father);
+}
+
+TEST_F(Test19_19, TestLeafs)
+{
+	name19_19::List<int> list;
+
+	tree.leafs(list);
+
+	ASSERT_EQ(2, list.size());
+	ASSERT_EQ(3, list[0]);
+	ASSERT_EQ(5, list[1]);
+}
+
+TEST_F(Test19_19, TestLeafsToRootPaths)
+{
+	name19_19::List<name19_19::List<int>> paths;
+
+	name19_19::Tree<int> intTree;
+
+	std::stringstream input("98 87 76 88 66 77 69 56 59 46 199 169 299 189 175 179");
+	input >> intTree;
+
+	intTree.leafsToRootPaths(paths);
+	name19_19::List<name19_19::List<int>> expectedPaths;
+	std::vector<std::stringstream> inputs;
+	
+	inputs.push_back(std::stringstream("46 56 66 76 87 98"));
+	inputs.push_back(std::stringstream("59 56 66 76 87 98"));
+	inputs.push_back(std::stringstream("69 66 76 87 98"));
+	inputs.push_back(std::stringstream("77 76 87 98"));
+	inputs.push_back(std::stringstream("88 87 98"));
+	inputs.push_back(std::stringstream("179 175 189 169 199 98"));
+	inputs.push_back(std::stringstream("299 199 98"));
+
+	for (size_t i = 0; i < inputs.size(); ++i)
+	{
+		name19_19::List<int> path;
+		inputs.at(i) >> path;
+		expectedPaths.insertAtBack(path);
+	}
+
+	ASSERT_EQ(expectedPaths, paths);
+}
