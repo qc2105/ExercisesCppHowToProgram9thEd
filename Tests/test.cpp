@@ -2304,3 +2304,194 @@ TEST_F(Test19_19, TestLeafsToRootPaths)
 
 	ASSERT_EQ(expectedPaths, paths);
 }
+
+
+#include "../19.26/List.h"
+
+class Test19_26 : public ::testing::Test
+{
+protected:
+	Test19_26(void)
+	{
+		std::stringstream inputs("1 2 3 4 5");
+
+		inputs >> list;
+	}
+
+	virtual ~Test19_26() {}
+
+	name19_26::List<int> list;
+};
+
+TEST_F(Test19_26, TestInsertAfterValue)
+{
+	bool ret = list.insertAfterValue(3, 6);
+
+	ASSERT_TRUE(ret);
+	ASSERT_EQ(6, list.size());
+	ASSERT_EQ(6, list[3]);
+	ASSERT_EQ(5, list[5]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.insertAfterValue(99, 100);
+	
+	ASSERT_FALSE(ret);
+	ASSERT_EQ(6, list.size());
+	ASSERT_EQ(6, list[3]);
+	ASSERT_EQ(5, list[5]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.insertAfterValue(5, 7);
+
+	ASSERT_TRUE(ret);
+	ASSERT_EQ(7, list.size());
+	ASSERT_EQ(6, list[3]);
+	ASSERT_EQ(5, list[5]);
+	ASSERT_EQ(3, list[2]);
+	ASSERT_EQ(7, list[6]);
+}
+
+TEST_F(Test19_26, TestRemoveAfterValue)
+{
+	int data = -1;
+	bool ret = list.removeAfterValue(3, data);
+	
+	ASSERT_TRUE(ret);
+	ASSERT_EQ(4, list.size());
+	ASSERT_EQ(5, list[3]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.removeAfterValue(99, data);
+	ASSERT_FALSE(ret);
+	ASSERT_EQ(4, list.size());
+	ASSERT_EQ(5, list[3]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.removeAfterValue(5, data);
+	ASSERT_FALSE(ret);
+	ASSERT_EQ(4, list.size());
+	ASSERT_EQ(5, list[3]);
+	ASSERT_EQ(3, list[2]);
+}
+
+TEST_F(Test19_26, TestInsertAfterPosition)
+{
+	bool ret = list.insertAfterPosition(2, 6);
+
+	ASSERT_TRUE(ret);
+	ASSERT_EQ(6, list.size());
+	ASSERT_EQ(6, list[3]);
+	ASSERT_EQ(5, list[5]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.insertAfterPosition(99, 100);
+
+	ASSERT_FALSE(ret);
+	ASSERT_EQ(6, list.size());
+	ASSERT_EQ(6, list[3]);
+	ASSERT_EQ(5, list[5]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.insertAfterPosition(5, 7);
+
+	ASSERT_TRUE(ret);
+	ASSERT_EQ(7, list.size());
+	ASSERT_EQ(6, list[3]);
+	ASSERT_EQ(5, list[5]);
+	ASSERT_EQ(3, list[2]);
+	ASSERT_EQ(7, list[6]);
+}
+
+TEST_F(Test19_26, TestRemoveAfterPosition)
+{
+	int data = -1;
+	bool ret = list.removeAfterPosition(2, data);
+
+	ASSERT_TRUE(ret);
+	ASSERT_EQ(4, list.size());
+	ASSERT_EQ(5, list[3]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.removeAfterPosition(99, data);
+	ASSERT_FALSE(ret);
+	ASSERT_EQ(4, list.size());
+	ASSERT_EQ(5, list[3]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.removeAfterPosition(3, data);
+	ASSERT_FALSE(ret);
+	ASSERT_EQ(4, list.size());
+	ASSERT_EQ(5, list[3]);
+	ASSERT_EQ(3, list[2]);
+}
+
+TEST_F(Test19_26, TestInsertAtPosition)
+{
+	bool ret = list.insertAtPosition(3, 6);
+
+	ASSERT_TRUE(ret);
+	ASSERT_EQ(6, list.size());
+	ASSERT_EQ(6, list[3]);
+	ASSERT_EQ(5, list[5]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.insertAtPosition(99, 100);
+
+	ASSERT_FALSE(ret);
+	ASSERT_EQ(6, list.size());
+	ASSERT_EQ(6, list[3]);
+	ASSERT_EQ(5, list[5]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.insertAtPosition(5, 7);
+
+	ASSERT_TRUE(ret);
+	ASSERT_EQ(7, list.size());
+	ASSERT_EQ(6, list[3]);
+	ASSERT_EQ(7, list[5]);
+	ASSERT_EQ(3, list[2]);
+	ASSERT_EQ(5, list[6]);
+
+	ret = list.insertAtPosition(0, 99);
+
+	ASSERT_TRUE(ret);
+	ASSERT_EQ(8, list.size());
+	ASSERT_EQ(6, list[4]);
+	ASSERT_EQ(7, list[6]);
+	ASSERT_EQ(3, list[3]);
+	ASSERT_EQ(5, list[7]);
+}
+
+TEST_F(Test19_26, TestRemoveAtPosition)
+{
+	int data = -1;
+	bool ret = list.removeAtPosition(3, data);
+
+	ASSERT_TRUE(ret);
+	ASSERT_EQ(4, data);
+	ASSERT_EQ(4, list.size());
+	ASSERT_EQ(5, list[3]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.removeAtPosition(99, data);
+	ASSERT_FALSE(ret);
+	ASSERT_EQ(4, data);
+	ASSERT_EQ(4, list.size());
+	ASSERT_EQ(5, list[3]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.removeAtPosition(4, data);
+	ASSERT_FALSE(ret);
+	ASSERT_EQ(4, data);
+	ASSERT_EQ(4, list.size());
+	ASSERT_EQ(5, list[3]);
+	ASSERT_EQ(3, list[2]);
+
+	ret = list.removeAtPosition(0, data);
+	ASSERT_TRUE(ret);
+	ASSERT_EQ(1, data);
+	ASSERT_EQ(3, list.size());
+	ASSERT_EQ(5, list[2]);
+	ASSERT_EQ(3, list[1]);
+	ASSERT_EQ(2, list[0]);
+}
