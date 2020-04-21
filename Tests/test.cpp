@@ -2495,3 +2495,66 @@ TEST_F(Test19_26, TestRemoveAtPosition)
 	ASSERT_EQ(3, list[1]);
 	ASSERT_EQ(2, list[0]);
 }
+
+#include "../19.22/Tree.h"
+
+class Test19_22 : public ::testing::Test
+{
+protected:
+	Test19_22(void)
+	{
+		std::stringstream inputs = std::stringstream("2 1 3 4");
+
+		inputs >> tree;
+	}
+	virtual ~Test19_22() {}
+
+	name19_22::Tree<int> tree;
+};
+
+TEST_F(Test19_22, TestRightMostNode)
+{
+	name19_22::TreeNode<int>* rightMostPtr = tree.rightMostNode();
+	ASSERT_EQ(4, rightMostPtr->data);
+}
+
+TEST_F(Test19_22, TestBinarySearchParent)
+{
+	name19_22::TreeNode<int>* parent = tree.binaryTreeSearchParent(4);
+	ASSERT_EQ(3, parent->data);
+
+	parent = tree.binaryTreeSearchParent(1);
+	ASSERT_EQ(2, parent->data);
+
+	parent = tree.binaryTreeSearchParent(3);
+	ASSERT_EQ(2, parent->data);
+}
+
+TEST_F(Test19_22, TestDeleteNode)
+{
+	std::stringstream inputs("49 28 83 18 40 71 97 11 19 32 44 69 72 92 99");
+
+	name19_22::List<int> list;
+	name19_22::Tree<int> tree;
+
+	inputs >> tree;
+	inputs >> list;
+
+	list.sort();
+
+	std::stringstream outputTree;
+	std::stringstream outputList;
+
+	for (size_t i = 0; i < list.size(); ++i)
+	{
+		outputList.clear();
+		outputTree.clear();
+		tree.deleteNode(list[i]);
+		outputTree << tree;
+		int data;
+		list.removeAtPosition(i, data);
+		outputList << list;
+		ASSERT_EQ(outputTree.str(), outputList.str());
+		list.insertAtPosition(i, data);
+	}
+}
