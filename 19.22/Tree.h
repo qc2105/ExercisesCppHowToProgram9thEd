@@ -12,6 +12,7 @@ namespace name19_22
 		friend std::ostream& operator <<(std::ostream &out, const Tree<U>& tree)
 		{
 			tree.inOrderTraverse(out);
+			out << std::endl;
 			return out;
 		}
 
@@ -171,47 +172,102 @@ namespace name19_22
 			{
 				return false;
 			}
-			TreeNode<T>* replacementNodePtr = nullptr;
-			rightMostNodeHelper(&(toBeDeleted->left), replacementNodePtr);
 			
 			TreeNode<T>* parentToBeDeleted = binaryTreeSearchParent(toBeDeleted->data);
-			TreeNode<T>* parentReplacement = binaryTreeSearchParent(replacementNodePtr->data);
+			if (toBeDeleted->isLeaf())
+			{
+				if (parentToBeDeleted->data > toBeDeleted->data)
+				{
+					parentToBeDeleted->left = nullptr;
+				}
+				else
+				{
+					parentToBeDeleted->right = nullptr;
+				}
+				delete toBeDeleted;
+				toBeDeleted = nullptr;
+				return true;
+			}
+			else if (toBeDeleted->left == nullptr && toBeDeleted->right != nullptr) 
+			{
+				if (parentToBeDeleted->data > toBeDeleted->right->data)
+				{
+					parentToBeDeleted->left = toBeDeleted->right;
+				}
+				else
+				{
+					parentToBeDeleted->right = toBeDeleted->right;
+				}
 
-			if (replacementNodePtr->data > parentToBeDeleted->data)
-			{
-				parentToBeDeleted->right = replacementNodePtr;
+				delete toBeDeleted;
+				toBeDeleted = nullptr;
+				return true;
 			}
-			else
+			else if (toBeDeleted->right == nullptr && toBeDeleted->left != nullptr)
 			{
-				parentToBeDeleted->left = replacementNodePtr;
-			}
-			
-			if (replacementNodePtr->isLeaf())
-			{
-				if (replacementNodePtr->data < parentReplacement->data)
+				if (parentToBeDeleted->data > toBeDeleted->left->data)
 				{
-					parentReplacement->left = nullptr;
+					parentToBeDeleted->left = toBeDeleted->left;
 				}
 				else
 				{
-					parentReplacement->right = nullptr;
+					parentToBeDeleted->right = toBeDeleted->left;
 				}
+
+				delete toBeDeleted;
+				toBeDeleted = nullptr;
+				return true;
 			}
-			else
+			else 
 			{
-				if (parentReplacement->data > replacementNodePtr->left->data)
+				TreeNode<T>* replacementNodePtr = nullptr;
+				rightMostNodeHelper(&(toBeDeleted->left), replacementNodePtr);
+
+				TreeNode<T>* parentReplacement = binaryTreeSearchParent(replacementNodePtr->data);
+
+				if (parentToBeDeleted != nullptr)
 				{
-					parentReplacement->left = replacementNodePtr->left;
+					if (replacementNodePtr->data > parentToBeDeleted->data)
+					{
+						parentToBeDeleted->right = replacementNodePtr;
+					}
+					else
+					{
+						parentToBeDeleted->left = replacementNodePtr;
+					}
 				}
 				else
 				{
-					parentReplacement->right = replacementNodePtr->left;
+					root = replacementNodePtr;
 				}
+				
+				if (replacementNodePtr->isLeaf())
+				{
+					if (replacementNodePtr->data < parentReplacement->data)
+					{
+						parentReplacement->left = nullptr;
+					}
+					else
+					{
+						parentReplacement->right = nullptr;
+					}
+				}
+				else
+				{
+					if (parentReplacement->data > replacementNodePtr->left->data)
+					{
+						parentReplacement->left = replacementNodePtr->left;
+					}
+					else
+					{
+						parentReplacement->right = replacementNodePtr->left;
+					}
+				}
+				replacementNodePtr->right = toBeDeleted->right;
+				replacementNodePtr->left = toBeDeleted->left;
+				delete toBeDeleted;
+				toBeDeleted = nullptr;
 			}
-			replacementNodePtr->right = toBeDeleted->right;
-			replacementNodePtr->left = toBeDeleted->left;
-			delete toBeDeleted;
-			toBeDeleted = nullptr;
 
 			return true;
 		}
@@ -232,7 +288,7 @@ namespace name19_22
 
 		void rightMostNodeHelper(TreeNode<T>* const*rootPtr, TreeNode<T>*& rightMostNodePtr) const
 		{
-			if ((*rootPtr)->right != nullptr)
+			if ((*rootPtr != nullptr) && (*rootPtr)->right != nullptr)
 			{
 				rightMostNodeHelper(&(*rootPtr)->right, rightMostNodePtr);
 			}
@@ -311,9 +367,9 @@ namespace name19_22
 		{
 			if (*rootPtr != nullptr)
 			{
-				preOrderTraverseHelper(out, &((*rootPtr)->left));
+				inOrderTraverseHelper(out, &((*rootPtr)->left));
 				out << (*rootPtr)->data << ' ';
-				preOrderTraverseHelper(out, &((*rootPtr)->right));
+				inOrderTraverseHelper(out, &((*rootPtr)->right));
 			}
 		}
 

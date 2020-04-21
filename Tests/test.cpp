@@ -2533,22 +2533,20 @@ TEST_F(Test19_22, TestBinarySearchParent)
 TEST_F(Test19_22, TestDeleteNode)
 {
 	std::stringstream inputs("49 28 83 18 40 71 97 11 19 32 44 69 72 92 99");
+	std::stringstream inputs2("49 28 83 18 40 71 97 11 19 32 44 69 72 92 99");
 
 	name19_22::List<int> list;
 	name19_22::Tree<int> tree;
 
 	inputs >> tree;
-	inputs >> list;
+	inputs2 >> list;
 
 	list.sort();
 
-	std::stringstream outputTree;
-	std::stringstream outputList;
-
 	for (size_t i = 0; i < list.size(); ++i)
 	{
-		outputList.clear();
-		outputTree.clear();
+		std::stringstream outputTree;
+		std::stringstream outputList;
 		tree.deleteNode(list[i]);
 		outputTree << tree;
 		int data;
@@ -2556,5 +2554,6 @@ TEST_F(Test19_22, TestDeleteNode)
 		outputList << list;
 		ASSERT_EQ(outputTree.str(), outputList.str());
 		list.insertAtPosition(i, data);
+		tree.insertNode(data);
 	}
 }

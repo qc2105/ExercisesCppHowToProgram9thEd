@@ -58,6 +58,15 @@ namespace name19_22 {
 			return nSize;
 		}
 
+		void clear(void)
+		{
+			while (nSize != 0)
+			{
+				T data;
+				removeAtBack(data);
+			}
+		}
+
 		bool isEmpty(void) const
 		{
 			return !nSize;
@@ -499,9 +508,6 @@ namespace name19_22 {
 	template <class T>
 	std::ostream& operator << (std::ostream& out, List<T>& list)
 	{
-		out << "Size: " << list.size() << ",\t";
-		out << "Elements: ";
-
 		Node<T>* currentPtr = list.headPtr;
 		while (currentPtr != nullptr)
 		{
