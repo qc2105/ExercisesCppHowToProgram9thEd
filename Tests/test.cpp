@@ -2566,7 +2566,7 @@ protected:
 
 	Test20_5(void)
 	{
-		srand(time(0));
+		srand(static_cast<unsigned int>(time(0)));
 		int num = -1;
 		for (size_t i = 0; i < 10; ++i)
 		{
@@ -2605,3 +2605,49 @@ TEST_F(Test20_5, TestBubbleSort)
 	ASSERT_EQ(outputs2.str(), outputs.str());
 }
 
+#include "../20.6/List.h"
+
+class Test20_6 : public ::testing::Test
+{
+protected:
+
+	Test20_6(void)
+	{
+		srand(static_cast<unsigned int>(time(0)));
+		int num = -1;
+		for (size_t i = 0; i < 10; ++i)
+		{
+			num = rand() % 10;
+			list.insertAtBack(num);
+			list2.insertAtBack(num);
+		}
+	}
+	virtual ~Test20_6() {}
+
+	name20_6::List<int> list;
+	name20_6::List<int> list2;
+};
+
+TEST_F(Test20_6, TestInsertionSort)
+{
+	std::stringstream outputs;
+	std::stringstream outputs2;
+	list.iSort();
+	outputs << list;
+	list2.sort();
+	outputs2 << list2;
+
+	ASSERT_EQ(outputs2.str(), outputs.str());
+}
+
+TEST_F(Test20_6, TestEnhancedBubbleSort)
+{
+	std::stringstream outputs;
+	std::stringstream outputs2;
+	list.mSort();
+	outputs << list;
+	list2.bSort();
+	outputs2 << list2;
+
+	ASSERT_EQ(outputs2.str(), outputs.str());
+}
