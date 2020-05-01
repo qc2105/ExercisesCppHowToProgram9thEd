@@ -2557,3 +2557,51 @@ TEST_F(Test19_22, TestDeleteNode)
 		tree.insertNode(data);
 	}
 }
+
+#include "../20.5/List.h"
+
+class Test20_5 : public ::testing::Test
+{
+protected:
+
+	Test20_5(void)
+	{
+		srand(time(0));
+		int num = -1;
+		for (size_t i = 0; i < 10; ++i)
+		{
+			num = rand() % 10;
+			list.insertAtBack(num);
+			list2.insertAtBack(num);
+		}
+	}
+	virtual ~Test20_5()	{}
+
+	name20_5::List<int> list;
+	name20_5::List<int> list2;
+};
+
+TEST_F(Test20_5, TestMergeSort)
+{
+	std::stringstream outputs;
+	std::stringstream outputs2;
+	list.mSort();
+	outputs << list;
+	list2.sort();
+	outputs2 << list2;
+
+	ASSERT_EQ(outputs2.str(), outputs.str());
+}
+
+TEST_F(Test20_5, TestBubbleSort)
+{
+	std::stringstream outputs;
+	std::stringstream outputs2;
+	list.mSort();
+	outputs << list;
+	list2.bSort();
+	outputs2 << list2;
+
+	ASSERT_EQ(outputs2.str(), outputs.str());
+}
+
