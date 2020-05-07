@@ -2651,3 +2651,39 @@ TEST_F(Test20_6, TestEnhancedBubbleSort)
 
 	ASSERT_EQ(outputs2.str(), outputs.str());
 }
+
+#include "../20.10/quickSort.h"
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+
+class Test20_10 : public ::testing::Test
+{
+protected:
+	Test20_10(void)
+	{
+		srand(static_cast<unsigned int>(time(NULL)));
+	}
+	virtual ~Test20_10()
+	{
+
+	}
+};
+
+TEST_F(Test20_10, TestQucikSort)
+{
+	const size_t SIZE = 1000;
+	std::array<int, SIZE> array1;
+	std::array<int, SIZE> array2;
+
+	for (int i = 0; i < SIZE; ++i)
+	{
+		array1[i] = rand() % SIZE;
+		array2[i] = array1[i];
+	}
+
+	quickSort(array1, 0, array1.size() - 1);
+	std::sort(std::begin(array2), std::end(array2));
+
+	ASSERT_EQ(array1, array2);
+}
