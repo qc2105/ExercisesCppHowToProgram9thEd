@@ -2672,7 +2672,7 @@ protected:
 
 TEST_F(Test20_10, TestQucikSort)
 {
-	const size_t SIZE = 1000;
+	const size_t SIZE = 10000;
 	std::array<int, SIZE> array1;
 	std::array<int, SIZE> array2;
 
@@ -2686,4 +2686,45 @@ TEST_F(Test20_10, TestQucikSort)
 	std::sort(std::begin(array2), std::end(array2));
 
 	ASSERT_EQ(array1, array2);
+}
+
+
+#include "../20.7/BucketSort.h"
+
+class Test20_7 : public ::testing::Test
+{
+protected:
+
+	Test20_7(void)
+	{
+		srand(static_cast<unsigned int>(time(NULL)));
+	}
+
+	virtual ~Test20_7()
+	{
+
+	}
+};
+
+TEST_F(Test20_7, TestBucketSort)
+{
+	const size_t size = 10000;
+	std::vector<size_t> items1(size);
+	std::vector<size_t> items2;
+
+	int num = 0;
+	for (size_t i = 0; i < size; ++i)
+	{
+		num = rand() % size + 1;
+		items1.at(i) = static_cast<size_t>(num);
+	}
+
+	items2 = items1;
+
+	BucketSort bucketSort;
+	bucketSort(items1);
+
+	std::sort(items2.begin(), items2.end());
+
+	ASSERT_EQ(items1, items2);
 }
