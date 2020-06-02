@@ -2728,3 +2728,24 @@ TEST_F(Test20_7, TestBucketSort)
 
 	ASSERT_EQ(items1, items2);
 }
+
+
+#include "../22.7/utils.h"
+
+class Test22_7 : public ::testing::Test
+{
+protected:
+	Test22_7() {}
+	~Test22_7() {}
+};
+
+TEST_F(Test22_7, TestPower2)
+{
+	for (unsigned i = 0; i < 99; i++)
+	{
+		for (unsigned j = 0; j < 99; j++)
+		{
+			ASSERT_EQ(power2(i, j) , i * static_cast<unsigned>(pow(2, j)));
+		}
+	}
+}
