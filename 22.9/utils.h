@@ -5,6 +5,7 @@
 void displayBits(unsigned integer);
 unsigned packCharacters(const char chars[4]);
 void unpackCharacters(char** chars, unsigned pack, int size = 4);
+unsigned reverseBits(unsigned v);
 
 void displayBits(unsigned integer)
 {
@@ -47,4 +48,21 @@ inline void unpackCharacters(char** chars, unsigned pack, int size)
         (*chars)[size - 1 - i] = temp >> i * 8;
     }
 }
+
+inline unsigned reverseBits(unsigned v)
+{
+    unsigned rV = 0;
+    unsigned MASK = 1 << (sizeof(unsigned) * 8 - 1);
+    
+    for (int i = 0; i < sizeof(unsigned) * 8 - 1; i++)
+    {
+        rV = v & MASK | rV;
+        rV >>= 1;
+        v <<= 1;
+    }
+
+    return rV;
+}
+
+
 
