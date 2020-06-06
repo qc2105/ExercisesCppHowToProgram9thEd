@@ -29,6 +29,10 @@ int main()
         {
             searchPtr = strstr(searchPtr + strlen(targetString), targetString);
         }
+        else
+        {
+            break;
+        }
     }
 
     return 0;
