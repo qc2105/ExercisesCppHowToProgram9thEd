@@ -2,7 +2,7 @@
 //
 
 #include <iostream>
-#define SUMARRY(Array, Size, sum)   for (size_t i = 0; i < Size; ++i) { sum += Array[i];}
+#define SUMARRY(Array, Size, sum) for (size_t i = 0; i < Size; ++i) { sum += Array[i];}
 
 int main()
 {
