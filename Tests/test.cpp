@@ -2736,7 +2736,7 @@ class Test22_7 : public ::testing::Test
 {
 protected:
 	Test22_7() {}
-	~Test22_7() {}
+	virtual ~Test22_7() {}
 };
 
 TEST_F(Test22_7, TestPower2)
@@ -2747,5 +2747,66 @@ TEST_F(Test22_7, TestPower2)
 		{
 			ASSERT_EQ(power2(i, j) , i * static_cast<unsigned>(pow(2, j)));
 		}
+	}
+}
+
+
+#include "../22.39/homeMadeStrUtils.h"
+
+class Test22_39 : public ::testing::Test
+{
+protected:
+	Test22_39()
+		:length(0),
+		str1(nullptr),
+		str2(nullptr)
+	{
+		srand(static_cast<unsigned>(time(0)));
+
+		length = rand();
+
+		str1 = new char[length + 1];
+
+		for (size_t i = 0; i < length; ++i)
+		{
+			str1[i] = rand() % (static_cast<int>('z') - static_cast<int>('a') + 1) + static_cast<int>('a');
+		}
+		str1[length] = '\0';
+
+		length = rand();
+
+		str2 = new char[length + 1];
+
+		for (size_t i = 0; i < length; ++i)
+		{
+			str2[i] = rand() % (static_cast<int>('z') - static_cast<int>('a') + 1) + static_cast<int>('a');
+		}
+
+		str2[length] = '\0';
+	}
+	
+	virtual ~Test22_39() 
+	{
+		delete[] str1;
+		delete[] str2;
+	}
+
+	size_t length;
+	char* str1;
+	char* str2;
+};
+
+TEST_F(Test22_39, TesthomeMadeStrcmp)
+{
+	ASSERT_EQ(strcmp(str1, str2), homeMadeStrcmpV1(str1, str2));
+	ASSERT_EQ(strcmp(str1, str2), homeMadeStrcmpV2(str1, str2));
+}
+
+TEST_F(Test22_39, TesthomeMadeStrncmp)
+{
+	for (size_t i = 0; i < (strlen(str1) < strlen(str2) ? strlen(str2) : strlen(str1)); ++i)
+	{
+		ASSERT_EQ(strncmp(str1, str2, i), homeMadeStrncmpV1(str1, str2, i));
+		ASSERT_EQ(strncmp(str1, str2, i), homeMadeStrncmpV2(str1, str2, i));
 	}
 }
