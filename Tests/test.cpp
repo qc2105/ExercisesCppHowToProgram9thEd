@@ -2800,6 +2800,8 @@ TEST_F(Test22_39, TesthomeMadeStrcmp)
 {
 	ASSERT_EQ(strcmp(str1, str2), homeMadeStrcmpV1(str1, str2));
 	ASSERT_EQ(strcmp(str1, str2), homeMadeStrcmpV2(str1, str2));
+	ASSERT_EQ(0, homeMadeStrcmpV1(str1, str1));
+	ASSERT_EQ(0, homeMadeStrcmpV2(str2, str2));
 }
 
 TEST_F(Test22_39, TesthomeMadeStrncmp)
@@ -2808,5 +2810,7 @@ TEST_F(Test22_39, TesthomeMadeStrncmp)
 	{
 		ASSERT_EQ(strncmp(str1, str2, i), homeMadeStrncmpV1(str1, str2, i));
 		ASSERT_EQ(strncmp(str1, str2, i), homeMadeStrncmpV2(str1, str2, i));
+		ASSERT_EQ(0, homeMadeStrncmpV1(str1, str1, i));
+		ASSERT_EQ(0, homeMadeStrncmpV2(str2, str2, i));
 	}
 }
