@@ -17,7 +17,9 @@ int main()
         "Xinjiang",
         "Taiwan",
         "Xizang",
-        "Neimenggu"
+        "Neimenggu",
+        "Hebei",
+        "Yunnan"
     };
 
     std::sort(std::begin(provinces), std::end(provinces), compare);
