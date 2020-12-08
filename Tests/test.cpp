@@ -1,47 +1,47 @@
 #include "pch.h"
-#include "../15.23/palindrome.h"
-#include "../9.27/InputProcessor.h"
-#include "../10.10/Rational.h"
-#include "../10.11/InputProcessor.h"
-#include "../10.8/Complex.h"
+#include "../Chapter 15/15.23/palindrome.h"
+#include "../Chapter 9/9.27/InputProcessor.h"
+#include "../Chapter 10/10.10/Rational.h"
+#include "../Chapter 10/10.11/InputProcessor.h"
+#include "../Chapter 10/10.8/Complex.h"
 #include <complex>
-#include "../10.9/Hugeint.h"
-#include "../11.10/Account.h"
-#include "../11.10/SavingsAccount.h"
-#include "../11.10/CheckingAccount.h"
-#include "../11.9/Package.h"
-#include "../11.9/TwoDayPackage.h"
-#include "../11.9/OvernightPackage.h"
-#include "../15.24/prime.h"
+#include "../Chapter 10/10.9/Hugeint.h"
+#include "../Chapter 11/11.10/Account.h"
+#include "../Chapter 11/11.10/SavingsAccount.h"
+#include "../Chapter 11/11.10/CheckingAccount.h"
+#include "../Chapter 11/11.9/Package.h"
+#include "../Chapter 11/11.9/TwoDayPackage.h"
+#include "../Chapter 11/11.9/OvernightPackage.h"
+#include "../Chapter 15/15.24/prime.h"
 
-#include "../13.16/Complex13_16.h"
+#include "../Chapter 13/13.16/Complex13_16.h"
 #include <string>
 #include <iostream>
 #include <sstream>
 #include <vector>
 
-#include "../12.15/PieceWorker.h"
-#include "../12.15/Employee.h"
-#include "../12.15/HourlyWorker.h"
+#include "../Chapter 12/12.15/PieceWorker.h"
+#include "../Chapter 12/12.15/Employee.h"
+#include "../Chapter 12/12.15/HourlyWorker.h"
 
-#include "../14.10/Person.h"
+#include "../Chapter 14/14.10/Person.h"
 #include <fstream>
 
-#include "../13.15/Point.h"
-#include "../13.14/PhoneNumber.h"
+#include "../Chapter 13/13.15/Point.h"
+#include "../Chapter 13/13.14/PhoneNumber.h"
 #include <sstream>
-#include "../12.14/CheckingAccount.h"
-#include "../12.14/SavingsAccount.h"
-#include "../12.13/TwoDayPackage.h"
-#include "../12.13/OvernightPackage.h"
-#include "../12.12/SalariedEmployee.h"
-#include "../18.4/Array.h"
-#include "../19.6/Node.h"
-#include "../19.6/List.h"
+#include "../Chapter 12/12.14/CheckingAccount.h"
+#include "../Chapter 12/12.14/SavingsAccount.h"
+#include "../Chapter 12/12.13/TwoDayPackage.h"
+#include "../Chapter 12/12.13/OvernightPackage.h"
+#include "../Chapter 12/12.12/SalariedEmployee.h"
+#include "../Chapter 18/18.4/Array.h"
+#include "../Chapter 19/19.6/Node.h"
+#include "../Chapter 19/19.6/List.h"
 
-#include "../19.7/List.h"
+#include "../Chapter 19/19.7/List.h"
 
-#include "../6.39/Clock.h"
+#include "../Chapter 6/6.39/Clock.h"
 
 class Test6_39 : public ::testing::Test
 {
@@ -198,7 +198,7 @@ TEST_F(Test19_7, TestSort)
 	}
 }
 
-#include "../19.9/List.h"
+#include "../Chapter 19/19.9/List.h"
 
 class Test19_9 : public ::testing::Test
 {
@@ -2165,7 +2165,7 @@ TEST(Test15_25, TestGetPrimesFactors)
 	EXPECT_EQ(expectFactors, realFactors);
 }
 
-#include "../19.15/Queue.h"
+#include "../Chapter 19/19.15/Queue.h"
 
 class Test19_15 : public ::testing::Test
 {
@@ -2215,7 +2215,7 @@ TEST_F(Test19_15, TestDequeue)
 }
 
 
-#include "../19.19/Tree.h"
+#include "../Chapter 19/19.19/Tree.h"
 
 class Test19_19 : public ::testing::Test
 {
@@ -2306,7 +2306,7 @@ TEST_F(Test19_19, TestLeafsToRootPaths)
 }
 
 
-#include "../19.26/List.h"
+#include "../Chapter 19/19.26/List.h"
 
 class Test19_26 : public ::testing::Test
 {
@@ -2496,7 +2496,7 @@ TEST_F(Test19_26, TestRemoveAtPosition)
 	ASSERT_EQ(2, list[0]);
 }
 
-#include "../19.22/Tree.h"
+#include "../Chapter 19/19.22/Tree.h"
 
 class Test19_22 : public ::testing::Test
 {
@@ -2558,7 +2558,7 @@ TEST_F(Test19_22, TestDeleteNode)
 	}
 }
 
-#include "../20.5/List.h"
+#include "../Chapter 20/20.5/List.h"
 
 class Test20_5 : public ::testing::Test
 {
@@ -2605,7 +2605,7 @@ TEST_F(Test20_5, TestBubbleSort)
 	ASSERT_EQ(outputs2.str(), outputs.str());
 }
 
-#include "../20.6/List.h"
+#include "../Chapter 20/20.6/List.h"
 
 class Test20_6 : public ::testing::Test
 {
@@ -2652,7 +2652,7 @@ TEST_F(Test20_6, TestEnhancedBubbleSort)
 	ASSERT_EQ(outputs2.str(), outputs.str());
 }
 
-#include "../20.10/quickSort.h"
+#include "../Chapter 20/20.10/quickSort.h"
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
@@ -2689,7 +2689,7 @@ TEST_F(Test20_10, TestQucikSort)
 }
 
 
-#include "../20.7/BucketSort.h"
+#include "../Chapter 20/20.7/BucketSort.h"
 
 class Test20_7 : public ::testing::Test
 {
@@ -2730,7 +2730,7 @@ TEST_F(Test20_7, TestBucketSort)
 }
 
 
-#include "../22.7/utils.h"
+#include "../Chapter 22/22.7/utils.h"
 
 class Test22_7 : public ::testing::Test
 {
@@ -2751,7 +2751,7 @@ TEST_F(Test22_7, TestPower2)
 }
 
 
-#include "../22.39/homeMadeStrUtils.h"
+#include "../Chapter 22/22.39/homeMadeStrUtils.h"
 
 class Test22_39 : public ::testing::Test
 {
