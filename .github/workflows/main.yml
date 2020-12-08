@@ -18,7 +18,7 @@ jobs:
       run: nuget restore cppHowToProgram.sln
 
     - name: Setup Msbuild
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1.0.2
     
     - name: Build
       run: MSBuild.exe -t:Build -m -p:Configuration=Debug -p:Platform=x64 cppHowToProgram.sln
